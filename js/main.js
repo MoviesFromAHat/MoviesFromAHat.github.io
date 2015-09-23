@@ -1,89 +1,111 @@
-(function(w, d) {
+(function(d) {
 
-    var init = function(movies) {
+    'use strict';
 
-        var unwatchedMovies = _.filter(movies,function(movie){
-              return movie.length === 2;
+    // get DOM elements
+
+    var movies;
+    var $btn = $("#selectBtn");
+    var $selectionWrapper = $("#selection");
+    var $future = $("#movies");
+    var $previous = $("#watched");
+
+    // helper functions
+
+    function filterWatchedMovies (movie) {
+        return movie.length > 2;
+    }
+
+    function filterUnwatchedMovies (movie) {
+        return movie.length === 2;
+    }
+
+    function sortMoviesByDate (movie) {
+        return Date.parse(movie[2]);
+    }
+
+    function buildMovieListItem (movie) {
+        var $li = $("<li>");
+        var $anchor = $("<a>", {
+            href: movie[1],
+            target: 'imdb',
+            title: movie[0],
+            text: movie[0]
         });
 
-        var selectionWrapper = document.getElementById("selection");
-        var btn = document.getElementById("selectBtn");
+        $li.append($anchor);
 
-        var selectMovie = function () {
-            var selection = _.sample(unwatchedMovies);
-            selectionWrapper.innerHTML = "This week's selection is: <br /><span><a target='imdb' href='" + selection[1] + "'>" + selection[0] + "</a></span>";
-        };
-
-        btn.onclick = function () {
-            btn.innerHTML = "Select a different Movie";
-            selectionWrapper.style.display = "block";
-            selectMovie();
+        if(movie.length > 2) {
+            var $span = $("<span>", {
+                text: " — " + movie[2]
+            });
+            $li.append($span);
         }
 
-        var list = document.getElementById("movies"),
-            watched = document.getElementById("watched");
+        return $li;
+    }
 
-        var watchedList = _.filter(movies, function(movie){
-           return (movie.length > 2);
-        });
+    // event binding helper functions
 
-        watchedList = _.sortBy(watchedList, function(m){
-           return Date.parse(m[2]);
-        });
+    function selectMovie () {
+        var unwatchedMovies = _(movies)
+            .filter(filterUnwatchedMovies)
+            .value();
 
-        var unwatchedList = _.filter(movies, function(movie){
-           return !(movie.length > 2);
-        });
+        var selection = _.sample(unwatchedMovies);
+        $selectionWrapper.html("This week's selection is: <br /><span><a target='imdb' href='" + selection[1] + "'>" + selection[0] + "</a></span>");
+    }
 
-        var sorted = watchedList.concat(unwatchedList);
+    function init () {
 
-        _.each(sorted, function(movie) {
-            var a = document.createElement('a');
-            var linkText = document.createTextNode(movie[0]);
-            a.appendChild(linkText);
-            a.title = movie[0];
-            a.href = movie[1];
-            a.target ="imdb";
-            var li = document.createElement('li');
-            li.appendChild(a);
+        // filtered & sorted movie lists
+
+        var watchedMovies = _(movies)
+            .filter(filterWatchedMovies)
+            .sortBy(sortMoviesByDate)
+            .value();
+
+        var unwatchedMovies = _(movies)
+            .filter(filterUnwatchedMovies)
+            .value();
+
+        var allMovies = watchedMovies.concat(unwatchedMovies);
+
+        // build dom structure
+
+        _.each(allMovies, function(movie) {
+            var $li = buildMovieListItem(movie);
+            
             if(movie.length > 2) {
-                var dateEl = document.createElement('span');
-                var date = document.createTextNode(' —  ' + movie[2]);
-                dateEl.appendChild(date);
-                li.appendChild(dateEl);
-            }
-            if(movie.length > 3) {
-                var stars = ' — ';
-                for(var i = 0; i < movie[3]; i++) {
-                     stars += '★';
-                }
-                for(var i = 0; i < 5 - movie[3]; i++) {
-                    stars += '☆';
-                }
-                var starsEl = document.createTextNode(stars);
-
-                li.appendChild(starsEl);
-            }
-            if(movie.length > 2) {
-                watched.appendChild(li);
+                $previous.append($li);
             } else {
-                list.appendChild(li);
+                $future.append($li);
             }
         });
 
-    };
+        // bind select button
+
+        $btn.on('click', function () {
+            $(this).html("Select a different movie.");
+            $selectionWrapper.css("display", "block");
+            selectMovie();
+        });
+
+    }
 
     // Load movies and init
+
     $(d).ready(function() {
         $.getJSON('movies/movies.json', function(response) {
-            var movies = _.map(response,function(movieData, movie) {
+            movies = _.map(response,function(movieData, movie) {
                 if(_.isUndefined(movieData.watchDate)) {
                     return [movie, movieData.url];
                 }
                 return [movie, movieData.url, movieData.watchDate];
             });
-            init(movies);
+
+            init();
         });
     });
 
-})(window, document);
+})(document);
