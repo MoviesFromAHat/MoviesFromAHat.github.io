@@ -1,0 +1,88 @@
+body{
+    background: #eee;
+}
+.selection-container{
+    text-align: center;
+    background: #fff;
+    margin: 20px;
+    padding: 20px;
+    color: #fff;
+    border: 1px solid #ccc;
+}
+
+button{
+    transition: opacity .25s;
+    background: #c00;
+    border: none;
+    color: #fff;
+    padding: 8px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+button:hover{
+    opacity: .7;
+    transition: opacity .25s;
+}
+
+.selection-container p{
+    font-family: georiga, times, serif;
+    color: #999;
+    margin-top: 30px;
+    margin-bottom: 0px;
+    font-size: 1em;
+}
+
+.selection-container p span{
+    font-family: arial, sans-serif;
+    color: #000;
+    display: block;
+    font-weight: bold;
+    margin-top: 10px;
+    font-size: 2em;
+    line-height: 1.4em;
+}
+
+.selection-container p span a {
+    color: #000;
+    text-decoration: none;
+}
+
+.selection-container p span a:hover{
+    color: #c00;
+}
+
+.previous-selection-container{
+    margin: 20px;
+    text-align: center;
+}
+
+.previous-selection-container h2{
+    font-size: 1em;
+    font-weight: bold;
+    font-family: arial, sans-serif;
+}
+
+.previous-selection-container ul{
+    list-style: none;
+    font-size: .8em;
+    padding: 0;
+}
+
+.previous-selection-container span{
+    font-style: italic;
+    color: #999;
+}
+
+.previous-selection-container a{
+    color: #999;
+    text-decoration: none;
+}
+
+.previous-selection-container a:hover{
+    color: #c00;
+}
+
+.previous-selection-container ul{
+    line-height: 1.5em;
+}

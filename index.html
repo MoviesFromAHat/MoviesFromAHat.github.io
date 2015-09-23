@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+
+        <title>Movies From a Hat</title>
+        <meta charset="utf-8" />
+
+        <!-- Styles -->
+        <link href="css/styles.css" rel="stylesheet" media="screen" />
+
+    </head>
+
+    <body>
+
+        <div class="selection-container">
+            <button id="selectBtn">Select A Movie</button>
+            <p id="selection" style="display: none"></p>
+        </div><!-- end .selection-container -->
+
+        <div class="previous-selection-container">
+            <h2>Previous Selections</h2>
+            <ul id="watched"></ul>
+            <h2>Future Selections</h2>
+            <ul id="movies"></ul>
+        </div><!-- end .previous-selection-container -->
+
+        <!-- Scripts -->
+        <script src="bower_components/lodash/dist/lodash.min.js"></script>
+        <script src="bower_components/jquery/dist/jquery.min.js"></script>
+        <script src="js/main.js"></script>
+
+    </body>
+
+</html>

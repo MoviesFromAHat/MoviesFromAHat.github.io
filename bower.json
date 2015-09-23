@@ -1,0 +1,8 @@
+{
+  "name": "Movies From a Hat",
+  "dependencies": {
+    "jquery": "1.11.3",
+    "lodash": "2.2.1"
+  },
+  "private": true
+}

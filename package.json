@@ -1,0 +1,21 @@
+{
+  "name": "movies-from-a-hat",
+  "version": "0.0.1",
+  "description": "Movies From a Hat",
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:jrrucker/movies-from-a-hat.git"
+  },
+  "devDependencies": {
+    "grunt": "~0.4.5",
+    "grunt-contrib-connect": "~0.5.0",
+    "grunt-contrib-watch": "~0.5.2",
+    "load-grunt-tasks": "~0.2.0",
+    "time-grunt": "~0.2.0"
+  },
+  "license": {
+    "type": "MIT",
+    "url": "http://www.opensource.org/licenses/mit-license.php"
+  },
+  "private": true
+}
