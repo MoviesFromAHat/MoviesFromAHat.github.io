@@ -23,20 +23,12 @@ module.exports = function (grunt){
                 }
             }
         },
+        jshint: {
+            all: ['Gruntfile.js', 'js/**/*.js']
+        }
     });
 
-    grunt.registerTask('server', function(){
-        grunt.task.run([
-            'connect',
-            'watch'
-        ]);
-    });
-
-    grunt.registerTask('default', ['server']);
-
-    // log changes during watch
-    grunt.event.on('watch', function(action, filepath, target) {
-        grunt.log.writeln(target + ': ' + filepath + ' has ' + action);
-    });
+    grunt.registerTask('server', ['connect', 'watch']);
+    grunt.registerTask('default', ['jshint','server']);
 
 };
