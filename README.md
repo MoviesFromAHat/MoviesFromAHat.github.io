@@ -5,7 +5,7 @@
 1. The movie is selected at random just before we watch. No one will know what the selection is until the event.
 2. Any movie can be tabled if a majority vote is reached to table.
 3. Any movie can be removed from the list if a majority vote is reached to do so.  Only attendees who've seen the movie can vote to remove it from the list.
-4. &ldquo;No Troma Films&rdquo; -- Matt Cheely
+4. No Troma Films -- Matt Cheely
 
 ## Movie Suggestions
 
