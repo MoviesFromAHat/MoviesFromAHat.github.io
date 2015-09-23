@@ -4,7 +4,7 @@
   "description": "Movies From a Hat",
   "repository": {
     "type": "git",
-    "url": "git@github.com:jrrucker/movies-from-a-hat.git"
+    "url": "git@github.com:MoviesFromAHat/movies-from-a-hat.git"
   },
   "devDependencies": {
     "grunt": "~0.4.5",
