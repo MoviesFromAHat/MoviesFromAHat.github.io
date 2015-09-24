@@ -59,7 +59,15 @@
         var title = selection.title;
         var year = selection.year;
         var url = selection.url;
-        $selectionWrapper.html("This week's selection is: <br /><span><a target='imdb' href='" + url + "'>" + title + " (" + year + ")</a></span>");
+        var img = selection.img;
+        var runtime = selection.runtime;
+
+        var output = "This week's selection is: <br /><br />";
+        output += "<a target='imdb' href='" + url + "'>";
+        output += "<img src='img/" + img + "' /><br />";
+        output += "<span>" + title + "<br /><span>(" + year + ", " + runtime + " min)</span></span></a>";
+
+        $selectionWrapper.html(output);
     }
 
     function init () {
@@ -81,7 +89,7 @@
 
         _.each(allMovies, function(movie) {
             var $li = buildMovieListItem(movie);
-            
+
             if(movie.watchDate) {
                 $previous.append($li);
             } else {

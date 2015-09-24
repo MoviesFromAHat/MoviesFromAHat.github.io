@@ -87,16 +87,28 @@ button:hover{
     font-weight: bold;
     font-style: normal;
     margin-top: 10px;
-    font-size: 3em;
+    font-size: 1.4em;
     line-height: 1.4em;
 }
 
-.selection-container p span a {
+.selection-container p a span span{
+    font-size: .6em;
+    color: #999;
+    font-family: georgia;
+    font-weight: normal;
+    line-height: 1;
+}
+
+.selection-container p a {
+    text-decoration: none;
+}
+
+.selection-container p a span {
     color: #000;
     text-decoration: none;
 }
 
-.selection-container p span a:hover{
+.selection-container p a:hover span {
     color: #c00;
 }
 
