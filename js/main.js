@@ -9,35 +9,38 @@
     var $selectionWrapper = $("#selection");
     var $future = $("#movies");
     var $previous = $("#watched");
+    var $moviesContainer = $(".previous-selection-container");
+    var $selectionContainer = $(".selection-container");
+
 
     // helper functions
 
     function filterWatchedMovies (movie) {
-        return movie.length > 2;
+        return !!movie.watchDate;
     }
 
     function filterUnwatchedMovies (movie) {
-        return movie.length === 2;
+        return !movie.watchDate;
     }
 
     function sortMoviesByDate (movie) {
-        return Date.parse(movie[2]);
+        return Date.parse(movie.watchDate);
     }
 
     function buildMovieListItem (movie) {
         var $li = $("<li>");
         var $anchor = $("<a>", {
-            href: movie[1],
+            href: movie.url,
             target: 'imdb',
-            title: movie[0],
-            text: movie[0]
+            title: movie.title,
+            text: movie.title
         });
 
         $li.append($anchor);
 
-        if(movie.length > 2) {
+        if(movie.watchDate) {
             var $span = $("<span>", {
-                text: " — " + movie[2]
+                text: " — " + movie.watchDate
             });
             $li.append($span);
         }
@@ -53,7 +56,10 @@
             .value();
 
         var selection = _.sample(unwatchedMovies);
-        $selectionWrapper.html("This week's selection is: <br /><span><a target='imdb' href='" + selection[1] + "'>" + selection[0] + "</a></span>");
+        var title = selection.title;
+        var year = selection.year;
+        var url = selection.url;
+        $selectionWrapper.html("This week's selection is: <br /><span><a target='imdb' href='" + url + "'>" + title + " (" + year + ")</a></span>");
     }
 
     function init () {
@@ -76,7 +82,7 @@
         _.each(allMovies, function(movie) {
             var $li = buildMovieListItem(movie);
             
-            if(movie.length > 2) {
+            if(movie.watchDate) {
                 $previous.append($li);
             } else {
                 $future.append($li);
@@ -87,8 +93,10 @@
 
         $btn.on('click', function () {
             $(this).html("Select a different movie.");
-            $selectionWrapper.css("display", "block");
             selectMovie();
+            $(this).remove();
+            $moviesContainer.remove();
+            $('html').addClass("full");
         });
 
     }
@@ -97,13 +105,7 @@
 
     $(d).ready(function() {
         $.getJSON('movies/movies.json', function(response) {
-            movies = _.map(response,function(movieData, movie) {
-                if(_.isUndefined(movieData.watchDate)) {
-                    return [movie, movieData.url];
-                }
-                return [movie, movieData.url, movieData.watchDate];
-            });
-
+            movies = response.movies;
             init();
         });
     });
