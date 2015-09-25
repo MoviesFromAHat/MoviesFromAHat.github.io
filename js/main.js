@@ -1,3 +1,9 @@
+jQuery.extend({
+  getQueryParameters : function(str) {
+      return (str || document.location.search).replace(/(^\?)/,'').split("&").map(function(n){return n = n.split("="),this[n[0]] = n[1],this;}.bind({}))[0];
+  }
+});
+
 (function(d) {
 
     'use strict';
@@ -21,6 +27,30 @@
 
     function filterUnwatchedMovies (movie) {
         return !movie.watchDate;
+    }
+
+    function filterLength (length, movie) {
+        if(_.isUndefined(length)){
+            return true;
+        }
+        return movie.runtime <= length;
+    }
+
+    function filterGenre(genres, movie) {
+        if(_.isUndefined(genres)){
+            return true;
+        }
+
+        var genreList = genres.split(',');
+        var match = true;
+
+        _.forEach(genreList, function(genre) {
+            if(!_.contains(movie.genres, genre)) {
+                match = false;
+            }
+        });
+
+        return match;
     }
 
     function sortMoviesByDate (movie) {
@@ -50,8 +80,20 @@
 
     // event binding helper functions
 
-    function selectMovie () {
+    function selectMovie (options) {
+        var genres, length;
+
+        if (options) {
+            genres = options.genres;
+            length = options.length;
+        }
+
+        var genreFilter = _.partial(filterGenre, genres);
+        var lengthFilter = _.partial(filterLength, length);
+
         var unwatchedMovies = _(movies)
+            .filter(lengthFilter)
+            .filter(genreFilter)
             .filter(filterUnwatchedMovies)
             .value();
 
@@ -70,16 +112,29 @@
         $selectionWrapper.html(output);
     }
 
-    function init () {
+    function init (options) {
+
+        var genres, length;
+
+        if (options) {
+            genres = options.genres;
+            length = options.length;
+        }
 
         // filtered & sorted movie lists
+        var genreFilter = _.partial(filterGenre, genres);
+        var lengthFilter = _.partial(filterLength, length);
 
         var watchedMovies = _(movies)
+            .filter(lengthFilter)
+            .filter(genreFilter)
             .filter(filterWatchedMovies)
             .sortBy(sortMoviesByDate)
             .value();
 
         var unwatchedMovies = _(movies)
+            .filter(lengthFilter)
+            .filter(genreFilter)
             .filter(filterUnwatchedMovies)
             .value();
 
@@ -101,7 +156,10 @@
 
         $btn.on('click', function () {
             $(this).html("Select a different movie.");
-            selectMovie();
+            selectMovie({
+                genres: genres,
+                length: length
+            });
             $(this).remove();
             $moviesContainer.remove();
             $('html').addClass("full");
@@ -113,8 +171,12 @@
 
     $(d).ready(function() {
         $.getJSON('movies/movies.json', function(response) {
+            var params = $.getQueryParameters();
             movies = response.movies;
-            init();
+            init({
+                genres: params.genre,
+                length: params.length
+            });
         });
     });
 
