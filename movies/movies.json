@@ -185,6 +185,14 @@
       "runtime": 94,
       "genres": ["action","adventure","comedy"]
     },
+     {
+      "title": "Evil Dead II",
+      "url": "http://www.imdb.com/title/tt0092991/",
+      "img": "evil-dead-2.jpg",
+      "year": "1987",
+      "runtime": 84,
+      "genres": ["comedy","horror"]
+    },
     {
       "title": "Raising Arizona",
       "url": "http://www.imdb.com/title/tt0093822/",
@@ -351,7 +359,7 @@
       "img": "fallen.jpg",
       "year": "1998",
       "runtime": 124,
-      "genres": ["action","crime","drama"]
+      "genres": ["action","crime","drama","horror"]
     },
     {
       "title": "The Negotiator",
