@@ -801,6 +801,14 @@
       "runtime": 107,
       "watchDate": "9.24.15",
       "genres": ["drama","music"]
+    },
+    {
+      "title": "The Conjuring",
+      "url:": "http://www.imdb.com/title/tt1457767/",
+      "img": "",
+      "year": "2014",
+      "runtime": 112,
+      "genres": ["horror"]
     }
   ]
 }
