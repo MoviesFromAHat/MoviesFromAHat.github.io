@@ -121,14 +121,6 @@
       "genres": ["drama","sport"]
     },
     {
-      "title": "The Toxic Avenger",
-      "url": "http://www.imdb.com/title/tt0090190/",
-      "img": "the-toxic-avenger.jpg",
-      "year": "1984",
-      "runtime": 82,
-      "genres": ["comedy","horror","sci-fi"]
-    },
-    {
       "title": "The Adventures of Buckaroo Banzai Across the 8th Dimension",
       "url": "http://www.imdb.com/title/tt0086856/",
       "year": "1984",
