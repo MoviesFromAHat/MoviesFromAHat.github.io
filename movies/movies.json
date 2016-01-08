@@ -1,6 +1,14 @@
 {
   "movies": [
     {
+        "title": "Tombstone",
+        "url": "http://www.imdb.com/title/tt0108358/",
+        "img": "tombstone.jpg",
+        "year": "1993",
+        "runtime": 130,
+        "genres": ["action", "drama", "history", "western"]
+    },
+    {
       "title": "Collateral",
       "url": "http://www.imdb.com/title/tt0369339/",
       "img": "collateral.jpg",
