@@ -53,8 +53,12 @@ jQuery.extend({
         return match;
     }
 
-    function sortMoviesByDate (movie) {
+    function sortMoviesByWatchDate (movie) {
         return Date.parse(movie.watchDate);
+    }
+
+    function sortMoviesByDate (movie) {
+        return Date.parse(movie.year);
     }
 
     function buildMovieListItem (movie) {
@@ -129,13 +133,14 @@ jQuery.extend({
             .filter(lengthFilter)
             .filter(genreFilter)
             .filter(filterWatchedMovies)
-            .sortBy(sortMoviesByDate)
+            .sortBy(sortMoviesByWatchDate)
             .value();
 
         var unwatchedMovies = _(movies)
             .filter(lengthFilter)
             .filter(genreFilter)
             .filter(filterUnwatchedMovies)
+            .sortBy(sortMoviesByDate)
             .value();
 
         var allMovies = watchedMovies.concat(unwatchedMovies);
