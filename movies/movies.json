@@ -826,6 +826,14 @@
       "runtime": 112,
       "watchDate": "10.22.15",
       "genres": ["horror"]
+    },
+    {
+      "title": "Parallels",
+      "url": "http://www.imdb.com/title/tt3479316/",
+      "img": "Parallels.jpg",
+      "year": "2015",
+      "runtime": 83,
+      "genres": ["action","sci-fi"]
     }
   ]
 }
