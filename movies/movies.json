@@ -263,7 +263,8 @@
       "img": "uhf.jpg",
       "year": "1989",
       "runtime": 97,
-      "genres": ["comedy"]
+      "genres": ["comedy"],
+      "watchDate": "1.14.16"
     },
     {
       "title": "Nothing But Trouble",
