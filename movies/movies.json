@@ -1,6 +1,14 @@
 {
   "movies": [
     {
+        "title": "The Hidden",
+        "url": "http://www.imdb.com/title/tt0093185/",
+        "img": "the-hidden.jpg",
+        "year": "1987",
+        "runtime": 96,
+        "genres": ["action", "crime", "horror"]
+    },
+    {
         "title": "Tombstone",
         "url": "http://www.imdb.com/title/tt0108358/",
         "img": "tombstone.jpg",
