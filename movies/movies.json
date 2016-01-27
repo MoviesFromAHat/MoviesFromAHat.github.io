@@ -1,6 +1,14 @@
 {
   "movies": [
     {
+        "title": "Cool Hand Luke",
+        "url": "http://www.imdb.com/title/tt0061512",
+        "img": "cool-hand-luke.jpg",
+        "year": "1967",
+        "runtime": 126,
+        "genres": ["crime", "drama"]
+    },
+    {
         "title": "The Hidden",
         "url": "http://www.imdb.com/title/tt0093185/",
         "img": "the-hidden.jpg",
