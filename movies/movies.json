@@ -844,6 +844,14 @@
       "year": "2015",
       "runtime": 83,
       "genres": ["action","sci-fi"]
+    },
+    {
+      "title": "Repo Man",
+      "url": "http://www.imdb.com/title/tt0087995/",
+      "img": "repo-man.jpg",
+      "year": "1984",
+      "runtime": "93",
+      "genres": ["comedy", "crime", "sci-fi"]
     }
   ]
 }
