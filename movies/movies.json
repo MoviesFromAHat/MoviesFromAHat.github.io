@@ -320,7 +320,8 @@
       "img": "congo.jpg",
       "year": "1995",
       "runtime": 109,
-      "genres": ["action","adventure","mystery"]
+      "genres": ["action","adventure","mystery"],
+      "watchDate": "7.28.16"
     },
     {
       "title": "Twelve Monkeys",
