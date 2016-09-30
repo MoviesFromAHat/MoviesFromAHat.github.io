@@ -490,7 +490,8 @@
       "img": "kpax.jpg",
       "year": "2001",
       "runtime": 120,
-      "genres": ["drama","sci-fi"]
+      "genres": ["drama","sci-fi"],
+      "watchDate": "9.30.16"
     },
     {
       "title": "Mulholland Drive",
