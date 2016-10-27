@@ -499,7 +499,7 @@
       "img": "mulholland-drive.jpg",
       "year": "2001",
       "runtime": 147,
-      "genres": ["drama","mystery","thriller"]
+      "genres": ["drama","mystery","thriller","horror"]
     },
     {
       "title": "Death to Smoochy",
@@ -720,7 +720,7 @@
       "img": "the-wild-hunt.jpg",
       "year": "2009",
       "runtime": 96,
-      "genres": ["drama","thriller"]
+      "genres": ["drama","thriller","horror"]
     },
     {
       "title": "Zombieland",
