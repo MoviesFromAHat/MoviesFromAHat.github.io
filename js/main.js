@@ -66,7 +66,7 @@ jQuery.extend({
         var $anchor = $("<a>", {
             href: movie.url,
             target: 'imdb',
-            title: movie.title,
+            title: movie.title + ' (' + movie.genres.join(', ') + ')',
             text: movie.title
         });
 
