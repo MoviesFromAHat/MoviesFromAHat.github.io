@@ -687,7 +687,8 @@
       "img": "let-the-right-one-in.jpg",
       "year": "2008",
       "runtime": 115,
-      "genres": ["drama","horror","romance"]
+      "genres": ["drama","horror","romance"],
+      "watchDate": "10.27.16"
     },
     {
       "title": "Synecdoche New York",
