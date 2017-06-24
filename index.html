@@ -7,29 +7,15 @@
         <meta charset="utf-8" />
 
         <!-- Styles -->
-        <link href="css/styles.css" rel="stylesheet" media="screen" />
-
+        <link href="https://fonts.googleapis.com/css?family=Montserrat:400,600,700" rel="stylesheet"> 
+        <link href="style.css" rel="stylesheet" media="screen" />
+        <script src="elm.js"></script>
     </head>
 
     <body>
-
-        <div class="selection-container">
-            <button id="selectBtn">Select a movie.</button>
-            <p id="selection"></p>
-        </div><!-- end .selection-container -->
-
-        <div class="previous-selection-container">
-            <h2>Previous Selections</h2>
-            <ul id="watched"></ul>
-            <h2>Future Selections</h2>
-            <ul id="movies"></ul>
-        </div><!-- end .previous-selection-container -->
-
-        <!-- Scripts -->
-        <script src="bower_components/lodash/dist/lodash.min.js"></script>
-        <script src="bower_components/jquery/dist/jquery.min.js"></script>
-        <script src="js/main.js"></script>
-
+        <script>
+            Elm.Main.fullscreen();
+        </script>
     </body>
 
 </html>

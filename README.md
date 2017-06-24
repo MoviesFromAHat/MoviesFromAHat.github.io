@@ -1,12 +1,23 @@
 # Movies From a Hat
 
-> Movies From a Hat happens roughly once a month.  It's a gathering of Interactive Intelligence in the RTP area to watch a movie selected at random and hangout after office hours. There is an open invitation for all employees to attend. The rules are as follows: 
+> Movies From a Hat happens roughly once a month.  It's a gathering of Interactive Intelligence in the RTP area to watch a movie selected at random and hangout after office hours. There is an open invitation for all employees to attend.
+
+## The Rules
+
+### Selecting the Movie
 
 1. The movie is selected at random just before we watch. No one will know what the selection is until the event.
-2. Any movie can be tabled if a majority vote is reached to table.
-3. Any movie can be removed from the list if a majority vote is reached to do so.  Only attendees who've seen the movie can vote to remove it from the list.
-4. No Troma Films -- Matt Cheely
+2. A movie can be removed from the list by a majority vote (but see #3)
+3. You can only vote to remove a movie if you have seen it
+4. A movie can be tabled to be watched later by a majority vote.
+5. Anyone can vote to table a movie .
+6. A vote to remove also counts as a vote to table.
+7. Be reasonable. If somebody's uncomfortable watching something, or finds it offensive, just skip it.
 
-## Movie Suggestions
+### Adding movies to the list
 
-Anyone is welcome to offer suggestions for the list.  We're looking for movies that have flown under the radar, not blockbusters. So, "Lord of the Rings" wouldn't be the best choice, but "Krull" is all good. Feel free to open a PR to the movies.json file to contribute, or open an issue on the repository and I'll get it added before the next drawing.
+1. Anyone can add movies to the list.
+2. Movies can be added to the list by opening a PR to edit `src/MovieList.elm` (don't forget to add an image in `posters/`)
+3. We're looking for movies that flew under the radar, not blockbusters. (Think "Krull", not "Lord of the Rings")
+4. Use common sense. You'll be watching this with your co-workers. Be mindful of them and the power differentials that exist in the workspace.
+5. No Troma Films. (The Cheely Rule)
