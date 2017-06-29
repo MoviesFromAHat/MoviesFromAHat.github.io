@@ -7,6 +7,7 @@
     "url": "git@github.com:MoviesFromAHat/movies-from-a-hat.git"
   },
   "scripts": {
+    "elm-setup": "elm-package install",
     "build-css": "elm-css style/Stylesheets.elm",
     "host": "elm-live src/Main.elm --debug --output=elm.js --before-build=./build-styles.sh",
     "start": "npm run build-css && npm run host"
