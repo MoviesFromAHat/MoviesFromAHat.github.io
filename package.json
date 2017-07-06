@@ -6,13 +6,16 @@
     "type": "git",
     "url": "git@github.com:MoviesFromAHat/movies-from-a-hat.git"
   },
+  "scripts": {
+    "elm-setup": "elm-package install",
+    "build-css": "elm-css style/Stylesheets.elm",
+    "host": "elm-live src/Main.elm --debug --output=elm.js --before-build=./build-styles.sh",
+    "start": "npm run build-css && npm run host"
+  },
   "devDependencies": {
-    "grunt": "~0.4.5",
-    "grunt-contrib-connect": "~0.5.0",
-    "grunt-contrib-watch": "~0.5.2",
-    "grunt-contrib-jshint": "~0.11.3",
-    "load-grunt-tasks": "~0.2.0",
-    "time-grunt": "~0.2.0"
+    "elm": "^0.18.0",
+    "elm-css": "^0.6.0",
+    "elm-live": "^2.7.4"
   },
   "license": {
     "type": "MIT",
