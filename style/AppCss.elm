@@ -23,6 +23,7 @@ colors =
     , blue = (hex "20457C")
     , orange = (hex "FB6648")
     , other = (hex "5E3448")
+    , black = (hex "000000")
     }
 
 
@@ -48,6 +49,7 @@ general =
         , color colors.light
         , padding2 spacing.medium spacing.large
         , borderRadius spacing.small
+        , (cursor pointer)
         ]
     , a
         [ color colors.light
@@ -74,6 +76,12 @@ header =
                 [ textAlign center
                 ]
             ]
+        , boxShadow5
+            (px 0)
+            (px 30)
+            (px 35)
+            (px -20)
+            colors.black
         ]
 
 
@@ -106,6 +114,12 @@ movieSelection =
         ]
 
 
+moviesList =
+    class Movies
+        [ textAlign center
+        ]
+
+
 css : Stylesheet
 css =
     stylesheet
@@ -113,5 +127,6 @@ css =
             ++ [ header
                , movieCard
                , movieSelection
+               , moviesList
                ]
         )

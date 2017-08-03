@@ -20424,7 +20424,8 @@ var _user$project$AppCss$colors = {
 	lessDark: _rtfeldman$elm_css$Css$hex('333333'),
 	blue: _rtfeldman$elm_css$Css$hex('20457C'),
 	orange: _rtfeldman$elm_css$Css$hex('FB6648'),
-	other: _rtfeldman$elm_css$Css$hex('5E3448')
+	other: _rtfeldman$elm_css$Css$hex('5E3448'),
+	black: _rtfeldman$elm_css$Css$hex('000000')
 };
 var _user$project$AppCss$general = {
 	ctor: '::',
@@ -20477,7 +20478,11 @@ var _user$project$AppCss$general = {
 							_1: {
 								ctor: '::',
 								_0: _rtfeldman$elm_css$Css$borderRadius(_user$project$AppCss$spacing.small),
-								_1: {ctor: '[]'}
+								_1: {
+									ctor: '::',
+									_0: _rtfeldman$elm_css$Css$cursor(_rtfeldman$elm_css$Css$pointer),
+									_1: {ctor: '[]'}
+								}
 							}
 						}
 					}
@@ -20563,7 +20568,17 @@ var _user$project$AppCss$header = A2(
 									_1: {ctor: '[]'}
 								}
 							}),
-						_1: {ctor: '[]'}
+						_1: {
+							ctor: '::',
+							_0: A5(
+								_rtfeldman$elm_css$Css$boxShadow5,
+								_rtfeldman$elm_css$Css$px(0),
+								_rtfeldman$elm_css$Css$px(30),
+								_rtfeldman$elm_css$Css$px(35),
+								_rtfeldman$elm_css$Css$px(-20),
+								_user$project$AppCss$colors.black),
+							_1: {ctor: '[]'}
+						}
 					}
 				}
 			}
@@ -20589,6 +20604,14 @@ var _user$project$AppCss$movieSelection = A2(
 	});
 var _user$project$AppCss$Poster = {ctor: 'Poster'};
 var _user$project$AppCss$Movies = {ctor: 'Movies'};
+var _user$project$AppCss$moviesList = A2(
+	_rtfeldman$elm_css$Css$class,
+	_user$project$AppCss$Movies,
+	{
+		ctor: '::',
+		_0: _rtfeldman$elm_css$Css$textAlign(_rtfeldman$elm_css$Css$center),
+		_1: {ctor: '[]'}
+	});
 var _user$project$AppCss$MovieCard = {ctor: 'MovieCard'};
 var _user$project$AppCss$movieCard = A2(
 	_rtfeldman$elm_css$Css$class,
@@ -20677,7 +20700,11 @@ var _user$project$AppCss$css = _rtfeldman$elm_css$Css$stylesheet(
 				_1: {
 					ctor: '::',
 					_0: _user$project$AppCss$movieSelection,
-					_1: {ctor: '[]'}
+					_1: {
+						ctor: '::',
+						_0: _user$project$AppCss$moviesList,
+						_1: {ctor: '[]'}
+					}
 				}
 			}
 		}));
@@ -23297,7 +23324,7 @@ var _user$project$Main$rulesView = A2(
 				_0: A2(
 					_evancz$elm_markdown$Markdown$toHtml,
 					{ctor: '[]'},
-					'\n\n### Selecting the Movie\n\n1. The movie is selected at random just before we watch. No one will know what the selection is until the event.\n2. A movie can be removed from the list by a majority vote (but see #3)\n3. You can only vote to remove a movie if you have seen it\n4. A movie can be tabled to be watched later by a majority vote.\n5. Anyone can vote to table a movie.\n6. A vote to remove also counts as a vote to table.\n7. Be reasonable. If somebody\'s uncomfortable watching something, or finds it offensive, just skip it.\n\n### Adding movies to the list\n\n1. Anyone can add movies to the list.\n2. Movies can be added to the list via a PR against the [git repo](https://github.com/MoviesFromAHat/MoviesFromAHat.github.io/)\n3. We\'re looking for movies that flew under the radar, not blockbusters. (Think \"Krull\", not \"Lord of the Rings\")\n4. Use common sense. You\'ll be watching this with your co-workers. Be mindful of the power differentials that exist in the workspace.\n5. No Troma Films. (The Cheely Rule)\n'),
+					'\n\n### Selecting the Movie\n\n1. The movie is selected at random just before we watch. No one will know what the selection is until the event.\n2. A movie can be removed from the list by a majority vote (but see #3)\n3. You can only vote to remove a movie if you have seen it\n4. A movie can be tabled to be watched later by a majority vote.\n5. Anyone can vote to table a movie.\n6. A vote to remove also counts as a vote to table.\n7. Be reasonable. If somebody\'s uncomfortable watching something, or finds it offensive, just skip it.\n\n### Adding movies to the list\n\n1. Anyone can add movies to the list.\n2. Movies can be added to the list via a PR against the [git repo](https://github.com/MoviesFromAHat/MoviesFromAHat.github.io/)\n3. We\'re looking for movies that flew under the radar, not blockbusters. (Think \"Krull\", not \"Lord of the Rings\")\n4. Use common sense. You\'ll be watching this with your co-workers. Be mindful of them and the power differentials that exist in the workspace.\n5. No Troma Films. (The Cheely Rule)\n'),
 				_1: {ctor: '[]'}
 			}
 		}
@@ -23398,7 +23425,11 @@ var _user$project$Main$selectionControls = A2(
 			{
 				ctor: '::',
 				_0: _elm_lang$html$Html_Events$onClick(_user$project$Main$SelectMovie),
-				_1: {ctor: '[]'}
+				_1: {
+					ctor: '::',
+					_0: _elm_lang$html$Html_Attributes$type_('button'),
+					_1: {ctor: '[]'}
+				}
 			},
 			{
 				ctor: '::',
