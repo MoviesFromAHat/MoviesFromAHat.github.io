@@ -23129,7 +23129,79 @@ var _user$project$MovieList$movies = {
 																																																																																																											},
 																																																																																																											watched: _user$project$Movie$Unwatched
 																																																																																																										},
-																																																																																																										_1: {ctor: '[]'}
+																																																																																																										_1: {
+																																																																																																											ctor: '::',
+																																																																																																											_0: {
+																																																																																																												title: 'John Wick',
+																																																																																																												url: 'http://www.imdb.com/title/tt2911666/',
+																																																																																																												img: 'john-wick.jpg',
+																																																																																																												year: 2014,
+																																																																																																												runtime: 101,
+																																																																																																												genres: {
+																																																																																																													ctor: '::',
+																																																																																																													_0: 'action',
+																																																																																																													_1: {
+																																																																																																														ctor: '::',
+																																																																																																														_0: 'crime',
+																																																																																																														_1: {
+																																																																																																															ctor: '::',
+																																																																																																															_0: 'thriller',
+																																																																																																															_1: {ctor: '[]'}
+																																																																																																														}
+																																																																																																													}
+																																																																																																												},
+																																																																																																												watched: _user$project$Movie$Unwatched
+																																																																																																											},
+																																																																																																											_1: {
+																																																																																																												ctor: '::',
+																																																																																																												_0: {
+																																																																																																													title: '10 Cloverfield Lane',
+																																																																																																													url: 'http://www.imdb.com/title/tt1179933/',
+																																																																																																													img: '10-cloverfield-lane.jpg',
+																																																																																																													year: 2016,
+																																																																																																													runtime: 104,
+																																																																																																													genres: {
+																																																																																																														ctor: '::',
+																																																																																																														_0: 'drama',
+																																																																																																														_1: {
+																																																																																																															ctor: '::',
+																																																																																																															_0: 'horror',
+																																																																																																															_1: {
+																																																																																																																ctor: '::',
+																																																																																																																_0: 'mystery',
+																																																																																																																_1: {ctor: '[]'}
+																																																																																																															}
+																																																																																																														}
+																																																																																																													},
+																																																																																																													watched: _user$project$Movie$Unwatched
+																																																																																																												},
+																																																																																																												_1: {
+																																																																																																													ctor: '::',
+																																																																																																													_0: {
+																																																																																																														title: 'Hell or High Water',
+																																																																																																														url: 'http://www.imdb.com/title/tt2582782/',
+																																																																																																														img: 'hell-or-high-water.jpg',
+																																																																																																														year: 2016,
+																																																																																																														runtime: 102,
+																																																																																																														genres: {
+																																																																																																															ctor: '::',
+																																																																																																															_0: 'drama',
+																																																																																																															_1: {
+																																																																																																																ctor: '::',
+																																																																																																																_0: 'crime',
+																																																																																																																_1: {
+																																																																																																																	ctor: '::',
+																																																																																																																	_0: 'thriller',
+																																																																																																																	_1: {ctor: '[]'}
+																																																																																																																}
+																																																																																																															}
+																																																																																																														},
+																																																																																																														watched: _user$project$Movie$Unwatched
+																																																																																																													},
+																																																																																																													_1: {ctor: '[]'}
+																																																																																																												}
+																																																																																																											}
+																																																																																																										}
 																																																																																																									}
 																																																																																																								}
 																																																																																																							}
@@ -23297,7 +23369,7 @@ var _user$project$Main$rulesView = A2(
 				_0: A2(
 					_evancz$elm_markdown$Markdown$toHtml,
 					{ctor: '[]'},
-					'\n\n### Selecting the Movie\n\n1. The movie is selected at random just before we watch. No one will know what the selection is until the event.\n2. A movie can be removed from the list by a majority vote (but see #3)\n3. You can only vote to remove a movie if you have seen it\n4. A movie can be tabled to be watched later by a majority vote.\n5. Anyone can vote to table a movie.\n6. A vote to remove also counts as a vote to table.\n7. Be reasonable. If somebody\'s uncomfortable watching something, or finds it offensive, just skip it.\n\n### Adding movies to the list\n\n1. Anyone can add movies to the list.\n2. Movies can be added to the list via a PR against the [git repo](https://github.com/MoviesFromAHat/MoviesFromAHat.github.io/)\n3. We\'re looking for movies that flew under the radar, not blockbusters. (Think \"Krull\", not \"Lord of the Rings\")\n4. Use common sense. You\'ll be watching this with your co-workers. Be mindful of the power differentials that exist in the workspace.\n5. No Troma Films. (The Cheely Rule)\n'),
+					'\n\n### Selecting the Movie\n\n1. The movie is selected at random just before we watch. No one will know what the selection is until the event.\n2. A movie can be removed from the list by a majority vote (but see #3)\n3. You can only vote to remove a movie if you have seen it\n4. A movie can be tabled to be watched later by a majority vote.\n5. Anyone can vote to table a movie.\n6. A vote to remove also counts as a vote to table.\n7. Be reasonable. If somebody\'s uncomfortable watching something, or finds it offensive, just skip it.\n\n### Adding movies to the list\n\n1. Anyone can add movies to the list.\n2. Movies can be added to the list via a PR against the [git repo](https://github.com/MoviesFromAHat/MoviesFromAHat.github.io/)\n3. We\'re looking for movies that flew under the radar, not blockbusters. (Think \"Krull\", not \"Lord of the Rings\")\n4. Use common sense. You\'ll be watching this with your co-workers. Be mindful of them and the power differentials that exist in the workspace.\n5. No Troma Films. (The Cheely Rule)\n'),
 				_1: {ctor: '[]'}
 			}
 		}

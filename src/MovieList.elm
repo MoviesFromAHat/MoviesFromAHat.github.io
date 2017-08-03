@@ -854,4 +854,28 @@ movies =
       , genres = [ "action", "adventure", "comedy" ]
       , watched = Unwatched
       }
+    , { title = "John Wick"
+      , url = "http://www.imdb.com/title/tt2911666/"
+      , img = "john-wick.jpg"
+      , year = 2014
+      , runtime = 101
+      , genres = [ "action", "crime", "thriller" ]
+      , watched = Unwatched
+      }
+    , { title = "10 Cloverfield Lane"
+      , url = "http://www.imdb.com/title/tt1179933/"
+      , img = "10-cloverfield-lane.jpg"
+      , year = 2016
+      , runtime = 104
+      , genres = [ "drama", "horror", "mystery" ]
+      , watched = Unwatched
+      }
+    , { title = "Hell or High Water"
+      , url = "http://www.imdb.com/title/tt2582782/"
+      , img = "hell-or-high-water.jpg"
+      , year = 2016
+      , runtime = 102
+      , genres = [ "drama", "crime", "thriller" ]
+      , watched = Unwatched
+      }
     ]
