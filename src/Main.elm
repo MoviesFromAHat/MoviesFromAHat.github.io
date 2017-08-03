@@ -1,7 +1,7 @@
 module Main exposing (..)
 
 import Html exposing (Html, div, h2, button, text, a)
-import Html.Attributes exposing (href, id)
+import Html.Attributes exposing (href, id, type_)
 import Html.Events exposing (onClick)
 import Movie exposing (Movie, movieCard)
 import MovieList exposing (..)
@@ -171,7 +171,7 @@ selectionView model =
 selectionControls : Html Msg
 selectionControls =
     div [ class [ SelectionControls ] ]
-        [ button [ onClick SelectMovie ]
+        [ button [ onClick SelectMovie, type_ "button" ]
             [ text "Pull a movie from the hat" ]
         ]
 
