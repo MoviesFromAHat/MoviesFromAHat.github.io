@@ -878,4 +878,60 @@ movies =
       , genres = [ "drama", "crime", "thriller" ]
       , watched = Unwatched
       }
+    , { title = "Eternal Sunshine of the Spotless Mind"
+      , url = "http://www.imdb.com/title/tt0338013/"
+      , img = "eternal-sunshine.jpg"
+      , year = 2004
+      , runtime = 108
+      , genres = [ "drama", "romance", "sci-fi" ]
+      , watched = Unwatched
+      }
+    , { title = "Gladiator"
+      , url = "http://www.imdb.com/title/tt0172495/"
+      , img = "gladiator.jpg"
+      , year = 2000
+      , runtime = 155
+      , genres = [ "drama", "action", "adventure" ]
+      , watched = Unwatched
+      }
+    , { title = "Psycho"
+      , url = "http://www.imdb.com/title/tt0054215/"
+      , img = "psycho.jpg"
+      , year = 1960
+      , runtime = 109
+      , genres = [ "horror", "mystery", "thriller" ]
+      , watched = Unwatched
+      }
+    , { title = "Earth Girls Are Easy"
+      , url = "http://www.imdb.com/title/tt0097257/"
+      , img = "earth-girls.jpg"
+      , year = 1988
+      , runtime = 100
+      , genres = [ "comedy", "musical", "romance" ]
+      , watched = Unwatched
+      }
+    , { title = "Tapeheads"
+      , url = "http://www.imdb.com/title/tt0096223/"
+      , img = "tapeheads.jpg"
+      , year = 1988
+      , runtime = 93
+      , genres = [ "music", "comedy" ]
+      , watched = Unwatched
+      }
+    , { title = "Boyhood"
+      , url = "http://www.imdb.com/title/tt1065073/"
+      , img = "boyhood.jpg"
+      , year = 2014
+      , runtime = 165
+      , genres = [ "drama" ]
+      , watched = Unwatched
+      }
+    , { title = "The Road Within"
+      , url = "http://www.imdb.com/title/tt2962876/"
+      , img = "road-within.jpg"
+      , year = 2014
+      , runtime = 100
+      , genres = [ "drama", "comedy" ]
+      , watched = Unwatched
+      }
     ]
