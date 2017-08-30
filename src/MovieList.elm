@@ -6,7 +6,23 @@ import Time.Date exposing (date)
 
 movies : List Movie
 movies =
-    [ { title = "Cool Hand Luke"
+    [ { title = "Perfect Sense"
+      , url = "http://www.imdb.com/title/tt1439572"
+      , img = "perfect-sense.jpg"
+      , year = 2011
+      , runtime = 92
+      , genres = [ "romance", "drama", "sci-fi" ]
+      , watched = Unwatched
+      }
+    , { title = "Spring"
+      , url = "http://www.imdb.com/title/tt3395184"
+      , img = "spring.jpg"
+      , year = 2014
+      , runtime = 109
+      , genres = [ "comedy", "horror", "romance" ]
+      , watched = Unwatched
+      }
+    , { title = "Cool Hand Luke"
       , url = "http://www.imdb.com/title/tt0061512"
       , img = "cool-hand-luke.jpg"
       , year = 1967
