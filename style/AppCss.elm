@@ -2,6 +2,8 @@ module AppCss exposing (CssClasses(..), css)
 
 import Css exposing (..)
 import Css.Elements exposing (body, button, a)
+import CssTransitions as T exposing (transition)
+import Time exposing (second)
 
 
 type CssClasses
@@ -14,6 +16,10 @@ type CssClasses
     | Header
     | Navigation
     | Notes
+    | GenreSelection
+    | Wrap
+    | Filterable
+    | Filtered
 
 
 colors =
@@ -85,6 +91,13 @@ header =
         ]
 
 
+genreSelection =
+    class GenreSelection
+        [ width (px 400)
+        , maxWidth (pct 100)
+        ]
+
+
 movieCard =
     class MovieCard
         [ display inlineBlock
@@ -103,6 +116,25 @@ movieCard =
             , class Notes
                 [ fontSize (Css.rem 0.9) ]
             ]
+        ]
+
+
+filterable =
+    class Filterable
+        [ transition
+            [ T.height (second * 0.3)
+            , T.width (second * 0.3)
+            , T.margin (second * 0.3)
+            ]
+        , overflow hidden
+        ]
+
+
+filtered =
+    class Filtered
+        [ width (px 0)
+        , height (px 0)
+        , margin (px 0)
         ]
 
 
@@ -128,5 +160,8 @@ css =
                , movieCard
                , movieSelection
                , moviesList
+               , genreSelection
+               , filtered
+               , filterable
                ]
         )

@@ -11,6 +11,8 @@ import Time.Date as Date exposing (date)
 import Random
 import Random.List as RandList
 import Markdown
+import Set exposing (Set)
+import Multiselect exposing (..)
 
 
 main : Program Never Model Msg
@@ -31,6 +33,9 @@ type alias Model =
     { unwatched : List Movie
     , watched : List Movie
     , selectedMovie : MovieSelection
+    , genres : Set ( String, String )
+    , selectedGenres : Set ( String, String )
+    , genresMultiselect : Multiselect.Model
     }
 
 
@@ -46,6 +51,14 @@ init =
         watchDate movie =
             Movie.watchDate movie
                 |> Maybe.withDefault (date 1800 1 1)
+
+        genres =
+            MovieList.movies
+                |> List.map .genres
+                |> List.foldr Set.union Set.empty
+
+        selectOptions set =
+            set
     in
         { unwatched =
             MovieList.movies
@@ -59,6 +72,12 @@ init =
                         Date.compare (watchDate m1) (watchDate m2)
                     )
         , selectedMovie = NotSelected
+        , genres = genres
+        , selectedGenres = Set.empty
+        , genresMultiselect =
+            genres
+                |> Set.toList
+                |> (\m -> Multiselect.initModel m "genres")
         }
             ! []
 
@@ -67,9 +86,20 @@ init =
 -- Update
 
 
+matchSelectedGenres : Model -> Movie -> Bool
+matchSelectedGenres model movie =
+    case Set.size model.selectedGenres of
+        0 ->
+            True
+
+        _ ->
+            Set.size (Set.intersect movie.genres model.selectedGenres) > 0
+
+
 type Msg
     = SelectMovie
     | MovieSelected ( Maybe Movie, List Movie )
+    | MultiselectEvent Multiselect.Msg
 
 
 update : Msg -> Model -> ( Model, Cmd Msg )
@@ -77,9 +107,10 @@ update msg model =
     case msg of
         SelectMovie ->
             ( model
-            , Random.generate
-                MovieSelected
-                (RandList.choose model.unwatched)
+            , model.unwatched
+                |> List.filter (matchSelectedGenres model)
+                |> RandList.choose
+                |> Random.generate MovieSelected
             )
 
         MovieSelected ( selection, remaining ) ->
@@ -92,11 +123,25 @@ update msg model =
                         Nothing ->
                             NothingToSelect
             in
-                { model
+                ( { model
                     | unwatched = remaining
                     , selectedMovie = selected
+                  }
+                , Cmd.none
+                )
+
+        MultiselectEvent subscriptionEvent ->
+            let
+                ( subModel, subCmd ) =
+                    Multiselect.update subscriptionEvent model.genresMultiselect
+            in
+                { model
+                    | genresMultiselect = subModel
+                    , selectedGenres =
+                        subModel.selected
+                            |> Set.fromList
                 }
-                    ! []
+                    ! [ Cmd.map MultiselectEvent subCmd ]
 
 
 
@@ -116,10 +161,14 @@ view model =
             , div []
                 [ h2 [] [ text "Unwatched Films" ]
                 , div [ class [ Movies ] ]
-                    (List.map Movie.movieCard model.unwatched)
+                    (model.unwatched
+                        |> List.map (Movie.movieCard model.selectedGenres)
+                    )
                 , h2 [] [ text "Watched" ]
                 , div [ class [ Movies ] ]
-                    (List.map Movie.movieCard model.watched)
+                    (model.watched
+                        |> List.map (Movie.movieCard model.selectedGenres)
+                    )
                 ]
             , rulesView
             ]
@@ -158,7 +207,7 @@ selectionView model =
     div [ class [ Selection ] ]
         [ case model.selectedMovie of
             Selected movie ->
-                Movie.movieCard movie
+                Movie.movieCard Set.empty movie
 
             NotSelected ->
                 text ""
@@ -185,6 +234,17 @@ appHeader model =
             ]
         , selectionControls
         , selectionView model
+        , genreSelection model
+        ]
+
+
+genreSelection : Model -> Html Msg
+genreSelection model =
+    div [ class [ GenreSelection ] ]
+        [ text "Genres"
+        , model.genresMultiselect
+            |> Multiselect.view
+            |> Html.map MultiselectEvent
         ]
 
 
@@ -194,4 +254,4 @@ appHeader model =
 
 subscriptions : Model -> Sub Msg
 subscriptions model =
-    Sub.none
+    Sub.map MultiselectEvent <| Multiselect.subscriptions model.genresMultiselect
