@@ -1,6 +1,6 @@
 # Movies From a Hat
 
-> Movies From a Hat happens roughly once a month.  It's a gathering of Interactive Intelligence in the RTP area to watch a movie selected at random and hangout after office hours. There is an open invitation for all employees to attend.
+> Movies From a Hat happens roughly once a month.  It's a gathering of Genesys in the RTP area to watch a movie selected at random and hangout after office hours. There is an open invitation for all employees to attend.
 
 ## The Rules
 
