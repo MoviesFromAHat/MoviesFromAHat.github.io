@@ -10,8 +10,8 @@
     "elm-setup": "elm-package install",
     "elm-setup-auto": "elm-package install -y",
     "build-css": "elm-css style/Stylesheets.elm",
-    "host": "elm-live src/Main.elm --debug --output=elm.js --before-build=./build-styles.sh",
-    "start": "npm run build-css && open \"http://localhost:8000\" && npm run host"
+    "host": "elm-live src/Main.elm --debug --output=elm.js --before-build=./build-styles.sh --open",
+    "start": "npm run build-css && npm run host"
   },
   "devDependencies": {
     "elm": "^0.18.0",

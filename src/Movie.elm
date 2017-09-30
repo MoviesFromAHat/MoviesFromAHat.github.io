@@ -6,16 +6,10 @@ import AppCss.Helpers exposing (class, classList)
 import AppCss as Style
 import Time.Date exposing (Date, day, month, year)
 import Set exposing (Set)
+import Genre exposing (..)
 
 
 -- Types
-
-
-{-| A (String, String) for value, Description.
-This is not a union type because making those comparable is poor.
--}
-type alias Genre =
-    ( String, String )
 
 
 type alias Movie =
@@ -56,6 +50,16 @@ watchDate movie =
 
         Watched date ->
             Just date
+
+
+matchGenres : Set Genre -> Movie -> Bool
+matchGenres genres movie =
+    case Set.size genres of
+        0 ->
+            True
+
+        _ ->
+            Set.size (Set.intersect genres movie.genres) > 0
 
 
 
