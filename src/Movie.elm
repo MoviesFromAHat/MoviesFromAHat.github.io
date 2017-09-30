@@ -60,12 +60,7 @@ movieCard : Set Genre -> Movie -> Html msg
 movieCard selectedGenres movie =
     let
         filtered =
-            case Set.size selectedGenres of
-                0 ->
-                    False
-
-                _ ->
-                    Set.size (Set.intersect movie.genres selectedGenres) == 0
+            not (matchSelectedGenres selectedGenres movie.genres)
     in
         a
             [ classList
