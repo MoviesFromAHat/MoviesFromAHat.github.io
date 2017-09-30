@@ -1,29 +1,9 @@
 module MovieList exposing (movies)
 
 import Movie exposing (Movie, WatchState(..))
+import Genre exposing (..)
 import Time.Date exposing (date)
 import Set exposing (Set)
-
-
-toCapital : String -> String
-toCapital str =
-    String.toUpper (String.left 1 str) ++ String.dropLeft 1 str
-
-
-{-| Converts a List of strings to a Set of lowercase strings
--}
-prepGenres : List String -> Set ( String, String )
-prepGenres genres =
-    genres
-        |> List.map
-            (\g ->
-                let
-                    lg =
-                        String.toLower g
-                in
-                    ( lg, toCapital lg )
-            )
-        |> Set.fromList
 
 
 movies : List Movie
@@ -973,4 +953,4 @@ movies =
       , watched = Unwatched
       }
     ]
-        |> List.map (\m -> { m | genres = prepGenres m.genres })
+        |> List.map (\m -> { m | genres = fromFlatList m.genres })
