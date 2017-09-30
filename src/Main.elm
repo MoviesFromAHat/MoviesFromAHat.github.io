@@ -1,23 +1,33 @@
 module Main exposing (..)
 
-import Html exposing (Html, div, h2, button, text, a)
-import Html.Attributes exposing (href, id, type_)
-import Html.Events exposing (onClick)
+-- Our Imports
+
 import Movie exposing (Movie, movieCard)
+import Genre exposing (..)
 import MovieList exposing (..)
 import AppCss.Helpers exposing (class)
 import AppCss exposing (..)
+
+
+-- External Imports
+
+import Html exposing (Html, div, h2, button, text, a)
+import Html.Attributes exposing (href, id, type_)
+import Html.Events exposing (onClick)
+import Markdown
+import Multiselect exposing (..)
 import Time.Date as Date exposing (date)
 import Random
 import Random.List as RandList
-import Markdown
 import Set exposing (Set)
-import Multiselect exposing (..)
+import Navigation
+import UrlParser as Url exposing ((<?>), s, stringParam, parsePath)
 
 
 main : Program Never Model Msg
 main =
-    Html.program
+    Navigation.program
+        LocationChange
         { init = init
         , view = view
         , update = update
@@ -33,9 +43,10 @@ type alias Model =
     { unwatched : List Movie
     , watched : List Movie
     , selectedMovie : MovieSelection
-    , genres : Set ( String, String )
-    , selectedGenres : Set ( String, String )
+    , genres : Set Genre
+    , selectedGenres : Set Genre
     , genresMultiselect : Multiselect.Model
+    , location : Navigation.Location
     }
 
 
@@ -45,8 +56,8 @@ type MovieSelection
     | NothingToSelect
 
 
-init : ( Model, Cmd Msg )
-init =
+init : Navigation.Location -> ( Model, Cmd Msg )
+init location =
     let
         watchDate movie =
             Movie.watchDate movie
@@ -59,6 +70,10 @@ init =
 
         selectOptions set =
             set
+
+        -- Get selected genres out of the url like ?genres=horror+sci-fi
+        queryGenres =
+            fromQueryString location
     in
         { unwatched =
             MovieList.movies
@@ -73,11 +88,9 @@ init =
                     )
         , selectedMovie = NotSelected
         , genres = genres
-        , selectedGenres = Set.empty
-        , genresMultiselect =
-            genres
-                |> Set.toList
-                |> (\m -> Multiselect.initModel m "genres")
+        , selectedGenres = queryGenres
+        , genresMultiselect = genresMultiselectModel "genres" genres queryGenres
+        , location = location
         }
             ! []
 
@@ -86,29 +99,23 @@ init =
 -- Update
 
 
-matchSelectedGenres : Model -> Movie -> Bool
-matchSelectedGenres model movie =
-    case Set.size model.selectedGenres of
-        0 ->
-            True
-
-        _ ->
-            Set.size (Set.intersect movie.genres model.selectedGenres) > 0
-
-
 type Msg
     = SelectMovie
     | MovieSelected ( Maybe Movie, List Movie )
     | MultiselectEvent Multiselect.Msg
+    | LocationChange Navigation.Location
 
 
 update : Msg -> Model -> ( Model, Cmd Msg )
 update msg model =
     case msg of
+        LocationChange location ->
+            ( model, Cmd.none )
+
         SelectMovie ->
             ( model
             , model.unwatched
-                |> List.filter (matchSelectedGenres model)
+                |> List.filter (\m -> (matchSelectedGenres model.selectedGenres m.genres))
                 |> RandList.choose
                 |> Random.generate MovieSelected
             )
@@ -134,14 +141,30 @@ update msg model =
             let
                 ( subModel, subCmd ) =
                     Multiselect.update subscriptionEvent model.genresMultiselect
+
+                selectedGenres =
+                    subModel.selected
+                        |> Set.fromList
+
+                newUrl =
+                    case List.length subModel.selected of
+                        0 ->
+                            model.location.origin
+
+                        _ ->
+                            subModel.selected
+                                |> List.map (\( m, n ) -> m)
+                                |> String.join "+"
+                                |> (++)
+                                    (model.location.origin
+                                        ++ "?genres="
+                                    )
             in
                 { model
                     | genresMultiselect = subModel
-                    , selectedGenres =
-                        subModel.selected
-                            |> Set.fromList
+                    , selectedGenres = selectedGenres
                 }
-                    ! [ Cmd.map MultiselectEvent subCmd ]
+                    ! [ Cmd.map MultiselectEvent subCmd, Navigation.modifyUrl newUrl ]
 
 
 
