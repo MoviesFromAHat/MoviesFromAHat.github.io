@@ -27575,17 +27575,7 @@ var _user$project$Movie$notesView = function (movie) {
 };
 var _user$project$Movie$movieCard = F2(
 	function (selectedGenres, movie) {
-		var filtered = function () {
-			var _p2 = _elm_lang$core$Set$size(selectedGenres);
-			if (_p2 === 0) {
-				return false;
-			} else {
-				return _elm_lang$core$Native_Utils.eq(
-					_elm_lang$core$Set$size(
-						A2(_elm_lang$core$Set$intersect, movie.genres, selectedGenres)),
-					0);
-			}
-		}();
+		var filtered = !A2(_user$project$Genre$matchSelectedGenres, selectedGenres, movie.genres);
 		return A2(
 			_elm_lang$html$Html$a,
 			{
@@ -27662,16 +27652,16 @@ var _user$project$Movie$movieCard = F2(
 			});
 	});
 var _user$project$Movie$watchDate = function (movie) {
-	var _p3 = movie.watched;
-	if (_p3.ctor === 'Unwatched') {
+	var _p2 = movie.watched;
+	if (_p2.ctor === 'Unwatched') {
 		return _elm_lang$core$Maybe$Nothing;
 	} else {
-		return _elm_lang$core$Maybe$Just(_p3._0);
+		return _elm_lang$core$Maybe$Just(_p2._0);
 	}
 };
 var _user$project$Movie$isWatched = function (movie) {
-	var _p4 = movie.watched;
-	if (_p4.ctor === 'Unwatched') {
+	var _p3 = movie.watched;
+	if (_p3.ctor === 'Unwatched') {
 		return false;
 	} else {
 		return true;
@@ -30419,9 +30409,48 @@ var _user$project$Main$rulesView = A2(
 			}
 		}
 	});
-var _user$project$Main$Model = F7(
-	function (a, b, c, d, e, f, g) {
-		return {unwatched: a, watched: b, selectedMovie: c, genres: d, selectedGenres: e, genresMultiselect: f, location: g};
+var _user$project$Main$makeMovieSummary = F3(
+	function (watched, unwatched, selectedGenres) {
+		var totalUnwatched = _elm_lang$core$Basics$toString(
+			_elm_lang$core$List$length(unwatched));
+		var totalWatched = _elm_lang$core$Basics$toString(
+			_elm_lang$core$List$length(watched));
+		var checkFilterList = _elm_lang$core$List$filter(
+			function (m) {
+				return A2(_user$project$Genre$matchSelectedGenres, selectedGenres, m.genres);
+			});
+		var visibleWatched = _elm_lang$core$Basics$toString(
+			_elm_lang$core$List$length(
+				checkFilterList(watched)));
+		var visibleUnwatched = _elm_lang$core$Basics$toString(
+			_elm_lang$core$List$length(
+				checkFilterList(unwatched)));
+		return A2(
+			_elm_lang$core$Basics_ops['++'],
+			visibleWatched,
+			A2(
+				_elm_lang$core$Basics_ops['++'],
+				_elm_lang$core$Native_Utils.eq(visibleWatched, totalWatched) ? '' : A2(
+					_elm_lang$core$Basics_ops['++'],
+					' (of ',
+					A2(_elm_lang$core$Basics_ops['++'], totalWatched, ') ')),
+				A2(
+					_elm_lang$core$Basics_ops['++'],
+					' watched and ',
+					A2(
+						_elm_lang$core$Basics_ops['++'],
+						visibleUnwatched,
+						A2(
+							_elm_lang$core$Basics_ops['++'],
+							_elm_lang$core$Native_Utils.eq(visibleUnwatched, totalUnwatched) ? '' : A2(
+								_elm_lang$core$Basics_ops['++'],
+								' (of ',
+								A2(_elm_lang$core$Basics_ops['++'], totalUnwatched, ') ')),
+							' unwatched')))));
+	});
+var _user$project$Main$Model = F8(
+	function (a, b, c, d, e, f, g, h) {
+		return {unwatched: a, watched: b, selectedMovie: c, genres: d, selectedGenres: e, genresMultiselect: f, location: g, movieSummary: h};
 	});
 var _user$project$Main$NothingToSelect = {ctor: 'NothingToSelect'};
 var _user$project$Main$Selected = function (a) {
@@ -30429,7 +30458,18 @@ var _user$project$Main$Selected = function (a) {
 };
 var _user$project$Main$NotSelected = {ctor: 'NotSelected'};
 var _user$project$Main$init = function (location) {
-	var queryGenres = _user$project$Genre$fromQueryString(location);
+	var unwatched = A2(
+		_elm_lang$core$List$sortBy,
+		function (_) {
+			return _.year;
+		},
+		A2(
+			_elm_lang$core$List$filter,
+			function (_p1) {
+				return !_user$project$Movie$isWatched(_p1);
+			},
+			_user$project$MovieList$movies));
+	var selectedGenres = _user$project$Genre$fromQueryString(location);
 	var selectOptions = function (set) {
 		return set;
 	};
@@ -30449,35 +30489,27 @@ var _user$project$Main$init = function (location) {
 			A3(_elm_community$elm_time$Time_Date$date, 1800, 1, 1),
 			_user$project$Movie$watchDate(movie));
 	};
+	var watched = A2(
+		_elm_lang$core$List$sortWith,
+		F2(
+			function (m1, m2) {
+				return A2(
+					_elm_community$elm_time$Time_Date$compare,
+					watchDate(m1),
+					watchDate(m2));
+			}),
+		A2(_elm_lang$core$List$filter, _user$project$Movie$isWatched, _user$project$MovieList$movies));
 	return A2(
 		_elm_lang$core$Platform_Cmd_ops['!'],
 		{
-			unwatched: A2(
-				_elm_lang$core$List$sortBy,
-				function (_) {
-					return _.year;
-				},
-				A2(
-					_elm_lang$core$List$filter,
-					function (_p1) {
-						return !_user$project$Movie$isWatched(_p1);
-					},
-					_user$project$MovieList$movies)),
-			watched: A2(
-				_elm_lang$core$List$sortWith,
-				F2(
-					function (m1, m2) {
-						return A2(
-							_elm_community$elm_time$Time_Date$compare,
-							watchDate(m1),
-							watchDate(m2));
-					}),
-				A2(_elm_lang$core$List$filter, _user$project$Movie$isWatched, _user$project$MovieList$movies)),
+			unwatched: unwatched,
+			watched: watched,
 			selectedMovie: _user$project$Main$NotSelected,
 			genres: genres,
-			selectedGenres: queryGenres,
-			genresMultiselect: A3(_user$project$Genre$genresMultiselectModel, 'genres', genres, queryGenres),
-			location: location
+			selectedGenres: selectedGenres,
+			genresMultiselect: A3(_user$project$Genre$genresMultiselectModel, 'genres', genres, selectedGenres),
+			location: location,
+			movieSummary: A3(_user$project$Main$makeMovieSummary, watched, unwatched, selectedGenres)
 		},
 		{ctor: '[]'});
 };
@@ -30509,7 +30541,11 @@ var _user$project$Main$genreSelection = function (model) {
 					_elm_lang$html$Html$map,
 					_user$project$Main$MultiselectEvent,
 					_inkuzmin$elm_multiselect$Multiselect$view(model.genresMultiselect)),
-				_1: {ctor: '[]'}
+				_1: {
+					ctor: '::',
+					_0: _elm_lang$html$Html$text(model.movieSummary),
+					_1: {ctor: '[]'}
+				}
 			}
 		});
 };
@@ -30591,7 +30627,11 @@ var _user$project$Main$update = F2(
 					_elm_lang$core$Platform_Cmd_ops['!'],
 					_elm_lang$core$Native_Utils.update(
 						model,
-						{genresMultiselect: subModel, selectedGenres: selectedGenres}),
+						{
+							genresMultiselect: subModel,
+							selectedGenres: selectedGenres,
+							movieSummary: A3(_user$project$Main$makeMovieSummary, model.watched, model.unwatched, selectedGenres)
+						}),
 					{
 						ctor: '::',
 						_0: A2(_elm_lang$core$Platform_Cmd$map, _user$project$Main$MultiselectEvent, subCmd),

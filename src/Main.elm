@@ -21,7 +21,6 @@ import Random
 import Random.List as RandList
 import Set exposing (Set)
 import Navigation
-import UrlParser as Url exposing ((<?>), s, stringParam, parsePath)
 
 
 main : Program Never Model Msg
@@ -47,6 +46,7 @@ type alias Model =
     , selectedGenres : Set Genre
     , genresMultiselect : Multiselect.Model
     , location : Navigation.Location
+    , movieSummary : String
     }
 
 
@@ -72,27 +72,75 @@ init location =
             set
 
         -- Get selected genres out of the url like ?genres=horror+sci-fi
-        queryGenres =
+        selectedGenres =
             fromQueryString location
-    in
-        { unwatched =
+
+        unwatched =
             MovieList.movies
                 |> List.filter (not << Movie.isWatched)
                 |> List.sortBy .year
-        , watched =
+
+        watched =
             MovieList.movies
                 |> List.filter Movie.isWatched
                 |> List.sortWith
                     (\m1 m2 ->
                         Date.compare (watchDate m1) (watchDate m2)
                     )
+    in
+        { unwatched = unwatched
+        , watched = watched
         , selectedMovie = NotSelected
         , genres = genres
-        , selectedGenres = queryGenres
-        , genresMultiselect = genresMultiselectModel "genres" genres queryGenres
+        , selectedGenres = selectedGenres
+        , genresMultiselect = genresMultiselectModel "genres" genres selectedGenres
         , location = location
+        , movieSummary = makeMovieSummary watched unwatched selectedGenres
         }
             ! []
+
+
+makeMovieSummary : List Movie -> List Movie -> Set Genre -> String
+makeMovieSummary watched unwatched selectedGenres =
+    let
+        checkFilterList =
+            List.filter (\m -> matchSelectedGenres selectedGenres m.genres)
+
+        totalWatched =
+            toString <| List.length watched
+
+        totalUnwatched =
+            toString <| List.length unwatched
+
+        visibleWatched =
+            watched
+                |> checkFilterList
+                |> List.length
+                |> toString
+
+        visibleUnwatched =
+            unwatched
+                |> checkFilterList
+                |> List.length
+                |> toString
+    in
+        visibleWatched
+            ++ (if visibleWatched == totalWatched then
+                    ""
+                else
+                    (" (of " ++ totalWatched ++ ") ")
+               )
+            ++ " watched and "
+            ++ visibleUnwatched
+            ++ (if visibleUnwatched == totalUnwatched then
+                    ""
+                else
+                    (" (of "
+                        ++ totalUnwatched
+                        ++ ") "
+                    )
+               )
+            ++ " unwatched"
 
 
 
@@ -163,6 +211,7 @@ update msg model =
                 { model
                     | genresMultiselect = subModel
                     , selectedGenres = selectedGenres
+                    , movieSummary = makeMovieSummary model.watched model.unwatched selectedGenres
                 }
                     ! [ Cmd.map MultiselectEvent subCmd, Navigation.modifyUrl newUrl ]
 
@@ -268,6 +317,7 @@ genreSelection model =
         , model.genresMultiselect
             |> Multiselect.view
             |> Html.map MultiselectEvent
+        , text model.movieSummary
         ]
 
 
