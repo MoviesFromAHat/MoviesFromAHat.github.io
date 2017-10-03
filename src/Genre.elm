@@ -1,9 +1,12 @@
-module Genre exposing (..)
+module Genre exposing (fromQueryString, multiSelectModel, selectionView, Genre, fromFlatList)
 
 import Set exposing (..)
 import Navigation exposing (..)
 import UrlParser as Url exposing (..)
 import Multiselect exposing (..)
+import Html exposing (Html, div, text)
+import AppCss.Helpers exposing (class)
+import AppCss exposing (..)
 
 
 {-| A (String, String) for value, Description.
@@ -16,16 +19,6 @@ type alias Genre =
 toCapital : String -> String
 toCapital str =
     String.toUpper (String.left 1 str) ++ String.dropLeft 1 str
-
-
-{-| Initializes a multiselect with an available and selected list
--}
-genresMultiselectModel : String -> Set Genre -> Set Genre -> Multiselect.Model
-genresMultiselectModel elemId available selected =
-    available
-        |> Set.toList
-        |> (\m -> Multiselect.initModel m elemId)
-        |> (\m -> { m | selected = Set.toList selected })
 
 
 {-| Converts a List of strings to a Set of lowercase strings
@@ -45,3 +38,23 @@ fromQueryString location =
         |> String.split "+"
         |> List.filter (\g -> not (String.isEmpty g))
         |> fromFlatList
+
+
+{-| Initializes a multiselect with an available and selected list
+-}
+multiSelectModel : Set Genre -> Set Genre -> Multiselect.Model
+multiSelectModel available selected =
+    available
+        |> Set.toList
+        |> (\m -> Multiselect.initModel m "genrePicker")
+        |> (\m -> { m | selected = Set.toList selected })
+
+
+selectionView : (Multiselect.Msg -> msg) -> Multiselect.Model -> Html msg
+selectionView updateSelection model =
+    div [ class [ GenreSelection ] ]
+        [ text "Genres"
+        , model
+            |> Multiselect.view
+            |> Html.map updateSelection
+        ]
