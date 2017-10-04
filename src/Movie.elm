@@ -6,7 +6,7 @@ import AppCss.Helpers exposing (class, classList)
 import AppCss as Style
 import Time.Date exposing (Date, day, month, year)
 import Set exposing (Set)
-import Genre exposing (..)
+import Genre exposing (Genre)
 
 
 -- Types

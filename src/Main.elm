@@ -3,7 +3,7 @@ module Main exposing (..)
 -- Our Imports
 
 import Movie exposing (Movie, movieCard, matchGenres)
-import Genre exposing (..)
+import Genre exposing (Genre)
 import MovieList exposing (..)
 import AppCss.Helpers exposing (class)
 import AppCss exposing (..)
@@ -21,7 +21,6 @@ import Random
 import Random.List as RandList
 import Set exposing (Set)
 import Navigation
-import UrlParser as Url exposing ((<?>), s, stringParam, parsePath)
 
 
 main : Program Never Model Msg
@@ -73,7 +72,7 @@ init location =
 
         -- Get selected genres out of the url like ?genres=horror+sci-fi
         queryGenres =
-            fromQueryString location
+            Genre.fromQueryString location
     in
         { unwatched =
             MovieList.movies
@@ -89,7 +88,7 @@ init location =
         , selectedMovie = NotSelected
         , genres = genres
         , selectedGenres = queryGenres
-        , genresMultiselect = genresMultiselectModel "genres" genres queryGenres
+        , genresMultiselect = Genre.multiSelectModel genres queryGenres
         , location = location
         }
             ! []
@@ -257,17 +256,7 @@ appHeader model =
             ]
         , selectionControls
         , selectionView model
-        , genreSelection model
-        ]
-
-
-genreSelection : Model -> Html Msg
-genreSelection model =
-    div [ class [ GenreSelection ] ]
-        [ text "Genres"
-        , model.genresMultiselect
-            |> Multiselect.view
-            |> Html.map MultiselectEvent
+        , Genre.selectionView MultiselectEvent model.genresMultiselect
         ]
 
 
