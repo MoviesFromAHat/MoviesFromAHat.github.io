@@ -1,21 +1,32 @@
 module Main exposing (..)
 
-import Html exposing (Html, div, h2, button, text, a)
-import Html.Attributes exposing (href, id, type_)
-import Html.Events exposing (onClick)
-import Movie exposing (Movie, movieCard)
+-- Our Imports
+
+import Movie exposing (Movie, movieCard, matchGenres)
+import Genre exposing (Genre)
 import MovieList exposing (..)
 import AppCss.Helpers exposing (class)
 import AppCss exposing (..)
+
+
+-- External Imports
+
+import Html exposing (Html, div, h2, button, text, a)
+import Html.Attributes exposing (href, id, type_)
+import Html.Events exposing (onClick)
+import Markdown
+import Multiselect exposing (..)
 import Time.Date as Date exposing (date)
 import Random
 import Random.List as RandList
-import Markdown
+import Set exposing (Set)
+import Navigation
 
 
 main : Program Never Model Msg
 main =
-    Html.program
+    Navigation.program
+        LocationChange
         { init = init
         , view = view
         , update = update
@@ -31,6 +42,10 @@ type alias Model =
     { unwatched : List Movie
     , watched : List Movie
     , selectedMovie : MovieSelection
+    , genres : Set Genre
+    , selectedGenres : Set Genre
+    , genresMultiselect : Multiselect.Model
+    , location : Navigation.Location
     }
 
 
@@ -40,12 +55,24 @@ type MovieSelection
     | NothingToSelect
 
 
-init : ( Model, Cmd Msg )
-init =
+init : Navigation.Location -> ( Model, Cmd Msg )
+init location =
     let
         watchDate movie =
             Movie.watchDate movie
                 |> Maybe.withDefault (date 1800 1 1)
+
+        genres =
+            MovieList.movies
+                |> List.map .genres
+                |> List.foldr Set.union Set.empty
+
+        selectOptions set =
+            set
+
+        -- Get selected genres out of the url like ?genres=horror+sci-fi
+        queryGenres =
+            Genre.fromQueryString location
     in
         { unwatched =
             MovieList.movies
@@ -59,6 +86,10 @@ init =
                         Date.compare (watchDate m1) (watchDate m2)
                     )
         , selectedMovie = NotSelected
+        , genres = genres
+        , selectedGenres = queryGenres
+        , genresMultiselect = Genre.multiSelectModel genres queryGenres
+        , location = location
         }
             ! []
 
@@ -70,16 +101,22 @@ init =
 type Msg
     = SelectMovie
     | MovieSelected ( Maybe Movie, List Movie )
+    | MultiselectEvent Multiselect.Msg
+    | LocationChange Navigation.Location
 
 
 update : Msg -> Model -> ( Model, Cmd Msg )
 update msg model =
     case msg of
+        LocationChange location ->
+            ( model, Cmd.none )
+
         SelectMovie ->
             ( model
-            , Random.generate
-                MovieSelected
-                (RandList.choose model.unwatched)
+            , model.unwatched
+                |> List.filter (matchGenres model.selectedGenres)
+                |> RandList.choose
+                |> Random.generate MovieSelected
             )
 
         MovieSelected ( selection, remaining ) ->
@@ -92,11 +129,41 @@ update msg model =
                         Nothing ->
                             NothingToSelect
             in
-                { model
+                ( { model
                     | unwatched = remaining
                     , selectedMovie = selected
+                  }
+                , Cmd.none
+                )
+
+        MultiselectEvent subscriptionEvent ->
+            let
+                ( subModel, subCmd ) =
+                    Multiselect.update subscriptionEvent model.genresMultiselect
+
+                selectedGenres =
+                    subModel.selected
+                        |> Set.fromList
+
+                newUrl =
+                    case List.length subModel.selected of
+                        0 ->
+                            model.location.origin
+
+                        _ ->
+                            subModel.selected
+                                |> List.map (\( m, n ) -> m)
+                                |> String.join "+"
+                                |> (++)
+                                    (model.location.origin
+                                        ++ "?genres="
+                                    )
+            in
+                { model
+                    | genresMultiselect = subModel
+                    , selectedGenres = selectedGenres
                 }
-                    ! []
+                    ! [ Cmd.map MultiselectEvent subCmd, Navigation.modifyUrl newUrl ]
 
 
 
@@ -116,10 +183,14 @@ view model =
             , div []
                 [ h2 [] [ text "Unwatched Films" ]
                 , div [ class [ Movies ] ]
-                    (List.map Movie.movieCard model.unwatched)
+                    (model.unwatched
+                        |> List.map (Movie.movieCard model.selectedGenres)
+                    )
                 , h2 [] [ text "Watched" ]
                 , div [ class [ Movies ] ]
-                    (List.map Movie.movieCard model.watched)
+                    (model.watched
+                        |> List.map (Movie.movieCard model.selectedGenres)
+                    )
                 ]
             , rulesView
             ]
@@ -158,7 +229,7 @@ selectionView model =
     div [ class [ Selection ] ]
         [ case model.selectedMovie of
             Selected movie ->
-                Movie.movieCard movie
+                Movie.movieCard Set.empty movie
 
             NotSelected ->
                 text ""
@@ -185,6 +256,7 @@ appHeader model =
             ]
         , selectionControls
         , selectionView model
+        , Genre.selectionView MultiselectEvent model.genresMultiselect
         ]
 
 
@@ -194,4 +266,4 @@ appHeader model =
 
 subscriptions : Model -> Sub Msg
 subscriptions model =
-    Sub.none
+    Sub.map MultiselectEvent <| Multiselect.subscriptions model.genresMultiselect

@@ -4,12 +4,14 @@ import Css
 import Css.File exposing (CssFileStructure, CssCompilerProgram)
 import Css.Normalize as Normalize
 import AppCss
+import GenreSelectCss
 
 
 styles : List Css.Stylesheet
 styles =
     [ Normalize.css
     , AppCss.css
+    , GenreSelectCss.css
     ]
 
 

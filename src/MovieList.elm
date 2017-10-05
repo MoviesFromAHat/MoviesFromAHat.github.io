@@ -1,7 +1,9 @@
 module MovieList exposing (movies)
 
 import Movie exposing (Movie, WatchState(..))
+import Genre
 import Time.Date exposing (date)
+import Set exposing (Set)
 
 
 movies : List Movie
@@ -951,3 +953,4 @@ movies =
       , watched = Unwatched
       }
     ]
+        |> List.map (\m -> { m | genres = Genre.fromFlatList m.genres })
