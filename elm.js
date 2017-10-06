@@ -27435,8 +27435,35 @@ var _user$project$AppCss_Helpers$id = _user$project$AppCss_Helpers$_p0.id;
 var _user$project$AppCss_Helpers$class = _user$project$AppCss_Helpers$_p0.$class;
 var _user$project$AppCss_Helpers$classList = _user$project$AppCss_Helpers$_p0.classList;
 
-var _user$project$Genre$genresMultiselectModel = F3(
-	function (elemId, available, selected) {
+var _user$project$Genre$selectionView = F2(
+	function (updateSelection, model) {
+		return A2(
+			_elm_lang$html$Html$div,
+			{
+				ctor: '::',
+				_0: _user$project$AppCss_Helpers$class(
+					{
+						ctor: '::',
+						_0: _user$project$AppCss$GenreSelection,
+						_1: {ctor: '[]'}
+					}),
+				_1: {ctor: '[]'}
+			},
+			{
+				ctor: '::',
+				_0: _elm_lang$html$Html$text('Genres'),
+				_1: {
+					ctor: '::',
+					_0: A2(
+						_elm_lang$html$Html$map,
+						updateSelection,
+						_inkuzmin$elm_multiselect$Multiselect$view(model)),
+					_1: {ctor: '[]'}
+				}
+			});
+	});
+var _user$project$Genre$multiSelectModel = F2(
+	function (available, selected) {
 		return function (m) {
 			return _elm_lang$core$Native_Utils.update(
 				m,
@@ -27445,7 +27472,7 @@ var _user$project$Genre$genresMultiselectModel = F3(
 				});
 		}(
 			function (m) {
-				return A2(_inkuzmin$elm_multiselect$Multiselect$initModel, m, elemId);
+				return A2(_inkuzmin$elm_multiselect$Multiselect$initModel, m, 'genrePicker');
 			}(
 				_elm_lang$core$Set$toList(available)));
 	});
@@ -27739,7 +27766,8 @@ var _user$project$MovieList$movies = A2(
 						}
 					}
 				},
-				watched: _user$project$Movie$Unwatched
+				watched: _user$project$Movie$Watched(
+					A3(_elm_community$elm_time$Time_Date$date, 2017, 10, 5))
 			},
 			_1: {
 				ctor: '::',
@@ -30476,7 +30504,7 @@ var _user$project$Main$init = function (location) {
 			selectedMovie: _user$project$Main$NotSelected,
 			genres: genres,
 			selectedGenres: queryGenres,
-			genresMultiselect: A3(_user$project$Genre$genresMultiselectModel, 'genres', genres, queryGenres),
+			genresMultiselect: A2(_user$project$Genre$multiSelectModel, genres, queryGenres),
 			location: location
 		},
 		{ctor: '[]'});
@@ -30486,32 +30514,6 @@ var _user$project$Main$LocationChange = function (a) {
 };
 var _user$project$Main$MultiselectEvent = function (a) {
 	return {ctor: 'MultiselectEvent', _0: a};
-};
-var _user$project$Main$genreSelection = function (model) {
-	return A2(
-		_elm_lang$html$Html$div,
-		{
-			ctor: '::',
-			_0: _user$project$AppCss_Helpers$class(
-				{
-					ctor: '::',
-					_0: _user$project$AppCss$GenreSelection,
-					_1: {ctor: '[]'}
-				}),
-			_1: {ctor: '[]'}
-		},
-		{
-			ctor: '::',
-			_0: _elm_lang$html$Html$text('Genres'),
-			_1: {
-				ctor: '::',
-				_0: A2(
-					_elm_lang$html$Html$map,
-					_user$project$Main$MultiselectEvent,
-					_inkuzmin$elm_multiselect$Multiselect$view(model.genresMultiselect)),
-				_1: {ctor: '[]'}
-			}
-		});
 };
 var _user$project$Main$subscriptions = function (model) {
 	return A2(
@@ -30700,7 +30702,7 @@ var _user$project$Main$appHeader = function (model) {
 					_0: _user$project$Main$selectionView(model),
 					_1: {
 						ctor: '::',
-						_0: _user$project$Main$genreSelection(model),
+						_0: A2(_user$project$Genre$selectionView, _user$project$Main$MultiselectEvent, model.genresMultiselect),
 						_1: {ctor: '[]'}
 					}
 				}

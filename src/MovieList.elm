@@ -3,7 +3,6 @@ module MovieList exposing (movies)
 import Movie exposing (Movie, WatchState(..))
 import Genre
 import Time.Date exposing (date)
-import Set exposing (Set)
 
 
 movies : List Movie
@@ -22,7 +21,7 @@ movies =
       , year = 2014
       , runtime = 109
       , genres = [ "comedy", "horror", "romance" ]
-      , watched = Unwatched
+      , watched = Watched (date 2017 10 5)
       }
     , { title = "Cool Hand Luke"
       , url = "http://www.imdb.com/title/tt0061512"
