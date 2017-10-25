@@ -951,5 +951,13 @@ movies =
       , genres = [ "drama", "comedy" ]
       , watched = Unwatched
       }
+    , { title = "Son of Rambow "
+      , url = "http://www.imdb.com/title/tt0845046/"
+      , img = "son-of-rambow"
+      , year = 2007
+      , runtime = 135
+      , genres = [ "comedy" ]
+      , watched = Unwatched
+      }
     ]
         |> List.map (\m -> { m | genres = Genre.fromFlatList m.genres })
