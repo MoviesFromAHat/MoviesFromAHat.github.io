@@ -951,11 +951,19 @@ movies =
       , genres = [ "drama", "comedy" ]
       , watched = Unwatched
       }
-    , { title = "Son of Rambow "
+    , { title = "Son of Rambow"
       , url = "http://www.imdb.com/title/tt0845046/"
-      , img = "son-of-rambow"
+      , img = "son-of-rambow.jpg"
       , year = 2007
-      , runtime = 135
+      , runtime = 95
+      , genres = [ "comedy" ]
+      , watched = Unwatched
+      }
+    , { title = "My Blue Heaven"
+      , url = "http://www.imdb.com/title/tt0100212/"
+      , img = "my-blue-heaven.jpg"
+      , year = 1990
+      , runtime = 97
       , genres = [ "comedy" ]
       , watched = Unwatched
       }
