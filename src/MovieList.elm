@@ -956,7 +956,7 @@ movies =
       , img = "son-of-rambow.jpg"
       , year = 2007
       , runtime = 95
-      , genres = [ "comedy" ]
+      , genres = [ "comedy", "adventure" ]
       , watched = Unwatched
       }
     , { title = "My Blue Heaven"
@@ -964,7 +964,7 @@ movies =
       , img = "my-blue-heaven.jpg"
       , year = 1990
       , runtime = 97
-      , genres = [ "comedy" ]
+      , genres = [ "comedy", "action" ]
       , watched = Unwatched
       }
     ]
