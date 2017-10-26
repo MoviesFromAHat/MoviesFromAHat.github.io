@@ -629,7 +629,7 @@ movies =
       , year = 2006
       , runtime = 113
       , genres = [ "comedy", "drama", "fantasy" ]
-      , watched = Unwatched
+      , watched = Watched (date 2017 10 26)
       }
     , { title = "Hot Fuzz"
       , url = "http://www.imdb.com/title/tt0425112/"
@@ -757,7 +757,7 @@ movies =
       , year = 2010
       , runtime = 89
       , genres = [ "comedy", "horror" ]
-      , watched = Unwatched
+      , watched = Watched (date 2017 8 31)
       }
     , { title = "Sanctum"
       , url = "http://www.imdb.com/title/tt0881320/"
