@@ -29407,7 +29407,8 @@ var _user$project$MovieList$movies = A2(
 																																																																																		}
 																																																																																	}
 																																																																																},
-																																																																																watched: _user$project$Movie$Unwatched
+																																																																																watched: _user$project$Movie$Watched(
+																																																																																	A3(_elm_community$elm_time$Time_Date$date, 2017, 10, 26))
 																																																																															},
 																																																																															_1: {
 																																																																																ctor: '::',
@@ -29747,7 +29748,8 @@ var _user$project$MovieList$movies = A2(
 																																																																																																		_1: {ctor: '[]'}
 																																																																																																	}
 																																																																																																},
-																																																																																																watched: _user$project$Movie$Unwatched
+																																																																																																watched: _user$project$Movie$Watched(
+																																																																																																	A3(_elm_community$elm_time$Time_Date$date, 2017, 8, 31))
 																																																																																															},
 																																																																																															_1: {
 																																																																																																ctor: '::',
