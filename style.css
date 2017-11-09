@@ -238,6 +238,12 @@ a:hover {
     justify-content: space-around;
 }
 
+@media screen and (max-width: 600px) {
+    .Header  .Navigation {
+        padding: 10px;
+    }
+}
+
 .Header  .SelectionControls {
     text-align: center;
 }
@@ -249,6 +255,13 @@ a:hover {
     text-align: center;
     vertical-align: top;
     width: 215px;
+    background-color: #00000000;
+}
+
+@media screen and (max-width: 600px) {
+    .MovieCard {
+        width: 45%;
+    }
 }
 
 .MovieCard  .Poster {
@@ -283,11 +296,89 @@ a:hover {
     width: 0px;
     height: 0px;
     margin: 0px;
+    padding: 0;
 }
 
 .Filterable {
     transition: height 300ms  ,width 300ms  ,margin 300ms  ;
     overflow: hidden;
+}
+
+.MovieModal {
+    width: 90%;
+    height: 80%;
+    max-height: 500px;
+    background-color: #262626;
+    border: 2px solid;
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin: auto;
+    border-radius: 5px;
+    padding: 10px;
+    display: flex;
+    overflow: auto;
+    transition: height 300ms  ,width 300ms  ,padding 300ms  ,margin 300ms  ;
+}
+
+@media screen and (max-width: 600px) {
+    .MovieModal {
+        display: block;
+    max-height: none;
+    }
+}
+
+.MovieModal  img {
+    height: 326px;
+}
+
+.CloseButton {
+    position: absolute;
+    right: 5px;
+    top: 5px;
+    padding: 5px;
+    background-color: #00000000;
+}
+
+.InfoBlock {
+    display: flex;
+    flex-direction: column;
+    flex: auto;
+}
+
+.InfoBlock  ul {
+    list-style-type: none;
+    padding: 0;
+    text-align: center;
+    font-size: 18px;
+}
+
+.InfoBlock  a {
+    padding: 0 5px;
+}
+
+.RightBar {
+    display: flex;
+    flex: auto;
+    padding: 10px;
+}
+
+.LeftBar {
+    display: flex;
+    flex-direction: column;
+    flex: auto;
+    flex-shrink: 0;
+    max-width: 300px;
+    padding: 10px;
+    align-items: center;
+}
+
+@media screen and (max-width: 600px) {
+    .LeftBar {
+        max-width: none;
+    }
 }
 
 body {
