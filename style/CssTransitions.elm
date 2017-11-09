@@ -2238,7 +2238,7 @@ timingFunctionToString tf =
                 ++ ")"
 
 
-transition : List Transition -> Css.Mixin
+transition : List Transition -> Css.Style
 transition options =
     let
         v =
@@ -2260,11 +2260,3 @@ transition options =
                 |> String.slice 0 -1
     in
         Css.property "transition" v
-
-
-example : Css.Mixin
-example =
-    transition
-        [ height (20 * Time.second)
-        , width (20 * Time.second)
-        ]
