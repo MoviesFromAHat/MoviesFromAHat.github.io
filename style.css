@@ -1,5 +1,4 @@
 html {
-    font-family: sans-serif;
     line-height: 1.15;
     -ms-text-size-adjust: 100%;
     -webkit-text-size-adjust: 100%;
@@ -18,7 +17,7 @@ h1 {
     margin: 0.67em 0;
 }
 
-figcaption figure, main {
+figcaption, figure, main {
     display: block;
 }
 
@@ -40,14 +39,6 @@ pre {
 a {
     background-color: transparent;
     -webkit-text-decoration-skip: objects;
-}
-
-a:active {
-    outline-width: 0;
-}
-
-a:hover {
-    outline-width: 0;
 }
 
 abbr[title] {
@@ -138,14 +129,12 @@ button::-moz-focus-inner, [type="button"]::-moz-focus-inner, [type="reset"]::-mo
     padding: 0;
 }
 
-button::-moz-focusring, [type="button"]::-moz-focusring, [type="reset"]::-moz-focusring, [type="submit"]::-moz-focusring {
+button:-moz-focusring, [type="button"]:-moz-focusring, [type="reset"]:-moz-focusring, [type="submit"]:-moz-focusring {
     outline: 1px dotted ButtonText;
 }
 
 fieldset {
-    border: 1px solid #c0c0c0;
-    margin: 0 2px;
-    padding: 0.35em 0.625em 0.75em;
+    padding: 0.35em 0.75em 0.625em;
 }
 
 legend {
