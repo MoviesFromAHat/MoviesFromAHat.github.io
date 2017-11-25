@@ -7,15 +7,7 @@ import Time.Date exposing (date)
 
 movies : List Movie
 movies =
-    [ { title = "Perfect Sense"
-      , url = "http://www.imdb.com/title/tt1439572"
-      , img = "perfect-sense.jpg"
-      , year = 2011
-      , runtime = 92
-      , genres = [ "romance", "drama", "sci-fi" ]
-      , watched = Unwatched
-      }
-    , { title = "Spring"
+    [ { title = "Spring"
       , url = "http://www.imdb.com/title/tt3395184"
       , img = "spring.jpg"
       , year = 2014
@@ -253,14 +245,6 @@ movies =
       , year = 1988
       , runtime = 124
       , genres = [ "animation", "action", "sci-fi" ]
-      , watched = Unwatched
-      }
-    , { title = "Bull Durham"
-      , url = "http://www.imdb.com/title/tt0094812/"
-      , img = "bull-durham.jpg"
-      , year = 1988
-      , runtime = 108
-      , genres = [ "comedy", "romance", "sport" ]
       , watched = Unwatched
       }
     , { title = "The Serpent and the Rainbow"

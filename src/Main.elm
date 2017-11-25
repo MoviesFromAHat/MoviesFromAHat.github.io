@@ -211,7 +211,11 @@ rulesView =
 4. A movie can be tabled to be watched later by a majority vote.
 5. Anyone can vote to table a movie.
 6. A vote to remove also counts as a vote to table.
-7. Be reasonable. If somebody's uncomfortable watching something, or finds it offensive, just skip it.
+7. Review the rating & content warnings for the movie. Anyone can veto a movie for content. <sup>*</sup>
+
+
+<sup>*</sup>If a movie is vetoed for content, even if it was your favorite movie ever, please keep your disappointment to yourself. 
+    Even in jest, this can make people feel like they're not welcome because they're "spoiling the fun"
 
 ### Adding movies to the list
 
