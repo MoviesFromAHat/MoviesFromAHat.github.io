@@ -7,16 +7,18 @@
     "url": "git@github.com:MoviesFromAHat/movies-from-a-hat.git"
   },
   "scripts": {
-    "elm-setup": "elm-package install",
-    "elm-setup-auto": "elm-package install -y",
-    "build-css": "elm-css style/Stylesheets.elm",
-    "host": "elm-live src/Main.elm --debug --output=elm.js --before-build=./build-styles.sh --open",
-    "start": "npm run build-css && npm run host"
+    "postinstall": "elm package install -y",
+    "start": "brunch watch --server",
+    "build": "brunch build --production"
   },
   "devDependencies": {
-    "elm": "^0.18.0",
-    "elm-css": "^0.6.0",
-    "elm-live": "^2.7.4"
+    "auto-reload-brunch": "^2.7.1",
+    "autoprefixer": "^7.1.6",
+    "brunch": "^2.8.2",
+    "elm-css-brunch": "^0.2.0",
+    "elm-fancy-brunch": "^1.0.0",
+    "elm-format": "^0.6.1-alpha",
+    "postcss-brunch": "^2.1.0"
   },
   "license": {
     "type": "MIT",
