@@ -109,7 +109,7 @@ movies =
       , year = 1973
       , runtime = 102
       , genres = [ "action", "crime", "drama" ]
-      , watched = Unwatched
+      , watched = Watched (date 2017 11 30)
       }
     , { title = "The Sting"
       , url = "http://www.imdb.com/title/tt0070735/"
