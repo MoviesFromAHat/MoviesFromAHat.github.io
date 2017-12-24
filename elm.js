@@ -28563,54 +28563,6 @@ var _user$project$Movie$notesView = function (movie) {
 			});
 	}
 };
-var _user$project$Movie$movieModalBase = F2(
-	function (focusMovie, contents) {
-		return A2(
-			_elm_lang$html$Html$div,
-			{
-				ctor: '::',
-				_0: _user$project$AppCss_Helpers$class(
-					{
-						ctor: '::',
-						_0: _user$project$AppCss$MovieModal,
-						_1: {ctor: '[]'}
-					}),
-				_1: {ctor: '[]'}
-			},
-			A2(
-				_elm_lang$core$Basics_ops['++'],
-				{
-					ctor: '::',
-					_0: A2(
-						_elm_lang$html$Html$button,
-						{
-							ctor: '::',
-							_0: _user$project$AppCss_Helpers$class(
-								{
-									ctor: '::',
-									_0: _user$project$AppCss$CloseButton,
-									_1: {ctor: '[]'}
-								}),
-							_1: {
-								ctor: '::',
-								_0: _elm_lang$html$Html_Events$onClick(
-									focusMovie(_elm_lang$core$Maybe$Nothing)),
-								_1: {
-									ctor: '::',
-									_0: _elm_lang$html$Html_Attributes$autofocus(true),
-									_1: {ctor: '[]'}
-								}
-							}
-						},
-						{
-							ctor: '::',
-							_0: _elm_lang$html$Html$text('❌'),
-							_1: {ctor: '[]'}
-						}),
-					_1: {ctor: '[]'}
-				},
-				contents));
-	});
 var _user$project$Movie$ratingsList = function (ratings) {
 	return A2(
 		_elm_lang$html$Html$ul,
@@ -28661,11 +28613,101 @@ var _user$project$Movie$moviePoster = function (movie) {
 		},
 		{ctor: '[]'});
 };
+var _user$project$Movie$matchGenres = F2(
+	function (genres, movie) {
+		var _p2 = _elm_lang$core$Set$size(genres);
+		if (_p2 === 0) {
+			return true;
+		} else {
+			return _elm_lang$core$Native_Utils.cmp(
+				_elm_lang$core$Set$size(
+					A2(_elm_lang$core$Set$intersect, genres, movie.genres)),
+				0) > 0;
+		}
+	});
+var _user$project$Movie$watchDate = function (movie) {
+	var _p3 = movie.watched;
+	if (_p3.ctor === 'Unwatched') {
+		return _elm_lang$core$Maybe$Nothing;
+	} else {
+		return _elm_lang$core$Maybe$Just(_p3._0);
+	}
+};
+var _user$project$Movie$isWatched = function (movie) {
+	var _p4 = movie.watched;
+	if (_p4.ctor === 'Unwatched') {
+		return false;
+	} else {
+		return true;
+	}
+};
+var _user$project$Movie$Movie = F7(
+	function (a, b, c, d, e, f, g) {
+		return {title: a, url: b, img: c, year: d, runtime: e, genres: f, watched: g};
+	});
+var _user$project$Movie$Rating = F2(
+	function (a, b) {
+		return {source: a, value: b};
+	});
+var _user$project$Movie$ratingDecoder = A3(
+	_NoRedInk$elm_decode_pipeline$Json_Decode_Pipeline$required,
+	'Value',
+	_elm_lang$core$Json_Decode$string,
+	A3(
+		_NoRedInk$elm_decode_pipeline$Json_Decode_Pipeline$required,
+		'Source',
+		_elm_lang$core$Json_Decode$string,
+		_NoRedInk$elm_decode_pipeline$Json_Decode_Pipeline$decode(_user$project$Movie$Rating)));
+var _user$project$Movie$MovieDetails = F8(
+	function (a, b, c, d, e, f, g, h) {
+		return {movie: a, rated: b, runtime: c, director: d, writer: e, actors: f, plot: g, ratings: h};
+	});
+var _user$project$Movie$decodeMovieData = function (movie) {
+	return A3(
+		_NoRedInk$elm_decode_pipeline$Json_Decode_Pipeline$required,
+		'Ratings',
+		_elm_lang$core$Json_Decode$list(_user$project$Movie$ratingDecoder),
+		A3(
+			_NoRedInk$elm_decode_pipeline$Json_Decode_Pipeline$required,
+			'Plot',
+			_elm_lang$core$Json_Decode$string,
+			A3(
+				_NoRedInk$elm_decode_pipeline$Json_Decode_Pipeline$required,
+				'Actors',
+				_elm_lang$core$Json_Decode$string,
+				A3(
+					_NoRedInk$elm_decode_pipeline$Json_Decode_Pipeline$required,
+					'Writer',
+					_elm_lang$core$Json_Decode$string,
+					A3(
+						_NoRedInk$elm_decode_pipeline$Json_Decode_Pipeline$required,
+						'Director',
+						_elm_lang$core$Json_Decode$string,
+						A3(
+							_NoRedInk$elm_decode_pipeline$Json_Decode_Pipeline$required,
+							'Runtime',
+							_elm_lang$core$Json_Decode$string,
+							A3(
+								_NoRedInk$elm_decode_pipeline$Json_Decode_Pipeline$required,
+								'Rated',
+								_elm_lang$core$Json_Decode$string,
+								A2(
+									_NoRedInk$elm_decode_pipeline$Json_Decode_Pipeline$hardcoded,
+									movie,
+									_NoRedInk$elm_decode_pipeline$Json_Decode_Pipeline$decode(_user$project$Movie$MovieDetails)))))))));
+};
+var _user$project$Movie$Loaded = function (a) {
+	return {ctor: 'Loaded', _0: a};
+};
+var _user$project$Movie$NothingToSelect = {ctor: 'NothingToSelect'};
+var _user$project$Movie$Selected = function (a) {
+	return {ctor: 'Selected', _0: a};
+};
 var _user$project$Movie$movieCard = F3(
 	function (focusMovie, selectedGenres, movie) {
 		var filtered = function () {
-			var _p2 = _elm_lang$core$Set$size(selectedGenres);
-			if (_p2 === 0) {
+			var _p5 = _elm_lang$core$Set$size(selectedGenres);
+			if (_p5 === 0) {
 				return false;
 			} else {
 				return _elm_lang$core$Native_Utils.eq(
@@ -28696,7 +28738,7 @@ var _user$project$Movie$movieCard = F3(
 					ctor: '::',
 					_0: _elm_lang$html$Html_Events$onClick(
 						focusMovie(
-							_elm_lang$core$Maybe$Just(movie))),
+							_user$project$Movie$Selected(movie))),
 					_1: {
 						ctor: '::',
 						_0: _elm_lang$html$Html_Attributes$type_('button'),
@@ -28733,6 +28775,55 @@ var _user$project$Movie$movieCard = F3(
 					}
 				}
 			});
+	});
+var _user$project$Movie$NotSelected = {ctor: 'NotSelected'};
+var _user$project$Movie$movieModalBase = F2(
+	function (focusMovie, contents) {
+		return A2(
+			_elm_lang$html$Html$div,
+			{
+				ctor: '::',
+				_0: _user$project$AppCss_Helpers$class(
+					{
+						ctor: '::',
+						_0: _user$project$AppCss$MovieModal,
+						_1: {ctor: '[]'}
+					}),
+				_1: {ctor: '[]'}
+			},
+			A2(
+				_elm_lang$core$Basics_ops['++'],
+				{
+					ctor: '::',
+					_0: A2(
+						_elm_lang$html$Html$button,
+						{
+							ctor: '::',
+							_0: _user$project$AppCss_Helpers$class(
+								{
+									ctor: '::',
+									_0: _user$project$AppCss$CloseButton,
+									_1: {ctor: '[]'}
+								}),
+							_1: {
+								ctor: '::',
+								_0: _elm_lang$html$Html_Events$onClick(
+									focusMovie(_user$project$Movie$NotSelected)),
+								_1: {
+									ctor: '::',
+									_0: _elm_lang$html$Html_Attributes$autofocus(true),
+									_1: {ctor: '[]'}
+								}
+							}
+						},
+						{
+							ctor: '::',
+							_0: _elm_lang$html$Html$text('❌'),
+							_1: {ctor: '[]'}
+						}),
+					_1: {ctor: '[]'}
+				},
+				contents));
 	});
 var _user$project$Movie$movieModal = F2(
 	function (focusMovie, movie) {
@@ -28886,19 +28977,19 @@ var _user$project$Movie$movieModal = F2(
 												{ctor: '[]'},
 												A2(
 													_elm_lang$core$List$map,
-													function (_p3) {
-														var _p4 = _p3;
+													function (_p6) {
+														var _p7 = _p6;
 														return A2(
 															_elm_lang$html$Html$a,
 															{
 																ctor: '::',
 																_0: _elm_lang$html$Html_Attributes$href(
-																	A2(_elm_lang$core$Basics_ops['++'], '?genres=', _p4._0)),
+																	A2(_elm_lang$core$Basics_ops['++'], '?genres=', _p7._0)),
 																_1: {ctor: '[]'}
 															},
 															{
 																ctor: '::',
-																_0: _elm_lang$html$Html$text(_p4._1),
+																_0: _elm_lang$html$Html$text(_p7._1),
 																_1: {ctor: '[]'}
 															});
 													},
@@ -29004,19 +29095,19 @@ var _user$project$Movie$offlineMovieModal = F2(
 									{ctor: '[]'},
 									A2(
 										_elm_lang$core$List$map,
-										function (_p5) {
-											var _p6 = _p5;
+										function (_p8) {
+											var _p9 = _p8;
 											return A2(
 												_elm_lang$html$Html$a,
 												{
 													ctor: '::',
 													_0: _elm_lang$html$Html_Attributes$href(
-														A2(_elm_lang$core$Basics_ops['++'], '?genres=', _p6._0)),
+														A2(_elm_lang$core$Basics_ops['++'], '?genres=', _p9._0)),
 													_1: {ctor: '[]'}
 												},
 												{
 													ctor: '::',
-													_0: _elm_lang$html$Html$text(_p6._1),
+													_0: _elm_lang$html$Html$text(_p9._1),
 													_1: {ctor: '[]'}
 												});
 										},
@@ -29028,89 +29119,6 @@ var _user$project$Movie$offlineMovieModal = F2(
 				}
 			});
 	});
-var _user$project$Movie$matchGenres = F2(
-	function (genres, movie) {
-		var _p7 = _elm_lang$core$Set$size(genres);
-		if (_p7 === 0) {
-			return true;
-		} else {
-			return _elm_lang$core$Native_Utils.cmp(
-				_elm_lang$core$Set$size(
-					A2(_elm_lang$core$Set$intersect, genres, movie.genres)),
-				0) > 0;
-		}
-	});
-var _user$project$Movie$watchDate = function (movie) {
-	var _p8 = movie.watched;
-	if (_p8.ctor === 'Unwatched') {
-		return _elm_lang$core$Maybe$Nothing;
-	} else {
-		return _elm_lang$core$Maybe$Just(_p8._0);
-	}
-};
-var _user$project$Movie$isWatched = function (movie) {
-	var _p9 = movie.watched;
-	if (_p9.ctor === 'Unwatched') {
-		return false;
-	} else {
-		return true;
-	}
-};
-var _user$project$Movie$Movie = F7(
-	function (a, b, c, d, e, f, g) {
-		return {title: a, url: b, img: c, year: d, runtime: e, genres: f, watched: g};
-	});
-var _user$project$Movie$Rating = F2(
-	function (a, b) {
-		return {source: a, value: b};
-	});
-var _user$project$Movie$ratingDecoder = A3(
-	_NoRedInk$elm_decode_pipeline$Json_Decode_Pipeline$required,
-	'Value',
-	_elm_lang$core$Json_Decode$string,
-	A3(
-		_NoRedInk$elm_decode_pipeline$Json_Decode_Pipeline$required,
-		'Source',
-		_elm_lang$core$Json_Decode$string,
-		_NoRedInk$elm_decode_pipeline$Json_Decode_Pipeline$decode(_user$project$Movie$Rating)));
-var _user$project$Movie$MovieDetails = F8(
-	function (a, b, c, d, e, f, g, h) {
-		return {movie: a, rated: b, runtime: c, director: d, writer: e, actors: f, plot: g, ratings: h};
-	});
-var _user$project$Movie$decodeMovieData = function (movie) {
-	return A3(
-		_NoRedInk$elm_decode_pipeline$Json_Decode_Pipeline$required,
-		'Ratings',
-		_elm_lang$core$Json_Decode$list(_user$project$Movie$ratingDecoder),
-		A3(
-			_NoRedInk$elm_decode_pipeline$Json_Decode_Pipeline$required,
-			'Plot',
-			_elm_lang$core$Json_Decode$string,
-			A3(
-				_NoRedInk$elm_decode_pipeline$Json_Decode_Pipeline$required,
-				'Actors',
-				_elm_lang$core$Json_Decode$string,
-				A3(
-					_NoRedInk$elm_decode_pipeline$Json_Decode_Pipeline$required,
-					'Writer',
-					_elm_lang$core$Json_Decode$string,
-					A3(
-						_NoRedInk$elm_decode_pipeline$Json_Decode_Pipeline$required,
-						'Director',
-						_elm_lang$core$Json_Decode$string,
-						A3(
-							_NoRedInk$elm_decode_pipeline$Json_Decode_Pipeline$required,
-							'Runtime',
-							_elm_lang$core$Json_Decode$string,
-							A3(
-								_NoRedInk$elm_decode_pipeline$Json_Decode_Pipeline$required,
-								'Rated',
-								_elm_lang$core$Json_Decode$string,
-								A2(
-									_NoRedInk$elm_decode_pipeline$Json_Decode_Pipeline$hardcoded,
-									movie,
-									_NoRedInk$elm_decode_pipeline$Json_Decode_Pipeline$decode(_user$project$Movie$MovieDetails)))))))));
-};
 var _user$project$Movie$Watched = function (a) {
 	return {ctor: 'Watched', _0: a};
 };
@@ -31863,18 +31871,6 @@ var _user$project$Main$rulesView = A2(
 			}
 		}
 	});
-var _user$project$Main$Model = F8(
-	function (a, b, c, d, e, f, g, h) {
-		return {unwatched: a, watched: b, selectedMovie: c, focusedMovie: d, genres: e, selectedGenres: f, genresMultiselect: g, location: h};
-	});
-var _user$project$Main$Loaded = function (a) {
-	return {ctor: 'Loaded', _0: a};
-};
-var _user$project$Main$NothingToSelect = {ctor: 'NothingToSelect'};
-var _user$project$Main$Selected = function (a) {
-	return {ctor: 'Selected', _0: a};
-};
-var _user$project$Main$NotSelected = {ctor: 'NotSelected'};
 var _user$project$Main$init = function (location) {
 	var queryGenres = _user$project$Genre$fromQueryString(location);
 	var selectOptions = function (set) {
@@ -31920,8 +31916,7 @@ var _user$project$Main$init = function (location) {
 							watchDate(m2));
 					}),
 				A2(_elm_lang$core$List$filter, _user$project$Movie$isWatched, _user$project$MovieList$movies)),
-			selectedMovie: _user$project$Main$NotSelected,
-			focusedMovie: _user$project$Main$NotSelected,
+			focusedMovie: _user$project$Movie$NotSelected,
 			genres: genres,
 			selectedGenres: queryGenres,
 			genresMultiselect: A2(_user$project$Genre$multiSelectModel, genres, queryGenres),
@@ -31929,6 +31924,10 @@ var _user$project$Main$init = function (location) {
 		},
 		{ctor: '[]'});
 };
+var _user$project$Main$Model = F7(
+	function (a, b, c, d, e, f, g) {
+		return {unwatched: a, watched: b, focusedMovie: c, genres: d, selectedGenres: e, genresMultiselect: f, location: g};
+	});
 var _user$project$Main$LoadMovie = function (a) {
 	return {ctor: 'LoadMovie', _0: a};
 };
@@ -31978,59 +31977,53 @@ var _user$project$Main$update = F2(
 								model.unwatched)))
 				};
 			case 'MovieSelected':
-				var _p4 = _p1._0._0;
-				var _p2 = A2(
-					_user$project$Main$update,
-					_user$project$Main$FocusMovie(_p4),
-					model);
-				var m = _p2._0;
-				var cmd = _p2._1;
 				var selected = function () {
-					var _p3 = _p4;
-					if (_p3.ctor === 'Just') {
-						return _user$project$Main$Selected(_p3._0);
+					var _p2 = _p1._0._0;
+					if (_p2.ctor === 'Just') {
+						return _user$project$Movie$Selected(_p2._0);
 					} else {
-						return _user$project$Main$NothingToSelect;
+						return _user$project$Movie$NothingToSelect;
+					}
+				}();
+				var _p3 = A2(
+					_user$project$Main$update,
+					_user$project$Main$FocusMovie(selected),
+					model);
+				var m = _p3._0;
+				var cmd = _p3._1;
+				return {
+					ctor: '_Tuple2',
+					_0: _elm_lang$core$Native_Utils.update(
+						m,
+						{unwatched: _p1._0._1}),
+					_1: cmd
+				};
+			case 'FocusMovie':
+				var _p5 = _p1._0;
+				var cmd = function () {
+					var _p4 = _p5;
+					if (_p4.ctor === 'Selected') {
+						return _user$project$Main$fetchMovie(_p4._0);
+					} else {
+						return _elm_lang$core$Platform_Cmd$none;
 					}
 				}();
 				return {
 					ctor: '_Tuple2',
 					_0: _elm_lang$core$Native_Utils.update(
-						m,
-						{unwatched: _p1._0._1, selectedMovie: selected}),
+						model,
+						{focusedMovie: _p5}),
 					_1: cmd
 				};
-			case 'FocusMovie':
-				var _p5 = _p1._0;
-				if (_p5.ctor === 'Just') {
-					var _p6 = _p5._0;
-					return {
-						ctor: '_Tuple2',
-						_0: _elm_lang$core$Native_Utils.update(
-							model,
-							{
-								focusedMovie: _user$project$Main$Selected(_p6)
-							}),
-						_1: _user$project$Main$fetchMovie(_p6)
-					};
-				} else {
-					return {
-						ctor: '_Tuple2',
-						_0: _elm_lang$core$Native_Utils.update(
-							model,
-							{focusedMovie: _user$project$Main$NotSelected}),
-						_1: _elm_lang$core$Platform_Cmd$none
-					};
-				}
 			case 'LoadMovie':
-				var _p7 = _p1._0;
-				if (_p7.ctor === 'Ok') {
+				var _p6 = _p1._0;
+				if (_p6.ctor === 'Ok') {
 					return {
 						ctor: '_Tuple2',
 						_0: _elm_lang$core$Native_Utils.update(
 							model,
 							{
-								focusedMovie: _user$project$Main$Loaded(_p7._0)
+								focusedMovie: _user$project$Movie$Loaded(_p6._0)
 							}),
 						_1: _elm_lang$core$Platform_Cmd$none
 					};
@@ -32038,13 +32031,13 @@ var _user$project$Main$update = F2(
 					return {ctor: '_Tuple2', _0: model, _1: _elm_lang$core$Platform_Cmd$none};
 				}
 			default:
-				var _p8 = A2(_inkuzmin$elm_multiselect$Multiselect$update, _p1._0, model.genresMultiselect);
-				var subModel = _p8._0;
-				var subCmd = _p8._1;
+				var _p7 = A2(_inkuzmin$elm_multiselect$Multiselect$update, _p1._0, model.genresMultiselect);
+				var subModel = _p7._0;
+				var subCmd = _p7._1;
 				var selectedGenres = _elm_lang$core$Set$fromList(subModel.selected);
 				var newUrl = function () {
-					var _p9 = _elm_lang$core$List$length(subModel.selected);
-					if (_p9 === 0) {
+					var _p8 = _elm_lang$core$List$length(subModel.selected);
+					if (_p8 === 0) {
 						return model.location.origin;
 					} else {
 						return A2(
@@ -32058,9 +32051,9 @@ var _user$project$Main$update = F2(
 								'+',
 								A2(
 									_elm_lang$core$List$map,
-									function (_p10) {
-										var _p11 = _p10;
-										return _p11._0;
+									function (_p9) {
+										var _p10 = _p9;
+										return _p10._0;
 									},
 									subModel.selected)));
 					}
@@ -32185,12 +32178,12 @@ var _user$project$Main$appHeader = function (model) {
 };
 var _user$project$Main$view = function (model) {
 	var modal = function () {
-		var _p12 = model.focusedMovie;
-		switch (_p12.ctor) {
+		var _p11 = model.focusedMovie;
+		switch (_p11.ctor) {
 			case 'Loaded':
-				return A2(_user$project$Movie$movieModal, _user$project$Main$FocusMovie, _p12._0);
+				return A2(_user$project$Movie$movieModal, _user$project$Main$FocusMovie, _p11._0);
 			case 'Selected':
-				return A2(_user$project$Movie$offlineMovieModal, _user$project$Main$FocusMovie, _p12._0);
+				return A2(_user$project$Movie$offlineMovieModal, _user$project$Main$FocusMovie, _p11._0);
 			default:
 				return A2(
 					_elm_lang$html$Html$div,
@@ -32307,7 +32300,7 @@ var _user$project$Main$main = A2(
 var Elm = {};
 Elm['Main'] = Elm['Main'] || {};
 if (typeof _user$project$Main$main !== 'undefined') {
-    _user$project$Main$main(Elm['Main'], 'Main', {"types":{"unions":{"Dict.LeafColor":{"args":[],"tags":{"LBBlack":[],"LBlack":[]}},"Time.Date.Date":{"args":[],"tags":{"Date":["{ year : Int, month : Int, day : Int }"]}},"Dom.Error":{"args":[],"tags":{"NotFound":["String"]}},"Movie.WatchState":{"args":[],"tags":{"Watched":["Time.Date.Date"],"Unwatched":[]}},"Dict.Dict":{"args":["k","v"],"tags":{"RBNode_elm_builtin":["Dict.NColor","k","v","Dict.Dict k v","Dict.Dict k v"],"RBEmpty_elm_builtin":["Dict.LeafColor"]}},"Maybe.Maybe":{"args":["a"],"tags":{"Just":["a"],"Nothing":[]}},"Set.Set":{"args":["t"],"tags":{"Set_elm_builtin":["Dict.Dict t ()"]}},"Main.Msg":{"args":[],"tags":{"MultiselectEvent":["Multiselect.Msg"],"SelectMovie":[],"FocusMovie":["Maybe.Maybe Movie.Movie"],"LocationChange":["Navigation.Location"],"LoadMovie":["Result.Result Http.Error Movie.MovieDetails"],"MovieSelected":["( Maybe.Maybe Movie.Movie, List Movie.Movie )"]}},"Dict.NColor":{"args":[],"tags":{"BBlack":[],"Red":[],"NBlack":[],"Black":[]}},"Http.Error":{"args":[],"tags":{"BadUrl":["String"],"NetworkError":[],"Timeout":[],"BadStatus":["Http.Response String"],"BadPayload":["String","Http.Response String"]}},"Result.Result":{"args":["error","value"],"tags":{"Ok":["value"],"Err":["error"]}},"Multiselect.Msg":{"args":[],"tags":{"ClearInput":[],"OnHover":["( String, String )"],"Toggle":[],"FocusResult":["Result.Result Dom.Error ()"],"Adjust":["Float"],"Start":[],"ClickOnComponent":[],"RemoveItem":["( String, String )"],"Clear":[],"OnSelect":["( String, String )"],"ScrollY":["Result.Result Dom.Error Float"],"ScrollResult":["Result.Result Dom.Error ()"],"DisableProtection":[],"Shortcut":["Int"],"Filter":["String"],"Click":["Mouse.Position"]}}},"aliases":{"Movie.MovieDetails":{"args":[],"type":"{ movie : Movie.Movie , rated : String , runtime : String , director : String , writer : String , actors : String , plot : String , ratings : List Movie.Rating }"},"Http.Response":{"args":["body"],"type":"{ url : String , status : { code : Int, message : String } , headers : Dict.Dict String String , body : body }"},"Genre.Genre":{"args":[],"type":"( String, String )"},"Mouse.Position":{"args":[],"type":"{ x : Int, y : Int }"},"Movie.Movie":{"args":[],"type":"{ title : String , url : String , img : String , year : Int , runtime : Int , genres : Set.Set Genre.Genre , watched : Movie.WatchState }"},"Movie.Rating":{"args":[],"type":"{ source : String, value : String }"},"Navigation.Location":{"args":[],"type":"{ href : String , host : String , hostname : String , protocol : String , origin : String , port_ : String , pathname : String , search : String , hash : String , username : String , password : String }"}},"message":"Main.Msg"},"versions":{"elm":"0.18.0"}});
+    _user$project$Main$main(Elm['Main'], 'Main', {"types":{"unions":{"Dict.LeafColor":{"args":[],"tags":{"LBBlack":[],"LBlack":[]}},"Time.Date.Date":{"args":[],"tags":{"Date":["{ year : Int, month : Int, day : Int }"]}},"Dom.Error":{"args":[],"tags":{"NotFound":["String"]}},"Movie.WatchState":{"args":[],"tags":{"Watched":["Time.Date.Date"],"Unwatched":[]}},"Dict.Dict":{"args":["k","v"],"tags":{"RBNode_elm_builtin":["Dict.NColor","k","v","Dict.Dict k v","Dict.Dict k v"],"RBEmpty_elm_builtin":["Dict.LeafColor"]}},"Maybe.Maybe":{"args":["a"],"tags":{"Just":["a"],"Nothing":[]}},"Set.Set":{"args":["t"],"tags":{"Set_elm_builtin":["Dict.Dict t ()"]}},"Main.Msg":{"args":[],"tags":{"MultiselectEvent":["Multiselect.Msg"],"SelectMovie":[],"FocusMovie":["Movie.MovieSelection"],"LocationChange":["Navigation.Location"],"LoadMovie":["Result.Result Http.Error Movie.MovieDetails"],"MovieSelected":["( Maybe.Maybe Movie.Movie, List Movie.Movie )"]}},"Dict.NColor":{"args":[],"tags":{"BBlack":[],"Red":[],"NBlack":[],"Black":[]}},"Http.Error":{"args":[],"tags":{"BadUrl":["String"],"NetworkError":[],"Timeout":[],"BadStatus":["Http.Response String"],"BadPayload":["String","Http.Response String"]}},"Result.Result":{"args":["error","value"],"tags":{"Ok":["value"],"Err":["error"]}},"Multiselect.Msg":{"args":[],"tags":{"ClearInput":[],"OnHover":["( String, String )"],"Toggle":[],"FocusResult":["Result.Result Dom.Error ()"],"Adjust":["Float"],"Start":[],"ClickOnComponent":[],"RemoveItem":["( String, String )"],"Clear":[],"OnSelect":["( String, String )"],"ScrollY":["Result.Result Dom.Error Float"],"ScrollResult":["Result.Result Dom.Error ()"],"DisableProtection":[],"Shortcut":["Int"],"Filter":["String"],"Click":["Mouse.Position"]}},"Movie.MovieSelection":{"args":[],"tags":{"NotSelected":[],"Loaded":["Movie.MovieDetails"],"Selected":["Movie.Movie"],"NothingToSelect":[]}}},"aliases":{"Movie.MovieDetails":{"args":[],"type":"{ movie : Movie.Movie , rated : String , runtime : String , director : String , writer : String , actors : String , plot : String , ratings : List Movie.Rating }"},"Http.Response":{"args":["body"],"type":"{ url : String , status : { code : Int, message : String } , headers : Dict.Dict String String , body : body }"},"Genre.Genre":{"args":[],"type":"( String, String )"},"Mouse.Position":{"args":[],"type":"{ x : Int, y : Int }"},"Movie.Movie":{"args":[],"type":"{ title : String , url : String , img : String , year : Int , runtime : Int , genres : Set.Set Genre.Genre , watched : Movie.WatchState }"},"Movie.Rating":{"args":[],"type":"{ source : String, value : String }"},"Navigation.Location":{"args":[],"type":"{ href : String , host : String , hostname : String , protocol : String , origin : String , port_ : String , pathname : String , search : String , hash : String , username : String , password : String }"}},"message":"Main.Msg"},"versions":{"elm":"0.18.0"}});
 }
 
 if (typeof define === "function" && define['amd'])

@@ -2,7 +2,7 @@ module Main exposing (..)
 
 -- Our Imports
 
-import Movie exposing (Movie, movieCard, matchGenres, MovieDetails, movieModal, offlineMovieModal)
+import Movie exposing (Movie, movieCard, matchGenres, MovieDetails, MovieSelection, movieModal, offlineMovieModal)
 import Genre exposing (Genre)
 import MovieList exposing (..)
 import AppCss.Helpers exposing (class)
@@ -43,20 +43,12 @@ main =
 type alias Model =
     { unwatched : List Movie
     , watched : List Movie
-    , selectedMovie : MovieSelection
     , focusedMovie : MovieSelection
     , genres : Set Genre
     , selectedGenres : Set Genre
     , genresMultiselect : Multiselect.Model
     , location : Navigation.Location
     }
-
-
-type MovieSelection
-    = NotSelected
-    | Selected Movie
-    | NothingToSelect
-    | Loaded MovieDetails
 
 
 init : Navigation.Location -> ( Model, Cmd Msg )
@@ -89,8 +81,7 @@ init location =
                     (\m1 m2 ->
                         Date.compare (watchDate m1) (watchDate m2)
                     )
-        , selectedMovie = NotSelected
-        , focusedMovie = NotSelected
+        , focusedMovie = Movie.NotSelected
         , genres = genres
         , selectedGenres = queryGenres
         , genresMultiselect = Genre.multiSelectModel genres queryGenres
@@ -106,7 +97,7 @@ init location =
 type Msg
     = SelectMovie
     | MovieSelected ( Maybe Movie, List Movie )
-    | FocusMovie (Maybe Movie)
+    | FocusMovie MovieSelection
     | MultiselectEvent Multiselect.Msg
     | LocationChange Navigation.Location
     | LoadMovie (Result Http.Error MovieDetails)
@@ -143,38 +134,41 @@ update msg model =
                 selected =
                     case selection of
                         Just movie ->
-                            Selected movie
+                            Movie.Selected movie
 
                         Nothing ->
-                            NothingToSelect
+                            Movie.NothingToSelect
 
                 ( m, cmd ) =
-                    update (FocusMovie selection) model
+                    update (FocusMovie selected) model
             in
                 ( { m
                     | unwatched = remaining
-                    , selectedMovie = selected
                   }
                 , cmd
                 )
 
         FocusMovie selection ->
-            case selection of
-                Just movie ->
-                    ( { model
-                        | focusedMovie = Selected movie
-                      }
-                    , fetchMovie movie
-                    )
+            let
+                cmd =
+                    case selection of
+                        Movie.Selected movie ->
+                            fetchMovie movie
 
-                Nothing ->
-                    ( { model | focusedMovie = NotSelected }, Cmd.none )
+                        _ ->
+                            Cmd.none
+            in
+                ( { model
+                    | focusedMovie = selection
+                  }
+                , cmd
+                )
 
         LoadMovie result ->
             case result of
                 Ok movie ->
                     ( { model
-                        | focusedMovie = Loaded movie
+                        | focusedMovie = Movie.Loaded movie
                       }
                     , Cmd.none
                     )
@@ -225,10 +219,10 @@ view model =
 
         modal =
             case model.focusedMovie of
-                Loaded movieDetails ->
+                Movie.Loaded movieDetails ->
                     movieModal FocusMovie movieDetails
 
-                Selected movie ->
+                Movie.Selected movie ->
                     offlineMovieModal FocusMovie movie
 
                 _ ->

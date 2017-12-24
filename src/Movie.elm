@@ -15,6 +15,13 @@ import Json.Decode.Pipeline exposing (decode, hardcoded, optional, required)
 -- Types
 
 
+type MovieSelection
+    = NotSelected
+    | Selected Movie
+    | NothingToSelect
+    | Loaded MovieDetails
+
+
 type alias Movie =
     { title : String
     , url : String
@@ -116,7 +123,7 @@ moviePoster movie =
         []
 
 
-movieCard : (Maybe Movie -> msg) -> Set Genre -> Movie -> Html msg
+movieCard : (MovieSelection -> msg) -> Set Genre -> Movie -> Html msg
 movieCard focusMovie selectedGenres movie =
     let
         filtered =
@@ -133,7 +140,7 @@ movieCard focusMovie selectedGenres movie =
                 , ( Style.Filterable, True )
                 , ( Style.Filtered, filtered )
                 ]
-            , Just movie |> focusMovie |> onClick
+            , Selected movie |> focusMovie |> onClick
             , type_ "button"
             ]
             [ moviePoster movie
@@ -151,14 +158,14 @@ ratingsList ratings =
         |> ul []
 
 
-movieModalBase : (Maybe Movie -> msg) -> List (Html msg) -> Html msg
+movieModalBase : (MovieSelection -> msg) -> List (Html msg) -> Html msg
 movieModalBase focusMovie contents =
     div
         [ class [ Style.MovieModal ]
         ]
         ([ button
             [ class [ Style.CloseButton ]
-            , onClick (focusMovie Nothing)
+            , onClick (focusMovie NotSelected)
             , autofocus True
             ]
             [ text "❌"
@@ -168,7 +175,7 @@ movieModalBase focusMovie contents =
         )
 
 
-movieModal : (Maybe Movie -> msg) -> MovieDetails -> Html msg
+movieModal : (MovieSelection -> msg) -> MovieDetails -> Html msg
 movieModal focusMovie movie =
     movieModalBase focusMovie
         [ div [ class [ Style.LeftBar ] ]
@@ -193,7 +200,7 @@ movieModal focusMovie movie =
         ]
 
 
-offlineMovieModal : (Maybe Movie -> msg) -> Movie -> Html msg
+offlineMovieModal : (MovieSelection -> msg) -> Movie -> Html msg
 offlineMovieModal focusMovie movie =
     movieModalBase focusMovie
         [ div [ class [ Style.LeftBar ] ]
