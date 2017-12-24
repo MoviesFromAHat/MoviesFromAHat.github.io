@@ -18,7 +18,6 @@ import Json.Decode.Pipeline exposing (decode, hardcoded, optional, required)
 type MovieSelection
     = NotSelected
     | Selected Movie
-    | NothingToSelect
     | Loaded MovieDetails
 
 
@@ -140,7 +139,7 @@ movieCard focusMovie selectedGenres movie =
                 , ( Style.Filterable, True )
                 , ( Style.Filtered, filtered )
                 ]
-            , Selected movie |> focusMovie |> onClick
+            , onClick <| focusMovie <| Selected movie
             , type_ "button"
             ]
             [ moviePoster movie

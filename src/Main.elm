@@ -115,6 +115,20 @@ fetchMovie movie =
         Http.send LoadMovie request
 
 
+updateModal : Model -> MovieSelection -> ( Model, Cmd Msg )
+updateModal model selection =
+    let
+        cmd =
+            case selection of
+                Movie.Selected movie ->
+                    fetchMovie movie
+
+                _ ->
+                    Cmd.none
+    in
+        ( { model | focusedMovie = selection }, cmd )
+
+
 update : Msg -> Model -> ( Model, Cmd Msg )
 update msg model =
     case msg of
@@ -137,32 +151,12 @@ update msg model =
                             Movie.Selected movie
 
                         Nothing ->
-                            Movie.NothingToSelect
-
-                ( m, cmd ) =
-                    update (FocusMovie selected) model
+                            Movie.NotSelected
             in
-                ( { m
-                    | unwatched = remaining
-                  }
-                , cmd
-                )
+                updateModal { model | unwatched = remaining } selected
 
         FocusMovie selection ->
-            let
-                cmd =
-                    case selection of
-                        Movie.Selected movie ->
-                            fetchMovie movie
-
-                        _ ->
-                            Cmd.none
-            in
-                ( { model
-                    | focusedMovie = selection
-                  }
-                , cmd
-                )
+            updateModal model selection
 
         LoadMovie result ->
             case result of
