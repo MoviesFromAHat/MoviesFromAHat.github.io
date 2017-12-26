@@ -97,7 +97,8 @@ init location =
 type Msg
     = SelectMovie
     | MovieSelected ( Maybe Movie, List Movie )
-    | FocusMovie MovieSelection
+    | FocusMovie Movie
+    | CloseModal
     | MultiselectEvent Multiselect.Msg
     | LocationChange Navigation.Location
     | LoadMovie (Result Http.Error MovieDetails)
@@ -115,18 +116,9 @@ fetchMovie movie =
         Http.send LoadMovie request
 
 
-updateModal : Model -> MovieSelection -> ( Model, Cmd Msg )
-updateModal model selection =
-    let
-        cmd =
-            case selection of
-                Movie.Selected movie ->
-                    fetchMovie movie
-
-                _ ->
-                    Cmd.none
-    in
-        ( { model | focusedMovie = selection }, cmd )
+openModal : Model -> Movie -> ( Model, Cmd Msg )
+openModal model movie =
+    ( { model | focusedMovie = Movie.Selected movie }, fetchMovie movie )
 
 
 update : Msg -> Model -> ( Model, Cmd Msg )
@@ -144,19 +136,18 @@ update msg model =
             )
 
         MovieSelected ( selection, remaining ) ->
-            let
-                selected =
-                    case selection of
-                        Just movie ->
-                            Movie.Selected movie
+            case selection of
+                Just movie ->
+                    openModal { model | unwatched = remaining } movie
 
-                        Nothing ->
-                            Movie.NotSelected
-            in
-                updateModal { model | unwatched = remaining } selected
+                Nothing ->
+                    ( model, Cmd.none )
 
-        FocusMovie selection ->
-            updateModal model selection
+        FocusMovie movie ->
+            openModal model movie
+
+        CloseModal ->
+            ( { model | focusedMovie = Movie.NotSelected }, Cmd.none )
 
         LoadMovie result ->
             case result of
@@ -214,10 +205,10 @@ view model =
         modal =
             case model.focusedMovie of
                 Movie.Loaded movieDetails ->
-                    movieModal FocusMovie movieDetails
+                    movieModal movieDetails CloseModal
 
                 Movie.Selected movie ->
-                    offlineMovieModal FocusMovie movie
+                    offlineMovieModal movie CloseModal
 
                 _ ->
                     div [] []

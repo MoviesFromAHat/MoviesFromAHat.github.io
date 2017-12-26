@@ -122,7 +122,7 @@ moviePoster movie =
         []
 
 
-movieCard : (MovieSelection -> msg) -> Set Genre -> Movie -> Html msg
+movieCard : (Movie -> msg) -> Set Genre -> Movie -> Html msg
 movieCard focusMovie selectedGenres movie =
     let
         filtered =
@@ -139,7 +139,7 @@ movieCard focusMovie selectedGenres movie =
                 , ( Style.Filterable, True )
                 , ( Style.Filtered, filtered )
                 ]
-            , onClick <| focusMovie <| Selected movie
+            , onClick <| focusMovie <| movie
             , type_ "button"
             ]
             [ moviePoster movie
@@ -157,14 +157,14 @@ ratingsList ratings =
         |> ul []
 
 
-movieModalBase : (MovieSelection -> msg) -> List (Html msg) -> Html msg
-movieModalBase focusMovie contents =
+movieModalBase : msg -> List (Html msg) -> Html msg
+movieModalBase closeModal contents =
     div
         [ class [ Style.MovieModal ]
         ]
         ([ button
             [ class [ Style.CloseButton ]
-            , onClick (focusMovie NotSelected)
+            , onClick closeModal
             , autofocus True
             ]
             [ text "❌"
@@ -174,9 +174,9 @@ movieModalBase focusMovie contents =
         )
 
 
-movieModal : (MovieSelection -> msg) -> MovieDetails -> Html msg
-movieModal focusMovie movie =
-    movieModalBase focusMovie
+movieModal : MovieDetails -> msg -> Html msg
+movieModal movie closeModal =
+    movieModalBase closeModal
         [ div [ class [ Style.LeftBar ] ]
             [ moviePoster movie.movie
             , div [ class [ Style.InfoBlock ] ]
@@ -199,9 +199,9 @@ movieModal focusMovie movie =
         ]
 
 
-offlineMovieModal : (MovieSelection -> msg) -> Movie -> Html msg
-offlineMovieModal focusMovie movie =
-    movieModalBase focusMovie
+offlineMovieModal : Movie -> msg -> Html msg
+offlineMovieModal movie closeModal =
+    movieModalBase closeModal
         [ div [ class [ Style.LeftBar ] ]
             [ moviePoster movie ]
         , div [ class [ Style.RightBar, Style.InfoBlock ] ]
