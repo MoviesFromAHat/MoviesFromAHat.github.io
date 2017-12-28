@@ -1,7 +1,8 @@
 module AppCss exposing (CssClasses(..), css)
 
 import Css exposing (..)
-import Css.Elements exposing (body, button, a)
+import Css.Media exposing (withMediaQuery)
+import Css.Elements exposing (body, button, a, img)
 import CssTransitions as T exposing (transition)
 import Time exposing (second)
 
@@ -20,6 +21,11 @@ type CssClasses
     | Wrap
     | Filterable
     | Filtered
+    | MovieModal
+    | CloseButton
+    | InfoBlock
+    | LeftBar
+    | RightBar
 
 
 colors =
@@ -30,6 +36,7 @@ colors =
     , orange = (hex "FB6648")
     , other = (hex "5E3448")
     , black = (hex "000000")
+    , transparent = (hex "00000000")
     }
 
 
@@ -77,6 +84,8 @@ header =
                 [ displayFlex
                 , flexDirection row
                 , justifyContent spaceAround
+                , withMediaQuery [ "screen and (max-width: 600px)" ]
+                    [ padding (px 10) ]
                 ]
             , class SelectionControls
                 [ textAlign center
@@ -106,6 +115,7 @@ movieCard =
         , textAlign center
         , verticalAlign top
         , width (px 215)
+        , backgroundColor colors.transparent
         , descendants
             [ class Poster
                 [ maxWidth (pct 100)
@@ -116,6 +126,90 @@ movieCard =
             , class Notes
                 [ fontSize (Css.rem 0.9) ]
             ]
+        , withMediaQuery [ "screen and (max-width: 600px)" ]
+            [ width (pct 45) ]
+        ]
+
+
+movieModal =
+    class MovieModal
+        [ width (pct 90)
+        , height (pct 80)
+        , maxHeight (px 500)
+        , backgroundColor colors.dark
+        , border2 (px 2) solid
+        , position fixed
+        , top zero
+        , bottom zero
+        , left zero
+        , right zero
+        , margin auto
+        , borderRadius (px 5)
+        , padding (px 10)
+        , displayFlex
+        , overflow auto
+        , transition
+            [ T.height (second * 0.3)
+            , T.width (second * 0.3)
+            , T.padding (second * 0.3)
+            , T.margin (second * 0.3)
+            ]
+        , descendants
+            [ img
+                [ height (px 326)
+                ]
+            ]
+        , withMediaQuery [ "screen and (max-width: 600px)" ]
+            [ display block, maxHeight none ]
+        ]
+
+
+infoBlock =
+    class InfoBlock
+        [ displayFlex
+        , flexDirection column
+        , flex auto
+        , descendants
+            [ Css.Elements.ul
+                [ listStyleType none
+                , padding zero
+                , textAlign center
+                , fontSize (px 18)
+                ]
+            , Css.Elements.a [ padding2 zero (px 5) ]
+            ]
+        ]
+
+
+leftBar =
+    class LeftBar
+        [ displayFlex
+        , flexDirection column
+        , flex auto
+        , flexShrink zero
+        , maxWidth (px 300)
+        , padding (px 10)
+        , alignItems center
+        , withMediaQuery [ "screen and (max-width: 600px)" ]
+            [ maxWidth none ]
+        ]
+
+
+rightBar =
+    class RightBar
+        [ displayFlex
+        , flex auto
+        , padding (px 10)
+        ]
+
+
+closeButton =
+    class CloseButton
+        [ position absolute
+        , right (px 5)
+        , top (px 5)
+        , padding (px 5)
+        , backgroundColor colors.transparent
         ]
 
 
@@ -135,6 +229,7 @@ filtered =
         [ width (px 0)
         , height (px 0)
         , margin (px 0)
+        , padding zero
         ]
 
 
@@ -163,5 +258,10 @@ css =
                , genreSelection
                , filtered
                , filterable
+               , movieModal
+               , closeButton
+               , infoBlock
+               , rightBar
+               , leftBar
                ]
         )

@@ -5757,6 +5757,86 @@ var _elm_lang$core$Platform$Task = {ctor: 'Task'};
 var _elm_lang$core$Platform$ProcessId = {ctor: 'ProcessId'};
 var _elm_lang$core$Platform$Router = {ctor: 'Router'};
 
+var _NoRedInk$elm_decode_pipeline$Json_Decode_Pipeline$decode = _elm_lang$core$Json_Decode$succeed;
+var _NoRedInk$elm_decode_pipeline$Json_Decode_Pipeline$resolve = _elm_lang$core$Json_Decode$andThen(_elm_lang$core$Basics$identity);
+var _NoRedInk$elm_decode_pipeline$Json_Decode_Pipeline$custom = _elm_lang$core$Json_Decode$map2(
+	F2(
+		function (x, y) {
+			return y(x);
+		}));
+var _NoRedInk$elm_decode_pipeline$Json_Decode_Pipeline$hardcoded = function (_p0) {
+	return _NoRedInk$elm_decode_pipeline$Json_Decode_Pipeline$custom(
+		_elm_lang$core$Json_Decode$succeed(_p0));
+};
+var _NoRedInk$elm_decode_pipeline$Json_Decode_Pipeline$optionalDecoder = F3(
+	function (pathDecoder, valDecoder, fallback) {
+		var nullOr = function (decoder) {
+			return _elm_lang$core$Json_Decode$oneOf(
+				{
+					ctor: '::',
+					_0: decoder,
+					_1: {
+						ctor: '::',
+						_0: _elm_lang$core$Json_Decode$null(fallback),
+						_1: {ctor: '[]'}
+					}
+				});
+		};
+		var handleResult = function (input) {
+			var _p1 = A2(_elm_lang$core$Json_Decode$decodeValue, pathDecoder, input);
+			if (_p1.ctor === 'Ok') {
+				var _p2 = A2(
+					_elm_lang$core$Json_Decode$decodeValue,
+					nullOr(valDecoder),
+					_p1._0);
+				if (_p2.ctor === 'Ok') {
+					return _elm_lang$core$Json_Decode$succeed(_p2._0);
+				} else {
+					return _elm_lang$core$Json_Decode$fail(_p2._0);
+				}
+			} else {
+				return _elm_lang$core$Json_Decode$succeed(fallback);
+			}
+		};
+		return A2(_elm_lang$core$Json_Decode$andThen, handleResult, _elm_lang$core$Json_Decode$value);
+	});
+var _NoRedInk$elm_decode_pipeline$Json_Decode_Pipeline$optionalAt = F4(
+	function (path, valDecoder, fallback, decoder) {
+		return A2(
+			_NoRedInk$elm_decode_pipeline$Json_Decode_Pipeline$custom,
+			A3(
+				_NoRedInk$elm_decode_pipeline$Json_Decode_Pipeline$optionalDecoder,
+				A2(_elm_lang$core$Json_Decode$at, path, _elm_lang$core$Json_Decode$value),
+				valDecoder,
+				fallback),
+			decoder);
+	});
+var _NoRedInk$elm_decode_pipeline$Json_Decode_Pipeline$optional = F4(
+	function (key, valDecoder, fallback, decoder) {
+		return A2(
+			_NoRedInk$elm_decode_pipeline$Json_Decode_Pipeline$custom,
+			A3(
+				_NoRedInk$elm_decode_pipeline$Json_Decode_Pipeline$optionalDecoder,
+				A2(_elm_lang$core$Json_Decode$field, key, _elm_lang$core$Json_Decode$value),
+				valDecoder,
+				fallback),
+			decoder);
+	});
+var _NoRedInk$elm_decode_pipeline$Json_Decode_Pipeline$requiredAt = F3(
+	function (path, valDecoder, decoder) {
+		return A2(
+			_NoRedInk$elm_decode_pipeline$Json_Decode_Pipeline$custom,
+			A2(_elm_lang$core$Json_Decode$at, path, valDecoder),
+			decoder);
+	});
+var _NoRedInk$elm_decode_pipeline$Json_Decode_Pipeline$required = F3(
+	function (key, valDecoder, decoder) {
+		return A2(
+			_NoRedInk$elm_decode_pipeline$Json_Decode_Pipeline$custom,
+			A2(_elm_lang$core$Json_Decode$field, key, valDecoder),
+			decoder);
+	});
+
 var _debois$elm_dom$DOM$className = A2(
 	_elm_lang$core$Json_Decode$at,
 	{
@@ -24647,6 +24727,351 @@ var _inkuzmin$elm_multiselect$Multiselect$main = _elm_lang$html$Html$programWith
 	_elm_lang$core$Json_Decode$succeed(
 		{}));
 
+var _rtfeldman$elm_css$Css_Media$unparameterizedFeature = function (key) {
+	return {feature: key, value: _elm_lang$core$Maybe$Nothing};
+};
+var _rtfeldman$elm_css$Css_Media$feature = F2(
+	function (key, _p0) {
+		var _p1 = _p0;
+		return {
+			feature: key,
+			value: _elm_lang$core$Maybe$Just(_p1.value)
+		};
+	});
+var _rtfeldman$elm_css$Css_Media$scripting = function (value) {
+	return A2(_rtfeldman$elm_css$Css_Media$feature, 'scripting', value);
+};
+var _rtfeldman$elm_css$Css_Media$enabled = {value: 'enabled', scriptingSupport: _rtfeldman$elm_css$Css_Structure$Compatible};
+var _rtfeldman$elm_css$Css_Media$initialOnly = {value: 'initial-only', scriptingSupport: _rtfeldman$elm_css$Css_Structure$Compatible};
+var _rtfeldman$elm_css$Css_Media$anyHover = function (value) {
+	return A2(_rtfeldman$elm_css$Css_Media$feature, 'any-hover', value);
+};
+var _rtfeldman$elm_css$Css_Media$hover = function (value) {
+	return A2(_rtfeldman$elm_css$Css_Media$feature, 'hover', value);
+};
+var _rtfeldman$elm_css$Css_Media$canHover = {value: 'hover', hoverCapability: _rtfeldman$elm_css$Css_Structure$Compatible};
+var _rtfeldman$elm_css$Css_Media$anyPointer = function (value) {
+	return A2(_rtfeldman$elm_css$Css_Media$feature, 'any-pointer', value);
+};
+var _rtfeldman$elm_css$Css_Media$pointer = function (value) {
+	return A2(_rtfeldman$elm_css$Css_Media$feature, 'pointer', value);
+};
+var _rtfeldman$elm_css$Css_Media$coarse = {value: 'coarse', pointerDevice: _rtfeldman$elm_css$Css_Structure$Compatible};
+var _rtfeldman$elm_css$Css_Media$fine = {value: 'fine', pointerDevice: _rtfeldman$elm_css$Css_Structure$Compatible};
+var _rtfeldman$elm_css$Css_Media$colorGamut = function (value) {
+	return A2(_rtfeldman$elm_css$Css_Media$feature, 'color-gamut', value);
+};
+var _rtfeldman$elm_css$Css_Media$rec2020 = {value: 'rec2020', colorGamut: _rtfeldman$elm_css$Css_Structure$Compatible};
+var _rtfeldman$elm_css$Css_Media$p3 = {value: 'p3', colorGamut: _rtfeldman$elm_css$Css_Structure$Compatible};
+var _rtfeldman$elm_css$Css_Media$srgb = {value: 'srgb', colorGamut: _rtfeldman$elm_css$Css_Structure$Compatible};
+var _rtfeldman$elm_css$Css_Media$maxColorIndex = function (value) {
+	return A2(_rtfeldman$elm_css$Css_Media$feature, 'max-color-index', value);
+};
+var _rtfeldman$elm_css$Css_Media$minColorIndex = function (value) {
+	return A2(_rtfeldman$elm_css$Css_Media$feature, 'min-color-index', value);
+};
+var _rtfeldman$elm_css$Css_Media$colorIndex = function (value) {
+	return A2(_rtfeldman$elm_css$Css_Media$feature, 'color-index', value);
+};
+var _rtfeldman$elm_css$Css_Media$maxMonochrome = function (value) {
+	return A2(_rtfeldman$elm_css$Css_Media$feature, 'max-monochrome', value);
+};
+var _rtfeldman$elm_css$Css_Media$minMonochrome = function (value) {
+	return A2(_rtfeldman$elm_css$Css_Media$feature, 'min-monochrome', value);
+};
+var _rtfeldman$elm_css$Css_Media$monochrome = _rtfeldman$elm_css$Css_Media$unparameterizedFeature('monochrome');
+var _rtfeldman$elm_css$Css_Media$maxColor = function (value) {
+	return A2(_rtfeldman$elm_css$Css_Media$feature, 'max-color', value);
+};
+var _rtfeldman$elm_css$Css_Media$color = _rtfeldman$elm_css$Css_Media$unparameterizedFeature('color');
+var _rtfeldman$elm_css$Css_Media$minColor = function (value) {
+	return A2(_rtfeldman$elm_css$Css_Media$feature, 'min-color', value);
+};
+var _rtfeldman$elm_css$Css_Media$bits = function (value) {
+	return {
+		value: _elm_lang$core$Basics$toString(value),
+		bits: _rtfeldman$elm_css$Css_Structure$Compatible
+	};
+};
+var _rtfeldman$elm_css$Css_Media$overflowInline = function (value) {
+	return A2(_rtfeldman$elm_css$Css_Media$feature, 'overflow-inline', value);
+};
+var _rtfeldman$elm_css$Css_Media$overflowBlock = function (value) {
+	return A2(_rtfeldman$elm_css$Css_Media$feature, 'overflow-block', value);
+};
+var _rtfeldman$elm_css$Css_Media$optionalPaged = {value: 'optional-paged', blockAxisOverflow: _rtfeldman$elm_css$Css_Structure$Compatible};
+var _rtfeldman$elm_css$Css_Media$paged = {value: 'paged', blockAxisOverflow: _rtfeldman$elm_css$Css_Structure$Compatible};
+var _rtfeldman$elm_css$Css_Media$update = function (value) {
+	return A2(_rtfeldman$elm_css$Css_Media$feature, 'update', value);
+};
+var _rtfeldman$elm_css$Css_Media$fast = {value: 'fast', updateFrequency: _rtfeldman$elm_css$Css_Structure$Compatible};
+var _rtfeldman$elm_css$Css_Media$slow = {value: 'slow', updateFrequency: _rtfeldman$elm_css$Css_Structure$Compatible};
+var _rtfeldman$elm_css$Css_Media$grid = _rtfeldman$elm_css$Css_Media$unparameterizedFeature('grid');
+var _rtfeldman$elm_css$Css_Media$scan = function (value) {
+	return A2(_rtfeldman$elm_css$Css_Media$feature, 'scan', value);
+};
+var _rtfeldman$elm_css$Css_Media$interlace = {value: 'interlace', scanningProcess: _rtfeldman$elm_css$Css_Structure$Compatible};
+var _rtfeldman$elm_css$Css_Media$progressive = {value: 'progressive', scanningProcess: _rtfeldman$elm_css$Css_Structure$Compatible};
+var _rtfeldman$elm_css$Css_Media$maxResolution = function (value) {
+	return A2(_rtfeldman$elm_css$Css_Media$feature, 'max-resolution', value);
+};
+var _rtfeldman$elm_css$Css_Media$resolution = function (value) {
+	return A2(_rtfeldman$elm_css$Css_Media$feature, 'resolution', value);
+};
+var _rtfeldman$elm_css$Css_Media$minResolution = function (value) {
+	return A2(_rtfeldman$elm_css$Css_Media$feature, 'min-resolution', value);
+};
+var _rtfeldman$elm_css$Css_Media$dppx = function (value) {
+	return {
+		value: A2(
+			_elm_lang$core$Basics_ops['++'],
+			_elm_lang$core$Basics$toString(value),
+			'dppx'),
+		resolution: _rtfeldman$elm_css$Css_Structure$Compatible
+	};
+};
+var _rtfeldman$elm_css$Css_Media$dpcm = function (value) {
+	return {
+		value: A2(
+			_elm_lang$core$Basics_ops['++'],
+			_elm_lang$core$Basics$toString(value),
+			'dpcm'),
+		resolution: _rtfeldman$elm_css$Css_Structure$Compatible
+	};
+};
+var _rtfeldman$elm_css$Css_Media$dpi = function (value) {
+	return {
+		value: A2(
+			_elm_lang$core$Basics_ops['++'],
+			_elm_lang$core$Basics$toString(value),
+			'dpi'),
+		resolution: _rtfeldman$elm_css$Css_Structure$Compatible
+	};
+};
+var _rtfeldman$elm_css$Css_Media$orientation = function (value) {
+	return A2(_rtfeldman$elm_css$Css_Media$feature, 'orientation', value);
+};
+var _rtfeldman$elm_css$Css_Media$portrait = {value: 'portrait', orientation: _rtfeldman$elm_css$Css_Structure$Compatible};
+var _rtfeldman$elm_css$Css_Media$landscape = {value: 'landscape', orientation: _rtfeldman$elm_css$Css_Structure$Compatible};
+var _rtfeldman$elm_css$Css_Media$maxAspectRatio = function (value) {
+	return A2(_rtfeldman$elm_css$Css_Media$feature, 'max-aspect-ratio', value);
+};
+var _rtfeldman$elm_css$Css_Media$aspectRatio = function (value) {
+	return A2(_rtfeldman$elm_css$Css_Media$feature, 'aspect-ratio', value);
+};
+var _rtfeldman$elm_css$Css_Media$minAspectRatio = function (value) {
+	return A2(_rtfeldman$elm_css$Css_Media$feature, 'min-aspect-ratio', value);
+};
+var _rtfeldman$elm_css$Css_Media$ratio = F2(
+	function (numerator, denominator) {
+		return {
+			value: A2(
+				_elm_lang$core$Basics_ops['++'],
+				_elm_lang$core$Basics$toString(numerator),
+				A2(
+					_elm_lang$core$Basics_ops['++'],
+					'/',
+					_elm_lang$core$Basics$toString(denominator))),
+			ratio: _rtfeldman$elm_css$Css_Structure$Compatible
+		};
+	});
+var _rtfeldman$elm_css$Css_Media$maxHeight = function (value) {
+	return A2(_rtfeldman$elm_css$Css_Media$feature, 'max-height', value);
+};
+var _rtfeldman$elm_css$Css_Media$height = function (value) {
+	return A2(_rtfeldman$elm_css$Css_Media$feature, 'height', value);
+};
+var _rtfeldman$elm_css$Css_Media$minHeight = function (value) {
+	return A2(_rtfeldman$elm_css$Css_Media$feature, 'min-height', value);
+};
+var _rtfeldman$elm_css$Css_Media$maxWidth = function (value) {
+	return A2(_rtfeldman$elm_css$Css_Media$feature, 'max-width', value);
+};
+var _rtfeldman$elm_css$Css_Media$width = function (value) {
+	return A2(_rtfeldman$elm_css$Css_Media$feature, 'width', value);
+};
+var _rtfeldman$elm_css$Css_Media$minWidth = function (value) {
+	return A2(_rtfeldman$elm_css$Css_Media$feature, 'min-width', value);
+};
+var _rtfeldman$elm_css$Css_Media$speech = _rtfeldman$elm_css$Css_Structure$Speech;
+var _rtfeldman$elm_css$Css_Media$screen = _rtfeldman$elm_css$Css_Structure$Screen;
+var _rtfeldman$elm_css$Css_Media$print = _rtfeldman$elm_css$Css_Structure$Print;
+var _rtfeldman$elm_css$Css_Media$connectWith = F2(
+	function (connect, queries) {
+		var _p2 = queries;
+		if (_p2.ctor === '[]') {
+			return _elm_lang$core$Maybe$Nothing;
+		} else {
+			var _p4 = _p2._0;
+			var _p3 = A2(_rtfeldman$elm_css$Css_Media$connectWith, connect, _p2._1);
+			if (_p3.ctor === 'Nothing') {
+				return _elm_lang$core$Maybe$Just(_p4);
+			} else {
+				return _elm_lang$core$Maybe$Just(
+					A2(connect, _p4, _p3._0));
+			}
+		}
+	});
+var _rtfeldman$elm_css$Css_Media$not = _rtfeldman$elm_css$Css_Structure$NotQuery;
+var _rtfeldman$elm_css$Css_Media$only = _rtfeldman$elm_css$Css_Structure$OnlyQuery;
+var _rtfeldman$elm_css$Css_Media$all = _rtfeldman$elm_css$Css_Structure$AllQuery;
+var _rtfeldman$elm_css$Css_Media$withMediaQuery = function (queries) {
+	return _rtfeldman$elm_css$Css_Preprocess$WithMedia(
+		A2(_elm_lang$core$List$map, _rtfeldman$elm_css$Css_Structure$CustomQuery, queries));
+};
+var _rtfeldman$elm_css$Css_Media$withMedia = function (queries) {
+	return _rtfeldman$elm_css$Css_Preprocess$WithMedia(queries);
+};
+var _rtfeldman$elm_css$Css_Media$media = F2(
+	function (queries, snippets) {
+		var nestedMediaRules = function (declarations) {
+			nestedMediaRules:
+			while (true) {
+				var _p5 = declarations;
+				if (_p5.ctor === '[]') {
+					return {ctor: '[]'};
+				} else {
+					switch (_p5._0.ctor) {
+						case 'StyleBlockDeclaration':
+							var _v4 = _p5._1;
+							declarations = _v4;
+							continue nestedMediaRules;
+						case 'MediaRule':
+							return {
+								ctor: '::',
+								_0: A2(
+									_rtfeldman$elm_css$Css_Preprocess$MediaRule,
+									A2(_elm_lang$core$List$append, queries, _p5._0._0),
+									_p5._0._1),
+								_1: nestedMediaRules(_p5._1)
+							};
+						default:
+							return {
+								ctor: '::',
+								_0: _p5._0,
+								_1: nestedMediaRules(_p5._1)
+							};
+					}
+				}
+			}
+		};
+		var extractStyleBlocks = function (declarations) {
+			extractStyleBlocks:
+			while (true) {
+				var _p6 = declarations;
+				if (_p6.ctor === '[]') {
+					return {ctor: '[]'};
+				} else {
+					if (_p6._0.ctor === 'StyleBlockDeclaration') {
+						return {
+							ctor: '::',
+							_0: _p6._0._0,
+							_1: extractStyleBlocks(_p6._1)
+						};
+					} else {
+						var _v6 = _p6._1;
+						declarations = _v6;
+						continue extractStyleBlocks;
+					}
+				}
+			}
+		};
+		var snippetDeclarations = A2(_elm_lang$core$List$concatMap, _rtfeldman$elm_css$Css_Preprocess$unwrapSnippet, snippets);
+		var mediaRuleFromStyleBlocks = A2(
+			_rtfeldman$elm_css$Css_Preprocess$MediaRule,
+			queries,
+			extractStyleBlocks(snippetDeclarations));
+		return _rtfeldman$elm_css$Css_Preprocess$Snippet(
+			{
+				ctor: '::',
+				_0: mediaRuleFromStyleBlocks,
+				_1: nestedMediaRules(snippetDeclarations)
+			});
+	});
+var _rtfeldman$elm_css$Css_Media$mediaQuery = F2(
+	function (stringQueries, snippets) {
+		return A2(
+			_rtfeldman$elm_css$Css_Media$media,
+			A2(_elm_lang$core$List$map, _rtfeldman$elm_css$Css_Structure$CustomQuery, stringQueries),
+			snippets);
+	});
+var _rtfeldman$elm_css$Css_Media$Ratio = F2(
+	function (a, b) {
+		return {value: a, ratio: b};
+	});
+var _rtfeldman$elm_css$Css_Media$Landscape = F2(
+	function (a, b) {
+		return {value: a, orientation: b};
+	});
+var _rtfeldman$elm_css$Css_Media$Portrait = F2(
+	function (a, b) {
+		return {value: a, orientation: b};
+	});
+var _rtfeldman$elm_css$Css_Media$Resolution = F2(
+	function (a, b) {
+		return {value: a, resolution: b};
+	});
+var _rtfeldman$elm_css$Css_Media$Progressive = F2(
+	function (a, b) {
+		return {value: a, scanningProcess: b};
+	});
+var _rtfeldman$elm_css$Css_Media$Interlace = F2(
+	function (a, b) {
+		return {value: a, scanningProcess: b};
+	});
+var _rtfeldman$elm_css$Css_Media$Slow = F2(
+	function (a, b) {
+		return {value: a, updateFrequency: b};
+	});
+var _rtfeldman$elm_css$Css_Media$Fast = F2(
+	function (a, b) {
+		return {value: a, updateFrequency: b};
+	});
+var _rtfeldman$elm_css$Css_Media$Paged = F2(
+	function (a, b) {
+		return {value: a, blockAxisOverflow: b};
+	});
+var _rtfeldman$elm_css$Css_Media$OptionalPaged = F2(
+	function (a, b) {
+		return {value: a, blockAxisOverflow: b};
+	});
+var _rtfeldman$elm_css$Css_Media$Bits = F2(
+	function (a, b) {
+		return {value: a, bits: b};
+	});
+var _rtfeldman$elm_css$Css_Media$SRGB = F2(
+	function (a, b) {
+		return {value: a, colorGamut: b};
+	});
+var _rtfeldman$elm_css$Css_Media$P3 = F2(
+	function (a, b) {
+		return {value: a, colorGamut: b};
+	});
+var _rtfeldman$elm_css$Css_Media$Rec2020 = F2(
+	function (a, b) {
+		return {value: a, colorGamut: b};
+	});
+var _rtfeldman$elm_css$Css_Media$Fine = F2(
+	function (a, b) {
+		return {value: a, pointerDevice: b};
+	});
+var _rtfeldman$elm_css$Css_Media$Coarse = F2(
+	function (a, b) {
+		return {value: a, pointerDevice: b};
+	});
+var _rtfeldman$elm_css$Css_Media$CanHover = F2(
+	function (a, b) {
+		return {value: a, hoverCapability: b};
+	});
+var _rtfeldman$elm_css$Css_Media$InitialOnly = F2(
+	function (a, b) {
+		return {value: a, scriptingSupport: b};
+	});
+var _rtfeldman$elm_css$Css_Media$Enabled = F2(
+	function (a, b) {
+		return {value: a, scriptingSupport: b};
+	});
+
 var _user$project$CssTransitions$timingFunctionToString = function (tf) {
 	var _p0 = tf;
 	switch (_p0.ctor) {
@@ -27281,7 +27706,8 @@ var _user$project$AppCss$colors = {
 	blue: _rtfeldman$elm_css$Css$hex('20457C'),
 	orange: _rtfeldman$elm_css$Css$hex('FB6648'),
 	other: _rtfeldman$elm_css$Css$hex('5E3448'),
-	black: _rtfeldman$elm_css$Css$hex('000000')
+	black: _rtfeldman$elm_css$Css$hex('000000'),
+	transparent: _rtfeldman$elm_css$Css$hex('00000000')
 };
 var _user$project$AppCss$general = {
 	ctor: '::',
@@ -27369,6 +27795,286 @@ var _user$project$AppCss$general = {
 		}
 	}
 };
+var _user$project$AppCss$RightBar = {ctor: 'RightBar'};
+var _user$project$AppCss$rightBar = A2(
+	_rtfeldman$elm_css$Css$class,
+	_user$project$AppCss$RightBar,
+	{
+		ctor: '::',
+		_0: _rtfeldman$elm_css$Css$displayFlex,
+		_1: {
+			ctor: '::',
+			_0: _rtfeldman$elm_css$Css$flex(_rtfeldman$elm_css$Css$auto),
+			_1: {
+				ctor: '::',
+				_0: _rtfeldman$elm_css$Css$padding(
+					_rtfeldman$elm_css$Css$px(10)),
+				_1: {ctor: '[]'}
+			}
+		}
+	});
+var _user$project$AppCss$LeftBar = {ctor: 'LeftBar'};
+var _user$project$AppCss$leftBar = A2(
+	_rtfeldman$elm_css$Css$class,
+	_user$project$AppCss$LeftBar,
+	{
+		ctor: '::',
+		_0: _rtfeldman$elm_css$Css$displayFlex,
+		_1: {
+			ctor: '::',
+			_0: _rtfeldman$elm_css$Css$flexDirection(_rtfeldman$elm_css$Css$column),
+			_1: {
+				ctor: '::',
+				_0: _rtfeldman$elm_css$Css$flex(_rtfeldman$elm_css$Css$auto),
+				_1: {
+					ctor: '::',
+					_0: _rtfeldman$elm_css$Css$flexShrink(_rtfeldman$elm_css$Css$zero),
+					_1: {
+						ctor: '::',
+						_0: _rtfeldman$elm_css$Css$maxWidth(
+							_rtfeldman$elm_css$Css$px(300)),
+						_1: {
+							ctor: '::',
+							_0: _rtfeldman$elm_css$Css$padding(
+								_rtfeldman$elm_css$Css$px(10)),
+							_1: {
+								ctor: '::',
+								_0: _rtfeldman$elm_css$Css$alignItems(_rtfeldman$elm_css$Css$center),
+								_1: {
+									ctor: '::',
+									_0: A2(
+										_rtfeldman$elm_css$Css_Media$withMediaQuery,
+										{
+											ctor: '::',
+											_0: 'screen and (max-width: 600px)',
+											_1: {ctor: '[]'}
+										},
+										{
+											ctor: '::',
+											_0: _rtfeldman$elm_css$Css$maxWidth(_rtfeldman$elm_css$Css$none),
+											_1: {ctor: '[]'}
+										}),
+									_1: {ctor: '[]'}
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+	});
+var _user$project$AppCss$InfoBlock = {ctor: 'InfoBlock'};
+var _user$project$AppCss$infoBlock = A2(
+	_rtfeldman$elm_css$Css$class,
+	_user$project$AppCss$InfoBlock,
+	{
+		ctor: '::',
+		_0: _rtfeldman$elm_css$Css$displayFlex,
+		_1: {
+			ctor: '::',
+			_0: _rtfeldman$elm_css$Css$flexDirection(_rtfeldman$elm_css$Css$column),
+			_1: {
+				ctor: '::',
+				_0: _rtfeldman$elm_css$Css$flex(_rtfeldman$elm_css$Css$auto),
+				_1: {
+					ctor: '::',
+					_0: _rtfeldman$elm_css$Css$descendants(
+						{
+							ctor: '::',
+							_0: _rtfeldman$elm_css$Css_Elements$ul(
+								{
+									ctor: '::',
+									_0: _rtfeldman$elm_css$Css$listStyleType(_rtfeldman$elm_css$Css$none),
+									_1: {
+										ctor: '::',
+										_0: _rtfeldman$elm_css$Css$padding(_rtfeldman$elm_css$Css$zero),
+										_1: {
+											ctor: '::',
+											_0: _rtfeldman$elm_css$Css$textAlign(_rtfeldman$elm_css$Css$center),
+											_1: {
+												ctor: '::',
+												_0: _rtfeldman$elm_css$Css$fontSize(
+													_rtfeldman$elm_css$Css$px(18)),
+												_1: {ctor: '[]'}
+											}
+										}
+									}
+								}),
+							_1: {
+								ctor: '::',
+								_0: _rtfeldman$elm_css$Css_Elements$a(
+									{
+										ctor: '::',
+										_0: A2(
+											_rtfeldman$elm_css$Css$padding2,
+											_rtfeldman$elm_css$Css$zero,
+											_rtfeldman$elm_css$Css$px(5)),
+										_1: {ctor: '[]'}
+									}),
+								_1: {ctor: '[]'}
+							}
+						}),
+					_1: {ctor: '[]'}
+				}
+			}
+		}
+	});
+var _user$project$AppCss$CloseButton = {ctor: 'CloseButton'};
+var _user$project$AppCss$closeButton = A2(
+	_rtfeldman$elm_css$Css$class,
+	_user$project$AppCss$CloseButton,
+	{
+		ctor: '::',
+		_0: _rtfeldman$elm_css$Css$position(_rtfeldman$elm_css$Css$absolute),
+		_1: {
+			ctor: '::',
+			_0: _rtfeldman$elm_css$Css$right(
+				_rtfeldman$elm_css$Css$px(5)),
+			_1: {
+				ctor: '::',
+				_0: _rtfeldman$elm_css$Css$top(
+					_rtfeldman$elm_css$Css$px(5)),
+				_1: {
+					ctor: '::',
+					_0: _rtfeldman$elm_css$Css$padding(
+						_rtfeldman$elm_css$Css$px(5)),
+					_1: {
+						ctor: '::',
+						_0: _rtfeldman$elm_css$Css$backgroundColor(_user$project$AppCss$colors.transparent),
+						_1: {ctor: '[]'}
+					}
+				}
+			}
+		}
+	});
+var _user$project$AppCss$MovieModal = {ctor: 'MovieModal'};
+var _user$project$AppCss$movieModal = A2(
+	_rtfeldman$elm_css$Css$class,
+	_user$project$AppCss$MovieModal,
+	{
+		ctor: '::',
+		_0: _rtfeldman$elm_css$Css$width(
+			_rtfeldman$elm_css$Css$pct(90)),
+		_1: {
+			ctor: '::',
+			_0: _rtfeldman$elm_css$Css$height(
+				_rtfeldman$elm_css$Css$pct(80)),
+			_1: {
+				ctor: '::',
+				_0: _rtfeldman$elm_css$Css$maxHeight(
+					_rtfeldman$elm_css$Css$px(500)),
+				_1: {
+					ctor: '::',
+					_0: _rtfeldman$elm_css$Css$backgroundColor(_user$project$AppCss$colors.dark),
+					_1: {
+						ctor: '::',
+						_0: A2(
+							_rtfeldman$elm_css$Css$border2,
+							_rtfeldman$elm_css$Css$px(2),
+							_rtfeldman$elm_css$Css$solid),
+						_1: {
+							ctor: '::',
+							_0: _rtfeldman$elm_css$Css$position(_rtfeldman$elm_css$Css$fixed),
+							_1: {
+								ctor: '::',
+								_0: _rtfeldman$elm_css$Css$top(_rtfeldman$elm_css$Css$zero),
+								_1: {
+									ctor: '::',
+									_0: _rtfeldman$elm_css$Css$bottom(_rtfeldman$elm_css$Css$zero),
+									_1: {
+										ctor: '::',
+										_0: _rtfeldman$elm_css$Css$left(_rtfeldman$elm_css$Css$zero),
+										_1: {
+											ctor: '::',
+											_0: _rtfeldman$elm_css$Css$right(_rtfeldman$elm_css$Css$zero),
+											_1: {
+												ctor: '::',
+												_0: _rtfeldman$elm_css$Css$margin(_rtfeldman$elm_css$Css$auto),
+												_1: {
+													ctor: '::',
+													_0: _rtfeldman$elm_css$Css$borderRadius(
+														_rtfeldman$elm_css$Css$px(5)),
+													_1: {
+														ctor: '::',
+														_0: _rtfeldman$elm_css$Css$padding(
+															_rtfeldman$elm_css$Css$px(10)),
+														_1: {
+															ctor: '::',
+															_0: _rtfeldman$elm_css$Css$displayFlex,
+															_1: {
+																ctor: '::',
+																_0: _rtfeldman$elm_css$Css$overflow(_rtfeldman$elm_css$Css$auto),
+																_1: {
+																	ctor: '::',
+																	_0: _user$project$CssTransitions$transition(
+																		{
+																			ctor: '::',
+																			_0: _user$project$CssTransitions$height(_elm_lang$core$Time$second * 0.3),
+																			_1: {
+																				ctor: '::',
+																				_0: _user$project$CssTransitions$width(_elm_lang$core$Time$second * 0.3),
+																				_1: {
+																					ctor: '::',
+																					_0: _user$project$CssTransitions$padding(_elm_lang$core$Time$second * 0.3),
+																					_1: {
+																						ctor: '::',
+																						_0: _user$project$CssTransitions$margin(_elm_lang$core$Time$second * 0.3),
+																						_1: {ctor: '[]'}
+																					}
+																				}
+																			}
+																		}),
+																	_1: {
+																		ctor: '::',
+																		_0: _rtfeldman$elm_css$Css$descendants(
+																			{
+																				ctor: '::',
+																				_0: _rtfeldman$elm_css$Css_Elements$img(
+																					{
+																						ctor: '::',
+																						_0: _rtfeldman$elm_css$Css$height(
+																							_rtfeldman$elm_css$Css$px(326)),
+																						_1: {ctor: '[]'}
+																					}),
+																				_1: {ctor: '[]'}
+																			}),
+																		_1: {
+																			ctor: '::',
+																			_0: A2(
+																				_rtfeldman$elm_css$Css_Media$withMediaQuery,
+																				{
+																					ctor: '::',
+																					_0: 'screen and (max-width: 600px)',
+																					_1: {ctor: '[]'}
+																				},
+																				{
+																					ctor: '::',
+																					_0: _rtfeldman$elm_css$Css$display(_rtfeldman$elm_css$Css$block),
+																					_1: {
+																						ctor: '::',
+																						_0: _rtfeldman$elm_css$Css$maxHeight(_rtfeldman$elm_css$Css$none),
+																						_1: {ctor: '[]'}
+																					}
+																				}),
+																			_1: {ctor: '[]'}
+																		}
+																	}
+																}
+															}
+														}
+													}
+												}
+											}
+										}
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+	});
 var _user$project$AppCss$Filtered = {ctor: 'Filtered'};
 var _user$project$AppCss$filtered = A2(
 	_rtfeldman$elm_css$Css$class,
@@ -27385,7 +28091,11 @@ var _user$project$AppCss$filtered = A2(
 				ctor: '::',
 				_0: _rtfeldman$elm_css$Css$margin(
 					_rtfeldman$elm_css$Css$px(0)),
-				_1: {ctor: '[]'}
+				_1: {
+					ctor: '::',
+					_0: _rtfeldman$elm_css$Css$padding(_rtfeldman$elm_css$Css$zero),
+					_1: {ctor: '[]'}
+				}
 			}
 		}
 	});
@@ -27469,7 +28179,23 @@ var _user$project$AppCss$header = A2(
 											_1: {
 												ctor: '::',
 												_0: _rtfeldman$elm_css$Css$justifyContent(_rtfeldman$elm_css$Css$spaceAround),
-												_1: {ctor: '[]'}
+												_1: {
+													ctor: '::',
+													_0: A2(
+														_rtfeldman$elm_css$Css_Media$withMediaQuery,
+														{
+															ctor: '::',
+															_0: 'screen and (max-width: 600px)',
+															_1: {ctor: '[]'}
+														},
+														{
+															ctor: '::',
+															_0: _rtfeldman$elm_css$Css$padding(
+																_rtfeldman$elm_css$Css$px(10)),
+															_1: {ctor: '[]'}
+														}),
+													_1: {ctor: '[]'}
+												}
 											}
 										}
 									}),
@@ -27555,49 +28281,69 @@ var _user$project$AppCss$movieCard = A2(
 								_rtfeldman$elm_css$Css$px(215)),
 							_1: {
 								ctor: '::',
-								_0: _rtfeldman$elm_css$Css$descendants(
-									{
-										ctor: '::',
-										_0: A2(
-											_rtfeldman$elm_css$Css$class,
-											_user$project$AppCss$Poster,
-											{
-												ctor: '::',
-												_0: _rtfeldman$elm_css$Css$maxWidth(
-													_rtfeldman$elm_css$Css$pct(100)),
-												_1: {
-													ctor: '::',
-													_0: _rtfeldman$elm_css$Css$width(
-														_rtfeldman$elm_css$Css$pct(100)),
-													_1: {ctor: '[]'}
-												}
-											}),
-										_1: {
+								_0: _rtfeldman$elm_css$Css$backgroundColor(_user$project$AppCss$colors.transparent),
+								_1: {
+									ctor: '::',
+									_0: _rtfeldman$elm_css$Css$descendants(
+										{
 											ctor: '::',
 											_0: A2(
 												_rtfeldman$elm_css$Css$class,
-												_user$project$AppCss$Title,
+												_user$project$AppCss$Poster,
 												{
 													ctor: '::',
-													_0: _rtfeldman$elm_css$Css$margin(_user$project$AppCss$spacing.small),
-													_1: {ctor: '[]'}
+													_0: _rtfeldman$elm_css$Css$maxWidth(
+														_rtfeldman$elm_css$Css$pct(100)),
+													_1: {
+														ctor: '::',
+														_0: _rtfeldman$elm_css$Css$width(
+															_rtfeldman$elm_css$Css$pct(100)),
+														_1: {ctor: '[]'}
+													}
 												}),
 											_1: {
 												ctor: '::',
 												_0: A2(
 													_rtfeldman$elm_css$Css$class,
-													_user$project$AppCss$Notes,
+													_user$project$AppCss$Title,
 													{
 														ctor: '::',
-														_0: _rtfeldman$elm_css$Css$fontSize(
-															_rtfeldman$elm_css$Css$rem(0.9)),
+														_0: _rtfeldman$elm_css$Css$margin(_user$project$AppCss$spacing.small),
 														_1: {ctor: '[]'}
 													}),
-												_1: {ctor: '[]'}
+												_1: {
+													ctor: '::',
+													_0: A2(
+														_rtfeldman$elm_css$Css$class,
+														_user$project$AppCss$Notes,
+														{
+															ctor: '::',
+															_0: _rtfeldman$elm_css$Css$fontSize(
+																_rtfeldman$elm_css$Css$rem(0.9)),
+															_1: {ctor: '[]'}
+														}),
+													_1: {ctor: '[]'}
+												}
 											}
-										}
-									}),
-								_1: {ctor: '[]'}
+										}),
+									_1: {
+										ctor: '::',
+										_0: A2(
+											_rtfeldman$elm_css$Css_Media$withMediaQuery,
+											{
+												ctor: '::',
+												_0: 'screen and (max-width: 600px)',
+												_1: {ctor: '[]'}
+											},
+											{
+												ctor: '::',
+												_0: _rtfeldman$elm_css$Css$width(
+													_rtfeldman$elm_css$Css$pct(45)),
+												_1: {ctor: '[]'}
+											}),
+										_1: {ctor: '[]'}
+									}
+								}
 							}
 						}
 					}
@@ -27630,7 +28376,27 @@ var _user$project$AppCss$css = _rtfeldman$elm_css$Css$stylesheet(
 								_1: {
 									ctor: '::',
 									_0: _user$project$AppCss$filterable,
-									_1: {ctor: '[]'}
+									_1: {
+										ctor: '::',
+										_0: _user$project$AppCss$movieModal,
+										_1: {
+											ctor: '::',
+											_0: _user$project$AppCss$closeButton,
+											_1: {
+												ctor: '::',
+												_0: _user$project$AppCss$infoBlock,
+												_1: {
+													ctor: '::',
+													_0: _user$project$AppCss$rightBar,
+													_1: {
+														ctor: '::',
+														_0: _user$project$AppCss$leftBar,
+														_1: {ctor: '[]'}
+													}
+												}
+											}
+										}
+									}
 								}
 							}
 						}
@@ -27797,8 +28563,105 @@ var _user$project$Movie$notesView = function (movie) {
 			});
 	}
 };
-var _user$project$Movie$movieCard = F2(
-	function (selectedGenres, movie) {
+var _user$project$Movie$movieModalBase = F2(
+	function (closeModal, contents) {
+		return A2(
+			_elm_lang$html$Html$div,
+			{
+				ctor: '::',
+				_0: _user$project$AppCss_Helpers$class(
+					{
+						ctor: '::',
+						_0: _user$project$AppCss$MovieModal,
+						_1: {ctor: '[]'}
+					}),
+				_1: {ctor: '[]'}
+			},
+			A2(
+				_elm_lang$core$Basics_ops['++'],
+				{
+					ctor: '::',
+					_0: A2(
+						_elm_lang$html$Html$button,
+						{
+							ctor: '::',
+							_0: _user$project$AppCss_Helpers$class(
+								{
+									ctor: '::',
+									_0: _user$project$AppCss$CloseButton,
+									_1: {ctor: '[]'}
+								}),
+							_1: {
+								ctor: '::',
+								_0: _elm_lang$html$Html_Events$onClick(closeModal),
+								_1: {
+									ctor: '::',
+									_0: _elm_lang$html$Html_Attributes$autofocus(true),
+									_1: {ctor: '[]'}
+								}
+							}
+						},
+						{
+							ctor: '::',
+							_0: _elm_lang$html$Html$text('❌'),
+							_1: {ctor: '[]'}
+						}),
+					_1: {ctor: '[]'}
+				},
+				contents));
+	});
+var _user$project$Movie$ratingsList = function (ratings) {
+	return A2(
+		_elm_lang$html$Html$ul,
+		{ctor: '[]'},
+		A2(
+			_elm_lang$core$List$map,
+			function (l) {
+				return A2(
+					_elm_lang$html$Html$li,
+					{ctor: '[]'},
+					{
+						ctor: '::',
+						_0: _elm_lang$html$Html$text(
+							A2(_elm_lang$core$Basics_ops['++'], l.source, ' - ')),
+						_1: {
+							ctor: '::',
+							_0: A2(
+								_elm_lang$html$Html$b,
+								{ctor: '[]'},
+								{
+									ctor: '::',
+									_0: _elm_lang$html$Html$text(l.value),
+									_1: {ctor: '[]'}
+								}),
+							_1: {ctor: '[]'}
+						}
+					});
+			},
+			ratings));
+};
+var _user$project$Movie$moviePoster = function (movie) {
+	return A2(
+		_elm_lang$html$Html$img,
+		{
+			ctor: '::',
+			_0: _user$project$AppCss_Helpers$class(
+				{
+					ctor: '::',
+					_0: _user$project$AppCss$Poster,
+					_1: {ctor: '[]'}
+				}),
+			_1: {
+				ctor: '::',
+				_0: _elm_lang$html$Html_Attributes$src(
+					A2(_elm_lang$core$Basics_ops['++'], 'posters/', movie.img)),
+				_1: {ctor: '[]'}
+			}
+		},
+		{ctor: '[]'});
+};
+var _user$project$Movie$movieCard = F3(
+	function (focusMovie, selectedGenres, movie) {
 		var filtered = function () {
 			var _p2 = _elm_lang$core$Set$size(selectedGenres);
 			if (_p2 === 0) {
@@ -27811,7 +28674,7 @@ var _user$project$Movie$movieCard = F2(
 			}
 		}();
 		return A2(
-			_elm_lang$html$Html$a,
+			_elm_lang$html$Html$button,
 			{
 				ctor: '::',
 				_0: _user$project$AppCss_Helpers$classList(
@@ -27830,34 +28693,18 @@ var _user$project$Movie$movieCard = F2(
 					}),
 				_1: {
 					ctor: '::',
-					_0: _elm_lang$html$Html_Attributes$href(movie.url),
+					_0: _elm_lang$html$Html_Events$onClick(
+						focusMovie(movie)),
 					_1: {
 						ctor: '::',
-						_0: _elm_lang$html$Html_Attributes$target('_blank'),
+						_0: _elm_lang$html$Html_Attributes$type_('button'),
 						_1: {ctor: '[]'}
 					}
 				}
 			},
 			{
 				ctor: '::',
-				_0: A2(
-					_elm_lang$html$Html$img,
-					{
-						ctor: '::',
-						_0: _user$project$AppCss_Helpers$class(
-							{
-								ctor: '::',
-								_0: _user$project$AppCss$Poster,
-								_1: {ctor: '[]'}
-							}),
-						_1: {
-							ctor: '::',
-							_0: _elm_lang$html$Html_Attributes$src(
-								A2(_elm_lang$core$Basics_ops['++'], 'posters/', movie.img)),
-							_1: {ctor: '[]'}
-						}
-					},
-					{ctor: '[]'}),
+				_0: _user$project$Movie$moviePoster(movie),
 				_1: {
 					ctor: '::',
 					_0: A2(
@@ -27885,10 +28732,304 @@ var _user$project$Movie$movieCard = F2(
 				}
 			});
 	});
+var _user$project$Movie$movieModal = F2(
+	function (movie, closeModal) {
+		return A2(
+			_user$project$Movie$movieModalBase,
+			closeModal,
+			{
+				ctor: '::',
+				_0: A2(
+					_elm_lang$html$Html$div,
+					{
+						ctor: '::',
+						_0: _user$project$AppCss_Helpers$class(
+							{
+								ctor: '::',
+								_0: _user$project$AppCss$LeftBar,
+								_1: {ctor: '[]'}
+							}),
+						_1: {ctor: '[]'}
+					},
+					{
+						ctor: '::',
+						_0: _user$project$Movie$moviePoster(movie.movie),
+						_1: {
+							ctor: '::',
+							_0: A2(
+								_elm_lang$html$Html$div,
+								{
+									ctor: '::',
+									_0: _user$project$AppCss_Helpers$class(
+										{
+											ctor: '::',
+											_0: _user$project$AppCss$InfoBlock,
+											_1: {ctor: '[]'}
+										}),
+									_1: {ctor: '[]'}
+								},
+								{
+									ctor: '::',
+									_0: _user$project$Movie$ratingsList(movie.ratings),
+									_1: {ctor: '[]'}
+								}),
+							_1: {ctor: '[]'}
+						}
+					}),
+				_1: {
+					ctor: '::',
+					_0: A2(
+						_elm_lang$html$Html$div,
+						{
+							ctor: '::',
+							_0: _user$project$AppCss_Helpers$class(
+								{
+									ctor: '::',
+									_0: _user$project$AppCss$RightBar,
+									_1: {
+										ctor: '::',
+										_0: _user$project$AppCss$InfoBlock,
+										_1: {ctor: '[]'}
+									}
+								}),
+							_1: {ctor: '[]'}
+						},
+						{
+							ctor: '::',
+							_0: A2(
+								_elm_lang$html$Html$h2,
+								{ctor: '[]'},
+								{
+									ctor: '::',
+									_0: A2(
+										_elm_lang$html$Html$a,
+										{
+											ctor: '::',
+											_0: _elm_lang$html$Html_Attributes$href(movie.movie.url),
+											_1: {
+												ctor: '::',
+												_0: _elm_lang$html$Html_Attributes$target('_blank'),
+												_1: {ctor: '[]'}
+											}
+										},
+										{
+											ctor: '::',
+											_0: _elm_lang$html$Html$text(movie.movie.title),
+											_1: {ctor: '[]'}
+										}),
+									_1: {
+										ctor: '::',
+										_0: _elm_lang$html$Html$text(
+											A2(
+												_elm_lang$core$Basics_ops['++'],
+												' - ',
+												A2(
+													_elm_lang$core$Basics_ops['++'],
+													_elm_lang$core$Basics$toString(movie.movie.year),
+													A2(
+														_elm_lang$core$Basics_ops['++'],
+														' - Rated ',
+														A2(
+															_elm_lang$core$Basics_ops['++'],
+															movie.rated,
+															A2(_elm_lang$core$Basics_ops['++'], ' - ', movie.runtime)))))),
+										_1: {ctor: '[]'}
+									}
+								}),
+							_1: {
+								ctor: '::',
+								_0: A2(
+									_elm_lang$html$Html$p,
+									{ctor: '[]'},
+									{
+										ctor: '::',
+										_0: _elm_lang$html$Html$text(movie.plot),
+										_1: {ctor: '[]'}
+									}),
+								_1: {
+									ctor: '::',
+									_0: A2(
+										_elm_lang$html$Html$p,
+										{ctor: '[]'},
+										{
+											ctor: '::',
+											_0: _elm_lang$html$Html$text(
+												A2(
+													_elm_lang$core$Basics_ops['++'],
+													'Directed by ',
+													A2(
+														_elm_lang$core$Basics_ops['++'],
+														movie.director,
+														A2(
+															_elm_lang$core$Basics_ops['++'],
+															'. Written by ',
+															A2(_elm_lang$core$Basics_ops['++'], movie.writer, '.'))))),
+											_1: {ctor: '[]'}
+										}),
+									_1: {
+										ctor: '::',
+										_0: A2(
+											_elm_lang$html$Html$p,
+											{ctor: '[]'},
+											{
+												ctor: '::',
+												_0: _elm_lang$html$Html$text(
+													A2(_elm_lang$core$Basics_ops['++'], 'Starring ', movie.actors)),
+												_1: {ctor: '[]'}
+											}),
+										_1: {
+											ctor: '::',
+											_0: A2(
+												_elm_lang$html$Html$div,
+												{ctor: '[]'},
+												A2(
+													_elm_lang$core$List$map,
+													function (_p3) {
+														var _p4 = _p3;
+														return A2(
+															_elm_lang$html$Html$a,
+															{
+																ctor: '::',
+																_0: _elm_lang$html$Html_Attributes$href(
+																	A2(_elm_lang$core$Basics_ops['++'], '?genres=', _p4._0)),
+																_1: {ctor: '[]'}
+															},
+															{
+																ctor: '::',
+																_0: _elm_lang$html$Html$text(_p4._1),
+																_1: {ctor: '[]'}
+															});
+													},
+													_elm_lang$core$Set$toList(movie.movie.genres))),
+											_1: {ctor: '[]'}
+										}
+									}
+								}
+							}
+						}),
+					_1: {ctor: '[]'}
+				}
+			});
+	});
+var _user$project$Movie$offlineMovieModal = F2(
+	function (movie, closeModal) {
+		return A2(
+			_user$project$Movie$movieModalBase,
+			closeModal,
+			{
+				ctor: '::',
+				_0: A2(
+					_elm_lang$html$Html$div,
+					{
+						ctor: '::',
+						_0: _user$project$AppCss_Helpers$class(
+							{
+								ctor: '::',
+								_0: _user$project$AppCss$LeftBar,
+								_1: {ctor: '[]'}
+							}),
+						_1: {ctor: '[]'}
+					},
+					{
+						ctor: '::',
+						_0: _user$project$Movie$moviePoster(movie),
+						_1: {ctor: '[]'}
+					}),
+				_1: {
+					ctor: '::',
+					_0: A2(
+						_elm_lang$html$Html$div,
+						{
+							ctor: '::',
+							_0: _user$project$AppCss_Helpers$class(
+								{
+									ctor: '::',
+									_0: _user$project$AppCss$RightBar,
+									_1: {
+										ctor: '::',
+										_0: _user$project$AppCss$InfoBlock,
+										_1: {ctor: '[]'}
+									}
+								}),
+							_1: {ctor: '[]'}
+						},
+						{
+							ctor: '::',
+							_0: A2(
+								_elm_lang$html$Html$h2,
+								{ctor: '[]'},
+								{
+									ctor: '::',
+									_0: A2(
+										_elm_lang$html$Html$a,
+										{
+											ctor: '::',
+											_0: _elm_lang$html$Html_Attributes$href(movie.url),
+											_1: {
+												ctor: '::',
+												_0: _elm_lang$html$Html_Attributes$target('_blank'),
+												_1: {ctor: '[]'}
+											}
+										},
+										{
+											ctor: '::',
+											_0: _elm_lang$html$Html$text(movie.title),
+											_1: {ctor: '[]'}
+										}),
+									_1: {
+										ctor: '::',
+										_0: _elm_lang$html$Html$text(
+											A2(
+												_elm_lang$core$Basics_ops['++'],
+												' - ',
+												A2(
+													_elm_lang$core$Basics_ops['++'],
+													_elm_lang$core$Basics$toString(movie.year),
+													A2(
+														_elm_lang$core$Basics_ops['++'],
+														' - ',
+														A2(
+															_elm_lang$core$Basics_ops['++'],
+															_elm_lang$core$Basics$toString(movie.runtime),
+															'min'))))),
+										_1: {ctor: '[]'}
+									}
+								}),
+							_1: {
+								ctor: '::',
+								_0: A2(
+									_elm_lang$html$Html$div,
+									{ctor: '[]'},
+									A2(
+										_elm_lang$core$List$map,
+										function (_p5) {
+											var _p6 = _p5;
+											return A2(
+												_elm_lang$html$Html$a,
+												{
+													ctor: '::',
+													_0: _elm_lang$html$Html_Attributes$href(
+														A2(_elm_lang$core$Basics_ops['++'], '?genres=', _p6._0)),
+													_1: {ctor: '[]'}
+												},
+												{
+													ctor: '::',
+													_0: _elm_lang$html$Html$text(_p6._1),
+													_1: {ctor: '[]'}
+												});
+										},
+										_elm_lang$core$Set$toList(movie.genres))),
+								_1: {ctor: '[]'}
+							}
+						}),
+					_1: {ctor: '[]'}
+				}
+			});
+	});
 var _user$project$Movie$matchGenres = F2(
 	function (genres, movie) {
-		var _p3 = _elm_lang$core$Set$size(genres);
-		if (_p3 === 0) {
+		var _p7 = _elm_lang$core$Set$size(genres);
+		if (_p7 === 0) {
 			return true;
 		} else {
 			return _elm_lang$core$Native_Utils.cmp(
@@ -27898,16 +29039,16 @@ var _user$project$Movie$matchGenres = F2(
 		}
 	});
 var _user$project$Movie$watchDate = function (movie) {
-	var _p4 = movie.watched;
-	if (_p4.ctor === 'Unwatched') {
+	var _p8 = movie.watched;
+	if (_p8.ctor === 'Unwatched') {
 		return _elm_lang$core$Maybe$Nothing;
 	} else {
-		return _elm_lang$core$Maybe$Just(_p4._0);
+		return _elm_lang$core$Maybe$Just(_p8._0);
 	}
 };
 var _user$project$Movie$isWatched = function (movie) {
-	var _p5 = movie.watched;
-	if (_p5.ctor === 'Unwatched') {
+	var _p9 = movie.watched;
+	if (_p9.ctor === 'Unwatched') {
 		return false;
 	} else {
 		return true;
@@ -27917,6 +29058,64 @@ var _user$project$Movie$Movie = F7(
 	function (a, b, c, d, e, f, g) {
 		return {title: a, url: b, img: c, year: d, runtime: e, genres: f, watched: g};
 	});
+var _user$project$Movie$Rating = F2(
+	function (a, b) {
+		return {source: a, value: b};
+	});
+var _user$project$Movie$ratingDecoder = A3(
+	_NoRedInk$elm_decode_pipeline$Json_Decode_Pipeline$required,
+	'Value',
+	_elm_lang$core$Json_Decode$string,
+	A3(
+		_NoRedInk$elm_decode_pipeline$Json_Decode_Pipeline$required,
+		'Source',
+		_elm_lang$core$Json_Decode$string,
+		_NoRedInk$elm_decode_pipeline$Json_Decode_Pipeline$decode(_user$project$Movie$Rating)));
+var _user$project$Movie$MovieDetails = F8(
+	function (a, b, c, d, e, f, g, h) {
+		return {movie: a, rated: b, runtime: c, director: d, writer: e, actors: f, plot: g, ratings: h};
+	});
+var _user$project$Movie$decodeMovieData = function (movie) {
+	return A3(
+		_NoRedInk$elm_decode_pipeline$Json_Decode_Pipeline$required,
+		'Ratings',
+		_elm_lang$core$Json_Decode$list(_user$project$Movie$ratingDecoder),
+		A3(
+			_NoRedInk$elm_decode_pipeline$Json_Decode_Pipeline$required,
+			'Plot',
+			_elm_lang$core$Json_Decode$string,
+			A3(
+				_NoRedInk$elm_decode_pipeline$Json_Decode_Pipeline$required,
+				'Actors',
+				_elm_lang$core$Json_Decode$string,
+				A3(
+					_NoRedInk$elm_decode_pipeline$Json_Decode_Pipeline$required,
+					'Writer',
+					_elm_lang$core$Json_Decode$string,
+					A3(
+						_NoRedInk$elm_decode_pipeline$Json_Decode_Pipeline$required,
+						'Director',
+						_elm_lang$core$Json_Decode$string,
+						A3(
+							_NoRedInk$elm_decode_pipeline$Json_Decode_Pipeline$required,
+							'Runtime',
+							_elm_lang$core$Json_Decode$string,
+							A3(
+								_NoRedInk$elm_decode_pipeline$Json_Decode_Pipeline$required,
+								'Rated',
+								_elm_lang$core$Json_Decode$string,
+								A2(
+									_NoRedInk$elm_decode_pipeline$Json_Decode_Pipeline$hardcoded,
+									movie,
+									_NoRedInk$elm_decode_pipeline$Json_Decode_Pipeline$decode(_user$project$Movie$MovieDetails)))))))));
+};
+var _user$project$Movie$Loaded = function (a) {
+	return {ctor: 'Loaded', _0: a};
+};
+var _user$project$Movie$Selected = function (a) {
+	return {ctor: 'Selected', _0: a};
+};
+var _user$project$Movie$NotSelected = {ctor: 'NotSelected'};
 var _user$project$Movie$Watched = function (a) {
 	return {ctor: 'Watched', _0: a};
 };
@@ -30589,35 +31788,6 @@ var _user$project$MovieList$movies = A2(
 		}
 	});
 
-var _user$project$Main$selectionView = function (model) {
-	return A2(
-		_elm_lang$html$Html$div,
-		{
-			ctor: '::',
-			_0: _user$project$AppCss_Helpers$class(
-				{
-					ctor: '::',
-					_0: _user$project$AppCss$Selection,
-					_1: {ctor: '[]'}
-				}),
-			_1: {ctor: '[]'}
-		},
-		{
-			ctor: '::',
-			_0: function () {
-				var _p0 = model.selectedMovie;
-				switch (_p0.ctor) {
-					case 'Selected':
-						return A2(_user$project$Movie$movieCard, _elm_lang$core$Set$empty, _p0._0);
-					case 'NotSelected':
-						return _elm_lang$html$Html$text('');
-					default:
-						return _elm_lang$html$Html$text('Sorry, it looks like the hat is empty.');
-				}
-			}(),
-			_1: {ctor: '[]'}
-		});
-};
 var _user$project$Main$rulesView = A2(
 	_elm_lang$html$Html$div,
 	{ctor: '[]'},
@@ -30651,15 +31821,6 @@ var _user$project$Main$rulesView = A2(
 			}
 		}
 	});
-var _user$project$Main$Model = F7(
-	function (a, b, c, d, e, f, g) {
-		return {unwatched: a, watched: b, selectedMovie: c, genres: d, selectedGenres: e, genresMultiselect: f, location: g};
-	});
-var _user$project$Main$NothingToSelect = {ctor: 'NothingToSelect'};
-var _user$project$Main$Selected = function (a) {
-	return {ctor: 'Selected', _0: a};
-};
-var _user$project$Main$NotSelected = {ctor: 'NotSelected'};
 var _user$project$Main$init = function (location) {
 	var queryGenres = _user$project$Genre$fromQueryString(location);
 	var selectOptions = function (set) {
@@ -30691,8 +31852,8 @@ var _user$project$Main$init = function (location) {
 				},
 				A2(
 					_elm_lang$core$List$filter,
-					function (_p1) {
-						return !_user$project$Movie$isWatched(_p1);
+					function (_p0) {
+						return !_user$project$Movie$isWatched(_p0);
 					},
 					_user$project$MovieList$movies)),
 			watched: A2(
@@ -30705,7 +31866,7 @@ var _user$project$Main$init = function (location) {
 							watchDate(m2));
 					}),
 				A2(_elm_lang$core$List$filter, _user$project$Movie$isWatched, _user$project$MovieList$movies)),
-			selectedMovie: _user$project$Main$NotSelected,
+			focusedMovie: _user$project$Movie$NotSelected,
 			genres: genres,
 			selectedGenres: queryGenres,
 			genresMultiselect: A2(_user$project$Genre$multiSelectModel, genres, queryGenres),
@@ -30713,6 +31874,33 @@ var _user$project$Main$init = function (location) {
 		},
 		{ctor: '[]'});
 };
+var _user$project$Main$Model = F7(
+	function (a, b, c, d, e, f, g) {
+		return {unwatched: a, watched: b, focusedMovie: c, genres: d, selectedGenres: e, genresMultiselect: f, location: g};
+	});
+var _user$project$Main$LoadMovie = function (a) {
+	return {ctor: 'LoadMovie', _0: a};
+};
+var _user$project$Main$fetchMovie = function (movie) {
+	var url = A2(_elm_lang$core$Basics_ops['++'], 'http://www.omdbapi.com/?apiKey=6f7301bf&t=', movie.title);
+	var request = A2(
+		_elm_lang$http$Http$get,
+		url,
+		_user$project$Movie$decodeMovieData(movie));
+	return A2(_elm_lang$http$Http$send, _user$project$Main$LoadMovie, request);
+};
+var _user$project$Main$openModal = F2(
+	function (model, movie) {
+		return {
+			ctor: '_Tuple2',
+			_0: _elm_lang$core$Native_Utils.update(
+				model,
+				{
+					focusedMovie: _user$project$Movie$Selected(movie)
+				}),
+			_1: _user$project$Main$fetchMovie(movie)
+		};
+	});
 var _user$project$Main$LocationChange = function (a) {
 	return {ctor: 'LocationChange', _0: a};
 };
@@ -30725,13 +31913,17 @@ var _user$project$Main$subscriptions = function (model) {
 		_user$project$Main$MultiselectEvent,
 		_inkuzmin$elm_multiselect$Multiselect$subscriptions(model.genresMultiselect));
 };
+var _user$project$Main$CloseModal = {ctor: 'CloseModal'};
+var _user$project$Main$FocusMovie = function (a) {
+	return {ctor: 'FocusMovie', _0: a};
+};
 var _user$project$Main$MovieSelected = function (a) {
 	return {ctor: 'MovieSelected', _0: a};
 };
 var _user$project$Main$update = F2(
 	function (msg, model) {
-		var _p2 = msg;
-		switch (_p2.ctor) {
+		var _p1 = msg;
+		switch (_p1.ctor) {
 			case 'LocationChange':
 				return {ctor: '_Tuple2', _0: model, _1: _elm_lang$core$Platform_Cmd$none};
 			case 'SelectMovie':
@@ -30748,23 +31940,44 @@ var _user$project$Main$update = F2(
 								model.unwatched)))
 				};
 			case 'MovieSelected':
-				var selected = function () {
-					var _p3 = _p2._0._0;
-					if (_p3.ctor === 'Just') {
-						return _user$project$Main$Selected(_p3._0);
-					} else {
-						return _user$project$Main$NothingToSelect;
-					}
-				}();
+				var _p2 = _p1._0._0;
+				if (_p2.ctor === 'Just') {
+					return A2(
+						_user$project$Main$openModal,
+						_elm_lang$core$Native_Utils.update(
+							model,
+							{unwatched: _p1._0._1}),
+						_p2._0);
+				} else {
+					return {ctor: '_Tuple2', _0: model, _1: _elm_lang$core$Platform_Cmd$none};
+				}
+			case 'FocusMovie':
+				return A2(_user$project$Main$openModal, model, _p1._0);
+			case 'CloseModal':
 				return {
 					ctor: '_Tuple2',
 					_0: _elm_lang$core$Native_Utils.update(
 						model,
-						{unwatched: _p2._0._1, selectedMovie: selected}),
+						{focusedMovie: _user$project$Movie$NotSelected}),
 					_1: _elm_lang$core$Platform_Cmd$none
 				};
+			case 'LoadMovie':
+				var _p3 = _p1._0;
+				if (_p3.ctor === 'Ok') {
+					return {
+						ctor: '_Tuple2',
+						_0: _elm_lang$core$Native_Utils.update(
+							model,
+							{
+								focusedMovie: _user$project$Movie$Loaded(_p3._0)
+							}),
+						_1: _elm_lang$core$Platform_Cmd$none
+					};
+				} else {
+					return {ctor: '_Tuple2', _0: model, _1: _elm_lang$core$Platform_Cmd$none};
+				}
 			default:
-				var _p4 = A2(_inkuzmin$elm_multiselect$Multiselect$update, _p2._0, model.genresMultiselect);
+				var _p4 = A2(_inkuzmin$elm_multiselect$Multiselect$update, _p1._0, model.genresMultiselect);
 				var subModel = _p4._0;
 				var subCmd = _p4._1;
 				var selectedGenres = _elm_lang$core$Set$fromList(subModel.selected);
@@ -30903,17 +32116,27 @@ var _user$project$Main$appHeader = function (model) {
 				_0: _user$project$Main$selectionControls,
 				_1: {
 					ctor: '::',
-					_0: _user$project$Main$selectionView(model),
-					_1: {
-						ctor: '::',
-						_0: A2(_user$project$Genre$selectionView, _user$project$Main$MultiselectEvent, model.genresMultiselect),
-						_1: {ctor: '[]'}
-					}
+					_0: A2(_user$project$Genre$selectionView, _user$project$Main$MultiselectEvent, model.genresMultiselect),
+					_1: {ctor: '[]'}
 				}
 			}
 		});
 };
 var _user$project$Main$view = function (model) {
+	var modal = function () {
+		var _p8 = model.focusedMovie;
+		switch (_p8.ctor) {
+			case 'Loaded':
+				return A2(_user$project$Movie$movieModal, _p8._0, _user$project$Main$CloseModal);
+			case 'Selected':
+				return A2(_user$project$Movie$offlineMovieModal, _p8._0, _user$project$Main$CloseModal);
+			default:
+				return A2(
+					_elm_lang$html$Html$div,
+					{ctor: '[]'},
+					{ctor: '[]'});
+		}
+	}();
 	var watchDate = function (movie) {
 		return A2(
 			_elm_lang$core$Maybe$withDefault,
@@ -30938,74 +32161,78 @@ var _user$project$Main$view = function (model) {
 				_0: _user$project$Main$appHeader(model),
 				_1: {
 					ctor: '::',
-					_0: A2(
-						_elm_lang$html$Html$div,
-						{ctor: '[]'},
-						{
-							ctor: '::',
-							_0: A2(
-								_elm_lang$html$Html$h2,
-								{ctor: '[]'},
-								{
-									ctor: '::',
-									_0: _elm_lang$html$Html$text('Unwatched Films'),
-									_1: {ctor: '[]'}
-								}),
-							_1: {
+					_0: modal,
+					_1: {
+						ctor: '::',
+						_0: A2(
+							_elm_lang$html$Html$div,
+							{ctor: '[]'},
+							{
 								ctor: '::',
 								_0: A2(
-									_elm_lang$html$Html$div,
+									_elm_lang$html$Html$h2,
+									{ctor: '[]'},
 									{
 										ctor: '::',
-										_0: _user$project$AppCss_Helpers$class(
-											{
-												ctor: '::',
-												_0: _user$project$AppCss$Movies,
-												_1: {ctor: '[]'}
-											}),
+										_0: _elm_lang$html$Html$text('Unwatched Films'),
 										_1: {ctor: '[]'}
-									},
-									A2(
-										_elm_lang$core$List$map,
-										_user$project$Movie$movieCard(model.selectedGenres),
-										model.unwatched)),
+									}),
 								_1: {
 									ctor: '::',
 									_0: A2(
-										_elm_lang$html$Html$h2,
-										{ctor: '[]'},
+										_elm_lang$html$Html$div,
 										{
 											ctor: '::',
-											_0: _elm_lang$html$Html$text('Watched'),
+											_0: _user$project$AppCss_Helpers$class(
+												{
+													ctor: '::',
+													_0: _user$project$AppCss$Movies,
+													_1: {ctor: '[]'}
+												}),
 											_1: {ctor: '[]'}
-										}),
+										},
+										A2(
+											_elm_lang$core$List$map,
+											A2(_user$project$Movie$movieCard, _user$project$Main$FocusMovie, model.selectedGenres),
+											model.unwatched)),
 									_1: {
 										ctor: '::',
 										_0: A2(
-											_elm_lang$html$Html$div,
+											_elm_lang$html$Html$h2,
+											{ctor: '[]'},
 											{
 												ctor: '::',
-												_0: _user$project$AppCss_Helpers$class(
-													{
-														ctor: '::',
-														_0: _user$project$AppCss$Movies,
-														_1: {ctor: '[]'}
-													}),
+												_0: _elm_lang$html$Html$text('Watched'),
 												_1: {ctor: '[]'}
-											},
-											A2(
-												_elm_lang$core$List$map,
-												_user$project$Movie$movieCard(model.selectedGenres),
-												model.watched)),
-										_1: {ctor: '[]'}
+											}),
+										_1: {
+											ctor: '::',
+											_0: A2(
+												_elm_lang$html$Html$div,
+												{
+													ctor: '::',
+													_0: _user$project$AppCss_Helpers$class(
+														{
+															ctor: '::',
+															_0: _user$project$AppCss$Movies,
+															_1: {ctor: '[]'}
+														}),
+													_1: {ctor: '[]'}
+												},
+												A2(
+													_elm_lang$core$List$map,
+													A2(_user$project$Movie$movieCard, _user$project$Main$FocusMovie, model.selectedGenres),
+													model.watched)),
+											_1: {ctor: '[]'}
+										}
 									}
 								}
-							}
-						}),
-					_1: {
-						ctor: '::',
-						_0: _user$project$Main$rulesView,
-						_1: {ctor: '[]'}
+							}),
+						_1: {
+							ctor: '::',
+							_0: _user$project$Main$rulesView,
+							_1: {ctor: '[]'}
+						}
 					}
 				}
 			}
@@ -31019,7 +32246,7 @@ var _user$project$Main$main = A2(
 var Elm = {};
 Elm['Main'] = Elm['Main'] || {};
 if (typeof _user$project$Main$main !== 'undefined') {
-    _user$project$Main$main(Elm['Main'], 'Main', {"types":{"unions":{"Dict.LeafColor":{"args":[],"tags":{"LBBlack":[],"LBlack":[]}},"Time.Date.Date":{"args":[],"tags":{"Date":["{ year : Int, month : Int, day : Int }"]}},"Dom.Error":{"args":[],"tags":{"NotFound":["String"]}},"Movie.WatchState":{"args":[],"tags":{"Watched":["Time.Date.Date"],"Unwatched":[]}},"Dict.Dict":{"args":["k","v"],"tags":{"RBNode_elm_builtin":["Dict.NColor","k","v","Dict.Dict k v","Dict.Dict k v"],"RBEmpty_elm_builtin":["Dict.LeafColor"]}},"Maybe.Maybe":{"args":["a"],"tags":{"Just":["a"],"Nothing":[]}},"Set.Set":{"args":["t"],"tags":{"Set_elm_builtin":["Dict.Dict t ()"]}},"Main.Msg":{"args":[],"tags":{"MultiselectEvent":["Multiselect.Msg"],"SelectMovie":[],"LocationChange":["Navigation.Location"],"MovieSelected":["( Maybe.Maybe Movie.Movie, List Movie.Movie )"]}},"Dict.NColor":{"args":[],"tags":{"BBlack":[],"Red":[],"NBlack":[],"Black":[]}},"Result.Result":{"args":["error","value"],"tags":{"Ok":["value"],"Err":["error"]}},"Multiselect.Msg":{"args":[],"tags":{"ClearInput":[],"OnHover":["( String, String )"],"Toggle":[],"FocusResult":["Result.Result Dom.Error ()"],"Adjust":["Float"],"Start":[],"ClickOnComponent":[],"RemoveItem":["( String, String )"],"Clear":[],"OnSelect":["( String, String )"],"ScrollY":["Result.Result Dom.Error Float"],"ScrollResult":["Result.Result Dom.Error ()"],"DisableProtection":[],"Shortcut":["Int"],"Filter":["String"],"Click":["Mouse.Position"]}}},"aliases":{"Genre.Genre":{"args":[],"type":"( String, String )"},"Mouse.Position":{"args":[],"type":"{ x : Int, y : Int }"},"Movie.Movie":{"args":[],"type":"{ title : String , url : String , img : String , year : Int , runtime : Int , genres : Set.Set Genre.Genre , watched : Movie.WatchState }"},"Navigation.Location":{"args":[],"type":"{ href : String , host : String , hostname : String , protocol : String , origin : String , port_ : String , pathname : String , search : String , hash : String , username : String , password : String }"}},"message":"Main.Msg"},"versions":{"elm":"0.18.0"}});
+    _user$project$Main$main(Elm['Main'], 'Main', {"types":{"unions":{"Dict.LeafColor":{"args":[],"tags":{"LBBlack":[],"LBlack":[]}},"Time.Date.Date":{"args":[],"tags":{"Date":["{ year : Int, month : Int, day : Int }"]}},"Dom.Error":{"args":[],"tags":{"NotFound":["String"]}},"Movie.WatchState":{"args":[],"tags":{"Watched":["Time.Date.Date"],"Unwatched":[]}},"Dict.Dict":{"args":["k","v"],"tags":{"RBNode_elm_builtin":["Dict.NColor","k","v","Dict.Dict k v","Dict.Dict k v"],"RBEmpty_elm_builtin":["Dict.LeafColor"]}},"Maybe.Maybe":{"args":["a"],"tags":{"Just":["a"],"Nothing":[]}},"Set.Set":{"args":["t"],"tags":{"Set_elm_builtin":["Dict.Dict t ()"]}},"Main.Msg":{"args":[],"tags":{"MultiselectEvent":["Multiselect.Msg"],"SelectMovie":[],"FocusMovie":["Movie.Movie"],"CloseModal":[],"LocationChange":["Navigation.Location"],"LoadMovie":["Result.Result Http.Error Movie.MovieDetails"],"MovieSelected":["( Maybe.Maybe Movie.Movie, List Movie.Movie )"]}},"Dict.NColor":{"args":[],"tags":{"BBlack":[],"Red":[],"NBlack":[],"Black":[]}},"Http.Error":{"args":[],"tags":{"BadUrl":["String"],"NetworkError":[],"Timeout":[],"BadStatus":["Http.Response String"],"BadPayload":["String","Http.Response String"]}},"Result.Result":{"args":["error","value"],"tags":{"Ok":["value"],"Err":["error"]}},"Multiselect.Msg":{"args":[],"tags":{"ClearInput":[],"OnHover":["( String, String )"],"Toggle":[],"FocusResult":["Result.Result Dom.Error ()"],"Adjust":["Float"],"Start":[],"ClickOnComponent":[],"RemoveItem":["( String, String )"],"Clear":[],"OnSelect":["( String, String )"],"ScrollY":["Result.Result Dom.Error Float"],"ScrollResult":["Result.Result Dom.Error ()"],"DisableProtection":[],"Shortcut":["Int"],"Filter":["String"],"Click":["Mouse.Position"]}}},"aliases":{"Movie.MovieDetails":{"args":[],"type":"{ movie : Movie.Movie , rated : String , runtime : String , director : String , writer : String , actors : String , plot : String , ratings : List Movie.Rating }"},"Http.Response":{"args":["body"],"type":"{ url : String , status : { code : Int, message : String } , headers : Dict.Dict String String , body : body }"},"Genre.Genre":{"args":[],"type":"( String, String )"},"Mouse.Position":{"args":[],"type":"{ x : Int, y : Int }"},"Movie.Movie":{"args":[],"type":"{ title : String , url : String , img : String , year : Int , runtime : Int , genres : Set.Set Genre.Genre , watched : Movie.WatchState }"},"Movie.Rating":{"args":[],"type":"{ source : String, value : String }"},"Navigation.Location":{"args":[],"type":"{ href : String , host : String , hostname : String , protocol : String , origin : String , port_ : String , pathname : String , search : String , hash : String , username : String , password : String }"}},"message":"Main.Msg"},"versions":{"elm":"0.18.0"}});
 }
 
 if (typeof define === "function" && define['amd'])

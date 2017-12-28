@@ -2,7 +2,7 @@ module Main exposing (..)
 
 -- Our Imports
 
-import Movie exposing (Movie, movieCard, matchGenres)
+import Movie exposing (Movie, movieCard, matchGenres, MovieDetails, MovieSelection, movieModal, offlineMovieModal)
 import Genre exposing (Genre)
 import MovieList exposing (..)
 import AppCss.Helpers exposing (class)
@@ -21,6 +21,8 @@ import Random
 import Random.List as RandList
 import Set exposing (Set)
 import Navigation
+import Http
+import Task
 
 
 main : Program Never Model Msg
@@ -41,18 +43,12 @@ main =
 type alias Model =
     { unwatched : List Movie
     , watched : List Movie
-    , selectedMovie : MovieSelection
+    , focusedMovie : MovieSelection
     , genres : Set Genre
     , selectedGenres : Set Genre
     , genresMultiselect : Multiselect.Model
     , location : Navigation.Location
     }
-
-
-type MovieSelection
-    = NotSelected
-    | Selected Movie
-    | NothingToSelect
 
 
 init : Navigation.Location -> ( Model, Cmd Msg )
@@ -85,7 +81,7 @@ init location =
                     (\m1 m2 ->
                         Date.compare (watchDate m1) (watchDate m2)
                     )
-        , selectedMovie = NotSelected
+        , focusedMovie = Movie.NotSelected
         , genres = genres
         , selectedGenres = queryGenres
         , genresMultiselect = Genre.multiSelectModel genres queryGenres
@@ -101,8 +97,28 @@ init location =
 type Msg
     = SelectMovie
     | MovieSelected ( Maybe Movie, List Movie )
+    | FocusMovie Movie
+    | CloseModal
     | MultiselectEvent Multiselect.Msg
     | LocationChange Navigation.Location
+    | LoadMovie (Result Http.Error MovieDetails)
+
+
+fetchMovie : Movie -> Cmd Msg
+fetchMovie movie =
+    let
+        url =
+            "http://www.omdbapi.com/?apiKey=6f7301bf&t=" ++ movie.title
+
+        request =
+            Http.get url (Movie.decodeMovieData movie)
+    in
+        Http.send LoadMovie request
+
+
+openModal : Model -> Movie -> ( Model, Cmd Msg )
+openModal model movie =
+    ( { model | focusedMovie = Movie.Selected movie }, fetchMovie movie )
 
 
 update : Msg -> Model -> ( Model, Cmd Msg )
@@ -120,21 +136,30 @@ update msg model =
             )
 
         MovieSelected ( selection, remaining ) ->
-            let
-                selected =
-                    case selection of
-                        Just movie ->
-                            Selected movie
+            case selection of
+                Just movie ->
+                    openModal { model | unwatched = remaining } movie
 
-                        Nothing ->
-                            NothingToSelect
-            in
-                ( { model
-                    | unwatched = remaining
-                    , selectedMovie = selected
-                  }
-                , Cmd.none
-                )
+                Nothing ->
+                    ( model, Cmd.none )
+
+        FocusMovie movie ->
+            openModal model movie
+
+        CloseModal ->
+            ( { model | focusedMovie = Movie.NotSelected }, Cmd.none )
+
+        LoadMovie result ->
+            case result of
+                Ok movie ->
+                    ( { model
+                        | focusedMovie = Movie.Loaded movie
+                      }
+                    , Cmd.none
+                    )
+
+                _ ->
+                    ( model, Cmd.none )
 
         MultiselectEvent subscriptionEvent ->
             let
@@ -176,20 +201,32 @@ view model =
         watchDate movie =
             Movie.watchDate movie
                 |> Maybe.withDefault (date 1800 1 1)
+
+        modal =
+            case model.focusedMovie of
+                Movie.Loaded movieDetails ->
+                    movieModal movieDetails CloseModal
+
+                Movie.Selected movie ->
+                    offlineMovieModal movie CloseModal
+
+                _ ->
+                    div [] []
     in
         div []
             [ a [ id "movies" ] []
             , appHeader model
+            , modal
             , div []
                 [ h2 [] [ text "Unwatched Films" ]
                 , div [ class [ Movies ] ]
                     (model.unwatched
-                        |> List.map (Movie.movieCard model.selectedGenres)
+                        |> List.map (Movie.movieCard FocusMovie model.selectedGenres)
                     )
                 , h2 [] [ text "Watched" ]
                 , div [ class [ Movies ] ]
                     (model.watched
-                        |> List.map (Movie.movieCard model.selectedGenres)
+                        |> List.map (Movie.movieCard FocusMovie model.selectedGenres)
                     )
                 ]
             , rulesView
@@ -228,21 +265,6 @@ rulesView =
         ]
 
 
-selectionView : Model -> Html Msg
-selectionView model =
-    div [ class [ Selection ] ]
-        [ case model.selectedMovie of
-            Selected movie ->
-                Movie.movieCard Set.empty movie
-
-            NotSelected ->
-                text ""
-
-            NothingToSelect ->
-                text "Sorry, it looks like the hat is empty."
-        ]
-
-
 selectionControls : Html Msg
 selectionControls =
     div [ class [ SelectionControls ] ]
@@ -259,7 +281,6 @@ appHeader model =
             , a [ href "#rules" ] [ text "The Rules" ]
             ]
         , selectionControls
-        , selectionView model
         , Genre.selectionView MultiselectEvent model.genresMultiselect
         ]
 
