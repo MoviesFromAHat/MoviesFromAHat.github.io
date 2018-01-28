@@ -2,7 +2,7 @@ module Main exposing (..)
 
 -- Our Imports
 
-import Movie exposing (Movie, movieCard, matchGenres, MovieDetails, MovieSelection, movieModal, offlineMovieModal)
+import Movie exposing (Movie, movieCard, matchGenres, MovieDetails, MovieSelection, movieModal, offlineMovieModal, JustWatchSearchResults, JustWatchDetails)
 import Genre exposing (Genre)
 import MovieList exposing (..)
 import AppCss.Helpers exposing (class)
@@ -102,6 +102,8 @@ type Msg
     | MultiselectEvent Multiselect.Msg
     | LocationChange Navigation.Location
     | LoadMovie (Result Http.Error MovieDetails)
+    | LoadJustWatchSearch (Result Http.Error JustWatchSearchResults)
+    | LoadJustWatchDetails (Result Http.Error JustWatchDetails)
 
 
 fetchMovie : Movie -> Cmd Msg
@@ -114,6 +116,35 @@ fetchMovie movie =
             Http.get url (Movie.decodeMovieData movie)
     in
         Http.send LoadMovie request
+
+
+searchJustWatch : Movie -> Cmd Msg
+searchJustWatch movie =
+    let
+        url =
+            "https://apis.justwatch.com/content/titles/en_US/popular?body=" ++ (Http.encodeUri ("{ \"query\": \" " ++ movie.title ++ "\"}"))
+
+        request =
+            Http.get url (Movie.decodeJustWatchSearch movie)
+    in
+        Http.send LoadJustWatchSearch request
+
+
+loadJustWatchDetails : JustWatchSearchResults -> Cmd Msg
+loadJustWatchDetails searchResults =
+    case List.head searchResults.items of
+        Nothing ->
+            Cmd.none
+
+        Just result ->
+            let
+                url =
+                    "https://apis.justwatch.com/content/titles/movie/" ++ (toString result.id) ++ "/locale/en_US"
+
+                request =
+                    Http.get url (Movie.decodeJustWatchDetails)
+            in
+                Http.send LoadJustWatchDetails request
 
 
 openModal : Model -> Movie -> ( Model, Cmd Msg )
@@ -152,11 +183,40 @@ update msg model =
         LoadMovie result ->
             case result of
                 Ok movie ->
-                    ( { model
-                        | focusedMovie = Movie.Loaded movie
-                      }
-                    , Cmd.none
-                    )
+                    let
+                        cmd =
+                            searchJustWatch movie.movie
+                    in
+                        ( { model
+                            | focusedMovie = Movie.Loaded movie
+                          }
+                        , cmd
+                        )
+
+                _ ->
+                    ( model, Cmd.none )
+
+        LoadJustWatchSearch result ->
+            case result of
+                Ok searchResults ->
+                    let
+                        x =
+                            Debug.log "Got results"
+                                searchResults
+                    in
+                        ( model, loadJustWatchDetails searchResults )
+
+                _ ->
+                    ( model, Cmd.none )
+
+        LoadJustWatchDetails result ->
+            case result of
+                Ok justWatchDetails ->
+                    let
+                        x =
+                            Debug.log "Got details!" justWatchDetails
+                    in
+                        ( model, Cmd.none )
 
                 _ ->
                     ( model, Cmd.none )
@@ -251,7 +311,7 @@ rulesView =
 7. Review the rating & content warnings for the movie. Anyone can veto a movie for content. <sup>*</sup>
 
 
-<sup>*</sup>If a movie is vetoed for content, even if it was your favorite movie ever, please keep your disappointment to yourself. 
+<sup>*</sup>If a movie is vetoed for content, even if it was your favorite movie ever, please keep your disappointment to yourself.
     Even in jest, this can make people feel like they're not welcome because they're "spoiling the fun"
 
 ### Adding movies to the list

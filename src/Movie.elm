@@ -70,6 +70,150 @@ ratingDecoder =
         |> Json.Decode.Pipeline.required "Value" Decode.string
 
 
+type alias JustWatchSearchResult =
+    { title : String
+    , id : Int
+    }
+
+
+type alias JustWatchSearchResults =
+    { items : List JustWatchSearchResult
+    }
+
+
+type alias JustWatchDetails =
+    { offers : List JustWatchOffer
+    }
+
+
+decodeJustWatchSearch : Movie -> Decode.Decoder JustWatchSearchResults
+decodeJustWatchSearch movie =
+    Json.Decode.Pipeline.decode JustWatchSearchResults
+        |> Json.Decode.Pipeline.required "items" (Decode.list searchResultDecoder)
+
+
+searchResultDecoder =
+    Json.Decode.Pipeline.decode JustWatchSearchResult
+        |> Json.Decode.Pipeline.required "title" Decode.string
+        |> Json.Decode.Pipeline.required "id" Decode.int
+
+
+type OfferType
+    = BuyVideo
+    | RentVideo
+    | StreamVideo
+
+
+offerTypeDecoder : Decode.Decoder OfferType
+offerTypeDecoder =
+    Decode.string
+        |> Decode.andThen
+            (\str ->
+                case str of
+                    "buy" ->
+                        Decode.succeed BuyVideo
+
+                    "flatrate" ->
+                        Decode.succeed StreamVideo
+
+                    "rent" ->
+                        Decode.succeed RentVideo
+
+                    other ->
+                        Decode.fail <| "Unknown offertype: " ++ other
+            )
+
+
+type PresentationType
+    = HD
+    | SD
+
+
+presentationTypeDecoder : Decode.Decoder PresentationType
+presentationTypeDecoder =
+    Decode.string
+        |> Decode.andThen
+            (\str ->
+                case str of
+                    "hd" ->
+                        Decode.succeed HD
+
+                    "sd" ->
+                        Decode.succeed SD
+
+                    other ->
+                        Decode.fail <| "Unknown PresentationType: " ++ other
+            )
+
+
+type Provider
+    = Apple
+    | Microsoft
+    | GooglePlay
+    | Hulu
+    | Netflix
+    | Amazon
+    | Fandango
+    | Vudu
+    | Other
+
+
+providerDecoder : Decode.Decoder Provider
+providerDecoder =
+    Decode.int
+        |> Decode.andThen
+            (\providerId ->
+                case providerId of
+                    15 ->
+                        Decode.succeed Hulu
+
+                    9 ->
+                        Decode.succeed Amazon
+
+                    10 ->
+                        Decode.succeed Amazon
+
+                    68 ->
+                        Decode.succeed Microsoft
+
+                    3 ->
+                        Decode.succeed GooglePlay
+
+                    105 ->
+                        Decode.succeed Fandango
+
+                    7 ->
+                        Decode.succeed Vudu
+
+                    2 ->
+                        Decode.succeed Apple
+
+                    other ->
+                        Decode.succeed Other
+            )
+
+
+type alias JustWatchOffer =
+    { offerType : OfferType
+    , provider : Provider
+    , url : String
+    }
+
+
+decodeJustWatchOffer : Decode.Decoder JustWatchOffer
+decodeJustWatchOffer =
+    Json.Decode.Pipeline.decode JustWatchOffer
+        |> Json.Decode.Pipeline.required "monetization_type" offerTypeDecoder
+        |> Json.Decode.Pipeline.required "provider_id" providerDecoder
+        |> Json.Decode.Pipeline.requiredAt [ "urls", "standard_web" ] Decode.string
+
+
+decodeJustWatchDetails : Decode.Decoder JustWatchDetails
+decodeJustWatchDetails =
+    Json.Decode.Pipeline.decode JustWatchDetails
+        |> Json.Decode.Pipeline.required "offers" (Decode.list decodeJustWatchOffer)
+
+
 type WatchState
     = Unwatched
     | Watched Date
