@@ -6264,15 +6264,16 @@ var _elm_community$parser_combinators$Combine$currentLocation = function (stream
 			while (true) {
 				var _p2 = lines;
 				if (_p2.ctor === '[]') {
-					return A3(_elm_community$parser_combinators$Combine$ParseLocation, '', 1, position);
+					return A3(_elm_community$parser_combinators$Combine$ParseLocation, '', currentLine, position);
 				} else {
-					if (_p2._1.ctor === '[]') {
-						return A3(_elm_community$parser_combinators$Combine$ParseLocation, _p2._0, currentLine + 1, position);
+					var _p3 = _p2._0;
+					var length = _elm_lang$core$String$length(_p3);
+					var lengthPlusNL = length + 1;
+					if (_elm_lang$core$Native_Utils.eq(position, length)) {
+						return A3(_elm_community$parser_combinators$Combine$ParseLocation, _p3, currentLine, position);
 					} else {
-						var _p3 = _p2._0;
-						var length = _elm_lang$core$String$length(_p3);
-						if (_elm_lang$core$Native_Utils.cmp(position, length) > -1) {
-							var _v3 = (position - length) - 1,
+						if (_elm_lang$core$Native_Utils.cmp(position, length) > 0) {
+							var _v3 = position - lengthPlusNL,
 								_v4 = currentLine + 1,
 								_v5 = _p2._1;
 							position = _v3;
@@ -6280,11 +6281,7 @@ var _elm_community$parser_combinators$Combine$currentLocation = function (stream
 							lines = _v5;
 							continue find;
 						} else {
-							if (_elm_lang$core$Native_Utils.eq(currentLine, 0)) {
-								return A3(_elm_community$parser_combinators$Combine$ParseLocation, _p3, 1, position);
-							} else {
-								return A3(_elm_community$parser_combinators$Combine$ParseLocation, _p3, currentLine, position - 1);
-							}
+							return A3(_elm_community$parser_combinators$Combine$ParseLocation, _p3, currentLine, position);
 						}
 					}
 				}
@@ -8149,6 +8146,1521 @@ var _elm_lang$core$Time$subMap = F2(
 	});
 _elm_lang$core$Native_Platform.effectManagers['Time'] = {pkg: 'elm-lang/core', init: _elm_lang$core$Time$init, onEffects: _elm_lang$core$Time$onEffects, onSelfMsg: _elm_lang$core$Time$onSelfMsg, tag: 'sub', subMap: _elm_lang$core$Time$subMap};
 
+var _elm_lang$core$Set$foldr = F3(
+	function (f, b, _p0) {
+		var _p1 = _p0;
+		return A3(
+			_elm_lang$core$Dict$foldr,
+			F3(
+				function (k, _p2, b) {
+					return A2(f, k, b);
+				}),
+			b,
+			_p1._0);
+	});
+var _elm_lang$core$Set$foldl = F3(
+	function (f, b, _p3) {
+		var _p4 = _p3;
+		return A3(
+			_elm_lang$core$Dict$foldl,
+			F3(
+				function (k, _p5, b) {
+					return A2(f, k, b);
+				}),
+			b,
+			_p4._0);
+	});
+var _elm_lang$core$Set$toList = function (_p6) {
+	var _p7 = _p6;
+	return _elm_lang$core$Dict$keys(_p7._0);
+};
+var _elm_lang$core$Set$size = function (_p8) {
+	var _p9 = _p8;
+	return _elm_lang$core$Dict$size(_p9._0);
+};
+var _elm_lang$core$Set$member = F2(
+	function (k, _p10) {
+		var _p11 = _p10;
+		return A2(_elm_lang$core$Dict$member, k, _p11._0);
+	});
+var _elm_lang$core$Set$isEmpty = function (_p12) {
+	var _p13 = _p12;
+	return _elm_lang$core$Dict$isEmpty(_p13._0);
+};
+var _elm_lang$core$Set$Set_elm_builtin = function (a) {
+	return {ctor: 'Set_elm_builtin', _0: a};
+};
+var _elm_lang$core$Set$empty = _elm_lang$core$Set$Set_elm_builtin(_elm_lang$core$Dict$empty);
+var _elm_lang$core$Set$singleton = function (k) {
+	return _elm_lang$core$Set$Set_elm_builtin(
+		A2(
+			_elm_lang$core$Dict$singleton,
+			k,
+			{ctor: '_Tuple0'}));
+};
+var _elm_lang$core$Set$insert = F2(
+	function (k, _p14) {
+		var _p15 = _p14;
+		return _elm_lang$core$Set$Set_elm_builtin(
+			A3(
+				_elm_lang$core$Dict$insert,
+				k,
+				{ctor: '_Tuple0'},
+				_p15._0));
+	});
+var _elm_lang$core$Set$fromList = function (xs) {
+	return A3(_elm_lang$core$List$foldl, _elm_lang$core$Set$insert, _elm_lang$core$Set$empty, xs);
+};
+var _elm_lang$core$Set$map = F2(
+	function (f, s) {
+		return _elm_lang$core$Set$fromList(
+			A2(
+				_elm_lang$core$List$map,
+				f,
+				_elm_lang$core$Set$toList(s)));
+	});
+var _elm_lang$core$Set$remove = F2(
+	function (k, _p16) {
+		var _p17 = _p16;
+		return _elm_lang$core$Set$Set_elm_builtin(
+			A2(_elm_lang$core$Dict$remove, k, _p17._0));
+	});
+var _elm_lang$core$Set$union = F2(
+	function (_p19, _p18) {
+		var _p20 = _p19;
+		var _p21 = _p18;
+		return _elm_lang$core$Set$Set_elm_builtin(
+			A2(_elm_lang$core$Dict$union, _p20._0, _p21._0));
+	});
+var _elm_lang$core$Set$intersect = F2(
+	function (_p23, _p22) {
+		var _p24 = _p23;
+		var _p25 = _p22;
+		return _elm_lang$core$Set$Set_elm_builtin(
+			A2(_elm_lang$core$Dict$intersect, _p24._0, _p25._0));
+	});
+var _elm_lang$core$Set$diff = F2(
+	function (_p27, _p26) {
+		var _p28 = _p27;
+		var _p29 = _p26;
+		return _elm_lang$core$Set$Set_elm_builtin(
+			A2(_elm_lang$core$Dict$diff, _p28._0, _p29._0));
+	});
+var _elm_lang$core$Set$filter = F2(
+	function (p, _p30) {
+		var _p31 = _p30;
+		return _elm_lang$core$Set$Set_elm_builtin(
+			A2(
+				_elm_lang$core$Dict$filter,
+				F2(
+					function (k, _p32) {
+						return p(k);
+					}),
+				_p31._0));
+	});
+var _elm_lang$core$Set$partition = F2(
+	function (p, _p33) {
+		var _p34 = _p33;
+		var _p35 = A2(
+			_elm_lang$core$Dict$partition,
+			F2(
+				function (k, _p36) {
+					return p(k);
+				}),
+			_p34._0);
+		var p1 = _p35._0;
+		var p2 = _p35._1;
+		return {
+			ctor: '_Tuple2',
+			_0: _elm_lang$core$Set$Set_elm_builtin(p1),
+			_1: _elm_lang$core$Set$Set_elm_builtin(p2)
+		};
+	});
+
+var _elm_community$list_extra$List_Extra$greedyGroupsOfWithStep = F3(
+	function (size, step, xs) {
+		var okayXs = _elm_lang$core$Native_Utils.cmp(
+			_elm_lang$core$List$length(xs),
+			0) > 0;
+		var okayArgs = (_elm_lang$core$Native_Utils.cmp(size, 0) > 0) && (_elm_lang$core$Native_Utils.cmp(step, 0) > 0);
+		var xs_ = A2(_elm_lang$core$List$drop, step, xs);
+		var group = A2(_elm_lang$core$List$take, size, xs);
+		return (okayArgs && okayXs) ? {
+			ctor: '::',
+			_0: group,
+			_1: A3(_elm_community$list_extra$List_Extra$greedyGroupsOfWithStep, size, step, xs_)
+		} : {ctor: '[]'};
+	});
+var _elm_community$list_extra$List_Extra$greedyGroupsOf = F2(
+	function (size, xs) {
+		return A3(_elm_community$list_extra$List_Extra$greedyGroupsOfWithStep, size, size, xs);
+	});
+var _elm_community$list_extra$List_Extra$groupsOfWithStep = F3(
+	function (size, step, xs) {
+		var okayArgs = (_elm_lang$core$Native_Utils.cmp(size, 0) > 0) && (_elm_lang$core$Native_Utils.cmp(step, 0) > 0);
+		var xs_ = A2(_elm_lang$core$List$drop, step, xs);
+		var group = A2(_elm_lang$core$List$take, size, xs);
+		var okayLength = _elm_lang$core$Native_Utils.eq(
+			size,
+			_elm_lang$core$List$length(group));
+		return (okayArgs && okayLength) ? {
+			ctor: '::',
+			_0: group,
+			_1: A3(_elm_community$list_extra$List_Extra$groupsOfWithStep, size, step, xs_)
+		} : {ctor: '[]'};
+	});
+var _elm_community$list_extra$List_Extra$groupsOf = F2(
+	function (size, xs) {
+		return A3(_elm_community$list_extra$List_Extra$groupsOfWithStep, size, size, xs);
+	});
+var _elm_community$list_extra$List_Extra$zip5 = _elm_lang$core$List$map5(
+	F5(
+		function (v0, v1, v2, v3, v4) {
+			return {ctor: '_Tuple5', _0: v0, _1: v1, _2: v2, _3: v3, _4: v4};
+		}));
+var _elm_community$list_extra$List_Extra$zip4 = _elm_lang$core$List$map4(
+	F4(
+		function (v0, v1, v2, v3) {
+			return {ctor: '_Tuple4', _0: v0, _1: v1, _2: v2, _3: v3};
+		}));
+var _elm_community$list_extra$List_Extra$zip3 = _elm_lang$core$List$map3(
+	F3(
+		function (v0, v1, v2) {
+			return {ctor: '_Tuple3', _0: v0, _1: v1, _2: v2};
+		}));
+var _elm_community$list_extra$List_Extra$zip = _elm_lang$core$List$map2(
+	F2(
+		function (v0, v1) {
+			return {ctor: '_Tuple2', _0: v0, _1: v1};
+		}));
+var _elm_community$list_extra$List_Extra$isSubsequenceOf = F2(
+	function (subseq, list) {
+		isSubsequenceOf:
+		while (true) {
+			var _p0 = {ctor: '_Tuple2', _0: subseq, _1: list};
+			if (_p0._0.ctor === '[]') {
+				return true;
+			} else {
+				if (_p0._1.ctor === '[]') {
+					return false;
+				} else {
+					var _p1 = _p0._1._1;
+					if (_elm_lang$core$Native_Utils.eq(_p0._0._0, _p0._1._0)) {
+						var _v1 = _p0._0._1,
+							_v2 = _p1;
+						subseq = _v1;
+						list = _v2;
+						continue isSubsequenceOf;
+					} else {
+						var _v3 = subseq,
+							_v4 = _p1;
+						subseq = _v3;
+						list = _v4;
+						continue isSubsequenceOf;
+					}
+				}
+			}
+		}
+	});
+var _elm_community$list_extra$List_Extra$isPrefixOf = F2(
+	function (prefix, xs) {
+		var _p2 = {ctor: '_Tuple2', _0: prefix, _1: xs};
+		if (_p2._0.ctor === '[]') {
+			return true;
+		} else {
+			if (_p2._1.ctor === '[]') {
+				return false;
+			} else {
+				return _elm_lang$core$Native_Utils.eq(_p2._0._0, _p2._1._0) && A2(_elm_community$list_extra$List_Extra$isPrefixOf, _p2._0._1, _p2._1._1);
+			}
+		}
+	});
+var _elm_community$list_extra$List_Extra$isSuffixOf = F2(
+	function (suffix, xs) {
+		return A2(
+			_elm_community$list_extra$List_Extra$isPrefixOf,
+			_elm_lang$core$List$reverse(suffix),
+			_elm_lang$core$List$reverse(xs));
+	});
+var _elm_community$list_extra$List_Extra$isInfixOfHelp = F3(
+	function (infixHead, infixTail, list) {
+		isInfixOfHelp:
+		while (true) {
+			var _p3 = list;
+			if (_p3.ctor === '[]') {
+				return false;
+			} else {
+				var _p4 = _p3._1;
+				if (_elm_lang$core$Native_Utils.eq(_p3._0, infixHead)) {
+					return A2(_elm_community$list_extra$List_Extra$isPrefixOf, infixTail, _p4);
+				} else {
+					var _v7 = infixHead,
+						_v8 = infixTail,
+						_v9 = _p4;
+					infixHead = _v7;
+					infixTail = _v8;
+					list = _v9;
+					continue isInfixOfHelp;
+				}
+			}
+		}
+	});
+var _elm_community$list_extra$List_Extra$isInfixOf = F2(
+	function (infixList, list) {
+		var _p5 = infixList;
+		if (_p5.ctor === '[]') {
+			return true;
+		} else {
+			return A3(_elm_community$list_extra$List_Extra$isInfixOfHelp, _p5._0, _p5._1, list);
+		}
+	});
+var _elm_community$list_extra$List_Extra$selectSplit = function (xs) {
+	var _p6 = xs;
+	if (_p6.ctor === '[]') {
+		return {ctor: '[]'};
+	} else {
+		var _p10 = _p6._1;
+		var _p9 = _p6._0;
+		return {
+			ctor: '::',
+			_0: {
+				ctor: '_Tuple3',
+				_0: {ctor: '[]'},
+				_1: _p9,
+				_2: _p10
+			},
+			_1: A2(
+				_elm_lang$core$List$map,
+				function (_p7) {
+					var _p8 = _p7;
+					return {
+						ctor: '_Tuple3',
+						_0: {ctor: '::', _0: _p9, _1: _p8._0},
+						_1: _p8._1,
+						_2: _p8._2
+					};
+				},
+				_elm_community$list_extra$List_Extra$selectSplit(_p10))
+		};
+	}
+};
+var _elm_community$list_extra$List_Extra$select = function (xs) {
+	var _p11 = xs;
+	if (_p11.ctor === '[]') {
+		return {ctor: '[]'};
+	} else {
+		var _p15 = _p11._1;
+		var _p14 = _p11._0;
+		return {
+			ctor: '::',
+			_0: {ctor: '_Tuple2', _0: _p14, _1: _p15},
+			_1: A2(
+				_elm_lang$core$List$map,
+				function (_p12) {
+					var _p13 = _p12;
+					return {
+						ctor: '_Tuple2',
+						_0: _p13._0,
+						_1: {ctor: '::', _0: _p14, _1: _p13._1}
+					};
+				},
+				_elm_community$list_extra$List_Extra$select(_p15))
+		};
+	}
+};
+var _elm_community$list_extra$List_Extra$tailsHelp = F2(
+	function (e, list) {
+		var _p16 = list;
+		if (_p16.ctor === '::') {
+			var _p17 = _p16._0;
+			return {
+				ctor: '::',
+				_0: {ctor: '::', _0: e, _1: _p17},
+				_1: {ctor: '::', _0: _p17, _1: _p16._1}
+			};
+		} else {
+			return {ctor: '[]'};
+		}
+	});
+var _elm_community$list_extra$List_Extra$tails = A2(
+	_elm_lang$core$List$foldr,
+	_elm_community$list_extra$List_Extra$tailsHelp,
+	{
+		ctor: '::',
+		_0: {ctor: '[]'},
+		_1: {ctor: '[]'}
+	});
+var _elm_community$list_extra$List_Extra$inits = A2(
+	_elm_lang$core$List$foldr,
+	F2(
+		function (e, acc) {
+			return {
+				ctor: '::',
+				_0: {ctor: '[]'},
+				_1: A2(
+					_elm_lang$core$List$map,
+					F2(
+						function (x, y) {
+							return {ctor: '::', _0: x, _1: y};
+						})(e),
+					acc)
+			};
+		}),
+	{
+		ctor: '::',
+		_0: {ctor: '[]'},
+		_1: {ctor: '[]'}
+	});
+var _elm_community$list_extra$List_Extra$groupWhileTransitivelyHelp = F4(
+	function (result, currentGroup, compare, list) {
+		groupWhileTransitivelyHelp:
+		while (true) {
+			var _p18 = list;
+			if (_p18.ctor === '[]') {
+				return _elm_lang$core$List$reverse(
+					_elm_lang$core$List$isEmpty(currentGroup) ? result : _elm_lang$core$List$reverse(
+						{ctor: '::', _0: currentGroup, _1: result}));
+			} else {
+				if (_p18._1.ctor === '[]') {
+					return _elm_lang$core$List$reverse(
+						{
+							ctor: '::',
+							_0: _elm_lang$core$List$reverse(
+								{ctor: '::', _0: _p18._0, _1: currentGroup}),
+							_1: result
+						});
+				} else {
+					var _p20 = _p18._1;
+					var _p19 = _p18._0;
+					if (A2(compare, _p19, _p18._1._0)) {
+						var _v17 = result,
+							_v18 = {ctor: '::', _0: _p19, _1: currentGroup},
+							_v19 = compare,
+							_v20 = _p20;
+						result = _v17;
+						currentGroup = _v18;
+						compare = _v19;
+						list = _v20;
+						continue groupWhileTransitivelyHelp;
+					} else {
+						var _v21 = {
+							ctor: '::',
+							_0: _elm_lang$core$List$reverse(
+								{ctor: '::', _0: _p19, _1: currentGroup}),
+							_1: result
+						},
+							_v22 = {ctor: '[]'},
+							_v23 = compare,
+							_v24 = _p20;
+						result = _v21;
+						currentGroup = _v22;
+						compare = _v23;
+						list = _v24;
+						continue groupWhileTransitivelyHelp;
+					}
+				}
+			}
+		}
+	});
+var _elm_community$list_extra$List_Extra$groupWhileTransitively = F2(
+	function (compare, list) {
+		return A4(
+			_elm_community$list_extra$List_Extra$groupWhileTransitivelyHelp,
+			{ctor: '[]'},
+			{ctor: '[]'},
+			compare,
+			list);
+	});
+var _elm_community$list_extra$List_Extra$stripPrefix = F2(
+	function (prefix, xs) {
+		var step = F2(
+			function (e, m) {
+				var _p21 = m;
+				if (_p21.ctor === 'Nothing') {
+					return _elm_lang$core$Maybe$Nothing;
+				} else {
+					if (_p21._0.ctor === '[]') {
+						return _elm_lang$core$Maybe$Nothing;
+					} else {
+						return _elm_lang$core$Native_Utils.eq(e, _p21._0._0) ? _elm_lang$core$Maybe$Just(_p21._0._1) : _elm_lang$core$Maybe$Nothing;
+					}
+				}
+			});
+		return A3(
+			_elm_lang$core$List$foldl,
+			step,
+			_elm_lang$core$Maybe$Just(xs),
+			prefix);
+	});
+var _elm_community$list_extra$List_Extra$dropWhileRight = function (p) {
+	return A2(
+		_elm_lang$core$List$foldr,
+		F2(
+			function (x, xs) {
+				return (p(x) && _elm_lang$core$List$isEmpty(xs)) ? {ctor: '[]'} : {ctor: '::', _0: x, _1: xs};
+			}),
+		{ctor: '[]'});
+};
+var _elm_community$list_extra$List_Extra$takeWhileRight = function (p) {
+	var step = F2(
+		function (x, _p22) {
+			var _p23 = _p22;
+			var _p24 = _p23._0;
+			return (p(x) && _p23._1) ? {
+				ctor: '_Tuple2',
+				_0: {ctor: '::', _0: x, _1: _p24},
+				_1: true
+			} : {ctor: '_Tuple2', _0: _p24, _1: false};
+		});
+	return function (_p25) {
+		return _elm_lang$core$Tuple$first(
+			A3(
+				_elm_lang$core$List$foldr,
+				step,
+				{
+					ctor: '_Tuple2',
+					_0: {ctor: '[]'},
+					_1: true
+				},
+				_p25));
+	};
+};
+var _elm_community$list_extra$List_Extra$splitAt = F2(
+	function (n, xs) {
+		return {
+			ctor: '_Tuple2',
+			_0: A2(_elm_lang$core$List$take, n, xs),
+			_1: A2(_elm_lang$core$List$drop, n, xs)
+		};
+	});
+var _elm_community$list_extra$List_Extra$groupsOfVarying_ = F3(
+	function (listOflengths, list, accu) {
+		groupsOfVarying_:
+		while (true) {
+			var _p26 = {ctor: '_Tuple2', _0: listOflengths, _1: list};
+			if (((_p26.ctor === '_Tuple2') && (_p26._0.ctor === '::')) && (_p26._1.ctor === '::')) {
+				var _p27 = A2(_elm_community$list_extra$List_Extra$splitAt, _p26._0._0, list);
+				var head = _p27._0;
+				var tail = _p27._1;
+				var _v28 = _p26._0._1,
+					_v29 = tail,
+					_v30 = {ctor: '::', _0: head, _1: accu};
+				listOflengths = _v28;
+				list = _v29;
+				accu = _v30;
+				continue groupsOfVarying_;
+			} else {
+				return _elm_lang$core$List$reverse(accu);
+			}
+		}
+	});
+var _elm_community$list_extra$List_Extra$groupsOfVarying = F2(
+	function (listOflengths, list) {
+		return A3(
+			_elm_community$list_extra$List_Extra$groupsOfVarying_,
+			listOflengths,
+			list,
+			{ctor: '[]'});
+	});
+var _elm_community$list_extra$List_Extra$unfoldr = F2(
+	function (f, seed) {
+		var _p28 = f(seed);
+		if (_p28.ctor === 'Nothing') {
+			return {ctor: '[]'};
+		} else {
+			return {
+				ctor: '::',
+				_0: _p28._0._0,
+				_1: A2(_elm_community$list_extra$List_Extra$unfoldr, f, _p28._0._1)
+			};
+		}
+	});
+var _elm_community$list_extra$List_Extra$scanr1 = F2(
+	function (f, xs_) {
+		var _p29 = xs_;
+		if (_p29.ctor === '[]') {
+			return {ctor: '[]'};
+		} else {
+			if (_p29._1.ctor === '[]') {
+				return {
+					ctor: '::',
+					_0: _p29._0,
+					_1: {ctor: '[]'}
+				};
+			} else {
+				var _p30 = A2(_elm_community$list_extra$List_Extra$scanr1, f, _p29._1);
+				if (_p30.ctor === '::') {
+					return {
+						ctor: '::',
+						_0: A2(f, _p29._0, _p30._0),
+						_1: _p30
+					};
+				} else {
+					return {ctor: '[]'};
+				}
+			}
+		}
+	});
+var _elm_community$list_extra$List_Extra$scanr = F3(
+	function (f, acc, xs_) {
+		var _p31 = xs_;
+		if (_p31.ctor === '[]') {
+			return {
+				ctor: '::',
+				_0: acc,
+				_1: {ctor: '[]'}
+			};
+		} else {
+			var _p32 = A3(_elm_community$list_extra$List_Extra$scanr, f, acc, _p31._1);
+			if (_p32.ctor === '::') {
+				return {
+					ctor: '::',
+					_0: A2(f, _p31._0, _p32._0),
+					_1: _p32
+				};
+			} else {
+				return {ctor: '[]'};
+			}
+		}
+	});
+var _elm_community$list_extra$List_Extra$scanl1 = F2(
+	function (f, xs_) {
+		var _p33 = xs_;
+		if (_p33.ctor === '[]') {
+			return {ctor: '[]'};
+		} else {
+			return A3(_elm_lang$core$List$scanl, f, _p33._0, _p33._1);
+		}
+	});
+var _elm_community$list_extra$List_Extra$indexedFoldr = F3(
+	function (func, acc, list) {
+		var step = F2(
+			function (x, _p34) {
+				var _p35 = _p34;
+				var _p36 = _p35._0;
+				return {
+					ctor: '_Tuple2',
+					_0: _p36 - 1,
+					_1: A3(func, _p36, x, _p35._1)
+				};
+			});
+		return _elm_lang$core$Tuple$second(
+			A3(
+				_elm_lang$core$List$foldr,
+				step,
+				{
+					ctor: '_Tuple2',
+					_0: _elm_lang$core$List$length(list) - 1,
+					_1: acc
+				},
+				list));
+	});
+var _elm_community$list_extra$List_Extra$indexedFoldl = F3(
+	function (func, acc, list) {
+		var step = F2(
+			function (x, _p37) {
+				var _p38 = _p37;
+				var _p39 = _p38._0;
+				return {
+					ctor: '_Tuple2',
+					_0: _p39 + 1,
+					_1: A3(func, _p39, x, _p38._1)
+				};
+			});
+		return _elm_lang$core$Tuple$second(
+			A3(
+				_elm_lang$core$List$foldl,
+				step,
+				{ctor: '_Tuple2', _0: 0, _1: acc},
+				list));
+	});
+var _elm_community$list_extra$List_Extra$foldr1 = F2(
+	function (f, xs) {
+		var mf = F2(
+			function (x, m) {
+				return _elm_lang$core$Maybe$Just(
+					function () {
+						var _p40 = m;
+						if (_p40.ctor === 'Nothing') {
+							return x;
+						} else {
+							return A2(f, x, _p40._0);
+						}
+					}());
+			});
+		return A3(_elm_lang$core$List$foldr, mf, _elm_lang$core$Maybe$Nothing, xs);
+	});
+var _elm_community$list_extra$List_Extra$foldl1 = F2(
+	function (f, xs) {
+		var mf = F2(
+			function (x, m) {
+				return _elm_lang$core$Maybe$Just(
+					function () {
+						var _p41 = m;
+						if (_p41.ctor === 'Nothing') {
+							return x;
+						} else {
+							return A2(f, _p41._0, x);
+						}
+					}());
+			});
+		return A3(_elm_lang$core$List$foldl, mf, _elm_lang$core$Maybe$Nothing, xs);
+	});
+var _elm_community$list_extra$List_Extra$reverseAppend = F2(
+	function (list1, list2) {
+		return A3(
+			_elm_lang$core$List$foldl,
+			F2(
+				function (x, y) {
+					return {ctor: '::', _0: x, _1: y};
+				}),
+			list2,
+			list1);
+	});
+var _elm_community$list_extra$List_Extra$interweaveHelp = F3(
+	function (acc, list1, list2) {
+		interweaveHelp:
+		while (true) {
+			var _p42 = {ctor: '_Tuple2', _0: list1, _1: list2};
+			if (_p42._0.ctor === '::') {
+				if (_p42._1.ctor === '::') {
+					var _v42 = {
+						ctor: '::',
+						_0: _p42._1._0,
+						_1: {ctor: '::', _0: _p42._0._0, _1: acc}
+					},
+						_v43 = _p42._0._1,
+						_v44 = _p42._1._1;
+					acc = _v42;
+					list1 = _v43;
+					list2 = _v44;
+					continue interweaveHelp;
+				} else {
+					return A2(_elm_community$list_extra$List_Extra$reverseAppend, acc, list1);
+				}
+			} else {
+				return A2(_elm_community$list_extra$List_Extra$reverseAppend, acc, list2);
+			}
+		}
+	});
+var _elm_community$list_extra$List_Extra$interweave = _elm_community$list_extra$List_Extra$interweaveHelp(
+	{ctor: '[]'});
+var _elm_community$list_extra$List_Extra$permutations = function (xs_) {
+	var _p43 = xs_;
+	if (_p43.ctor === '[]') {
+		return {
+			ctor: '::',
+			_0: {ctor: '[]'},
+			_1: {ctor: '[]'}
+		};
+	} else {
+		var f = function (_p44) {
+			var _p45 = _p44;
+			return A2(
+				_elm_lang$core$List$map,
+				F2(
+					function (x, y) {
+						return {ctor: '::', _0: x, _1: y};
+					})(_p45._0),
+				_elm_community$list_extra$List_Extra$permutations(_p45._1));
+		};
+		return A2(
+			_elm_lang$core$List$concatMap,
+			f,
+			_elm_community$list_extra$List_Extra$select(_p43));
+	}
+};
+var _elm_community$list_extra$List_Extra$isPermutationOf = F2(
+	function (permut, xs) {
+		return A2(
+			_elm_lang$core$List$member,
+			permut,
+			_elm_community$list_extra$List_Extra$permutations(xs));
+	});
+var _elm_community$list_extra$List_Extra$subsequencesNonEmpty = function (xs) {
+	var _p46 = xs;
+	if (_p46.ctor === '[]') {
+		return {ctor: '[]'};
+	} else {
+		var _p47 = _p46._0;
+		var f = F2(
+			function (ys, r) {
+				return {
+					ctor: '::',
+					_0: ys,
+					_1: {
+						ctor: '::',
+						_0: {ctor: '::', _0: _p47, _1: ys},
+						_1: r
+					}
+				};
+			});
+		return {
+			ctor: '::',
+			_0: {
+				ctor: '::',
+				_0: _p47,
+				_1: {ctor: '[]'}
+			},
+			_1: A3(
+				_elm_lang$core$List$foldr,
+				f,
+				{ctor: '[]'},
+				_elm_community$list_extra$List_Extra$subsequencesNonEmpty(_p46._1))
+		};
+	}
+};
+var _elm_community$list_extra$List_Extra$subsequences = function (xs) {
+	return {
+		ctor: '::',
+		_0: {ctor: '[]'},
+		_1: _elm_community$list_extra$List_Extra$subsequencesNonEmpty(xs)
+	};
+};
+var _elm_community$list_extra$List_Extra$rowsLength = function (listOfLists) {
+	var _p48 = listOfLists;
+	if (_p48.ctor === '[]') {
+		return 0;
+	} else {
+		return _elm_lang$core$List$length(_p48._0);
+	}
+};
+var _elm_community$list_extra$List_Extra$transpose = function (listOfLists) {
+	return A3(
+		_elm_lang$core$List$foldr,
+		_elm_lang$core$List$map2(
+			F2(
+				function (x, y) {
+					return {ctor: '::', _0: x, _1: y};
+				})),
+		A2(
+			_elm_lang$core$List$repeat,
+			_elm_community$list_extra$List_Extra$rowsLength(listOfLists),
+			{ctor: '[]'}),
+		listOfLists);
+};
+var _elm_community$list_extra$List_Extra$intercalate = function (xs) {
+	return function (_p49) {
+		return _elm_lang$core$List$concat(
+			A2(_elm_lang$core$List$intersperse, xs, _p49));
+	};
+};
+var _elm_community$list_extra$List_Extra$filterNot = F2(
+	function (pred, list) {
+		return A2(
+			_elm_lang$core$List$filter,
+			function (_p50) {
+				return !pred(_p50);
+			},
+			list);
+	});
+var _elm_community$list_extra$List_Extra$removeIfIndex = function (predicate) {
+	return A2(
+		_elm_community$list_extra$List_Extra$indexedFoldr,
+		F3(
+			function (index, item, acc) {
+				return predicate(index) ? acc : {ctor: '::', _0: item, _1: acc};
+			}),
+		{ctor: '[]'});
+};
+var _elm_community$list_extra$List_Extra$removeAt = F2(
+	function (index, l) {
+		if (_elm_lang$core$Native_Utils.cmp(index, 0) < 0) {
+			return l;
+		} else {
+			var tail = _elm_lang$core$List$tail(
+				A2(_elm_lang$core$List$drop, index, l));
+			var head = A2(_elm_lang$core$List$take, index, l);
+			var _p51 = tail;
+			if (_p51.ctor === 'Nothing') {
+				return l;
+			} else {
+				return A2(_elm_lang$core$List$append, head, _p51._0);
+			}
+		}
+	});
+var _elm_community$list_extra$List_Extra$stableSortWith = F2(
+	function (pred, list) {
+		var predWithIndex = F2(
+			function (_p53, _p52) {
+				var _p54 = _p53;
+				var _p55 = _p52;
+				var result = A2(pred, _p54._0, _p55._0);
+				var _p56 = result;
+				if (_p56.ctor === 'EQ') {
+					return A2(_elm_lang$core$Basics$compare, _p54._1, _p55._1);
+				} else {
+					return result;
+				}
+			});
+		var listWithIndex = A2(
+			_elm_lang$core$List$indexedMap,
+			F2(
+				function (i, a) {
+					return {ctor: '_Tuple2', _0: a, _1: i};
+				}),
+			list);
+		return A2(
+			_elm_lang$core$List$map,
+			_elm_lang$core$Tuple$first,
+			A2(_elm_lang$core$List$sortWith, predWithIndex, listWithIndex));
+	});
+var _elm_community$list_extra$List_Extra$remove = F2(
+	function (x, xs) {
+		var _p57 = xs;
+		if (_p57.ctor === '[]') {
+			return {ctor: '[]'};
+		} else {
+			var _p59 = _p57._1;
+			var _p58 = _p57._0;
+			return _elm_lang$core$Native_Utils.eq(x, _p58) ? _p59 : {
+				ctor: '::',
+				_0: _p58,
+				_1: A2(_elm_community$list_extra$List_Extra$remove, x, _p59)
+			};
+		}
+	});
+var _elm_community$list_extra$List_Extra$updateIfIndex = F3(
+	function (predicate, update, list) {
+		return A2(
+			_elm_lang$core$List$indexedMap,
+			F2(
+				function (i, x) {
+					return predicate(i) ? update(x) : x;
+				}),
+			list);
+	});
+var _elm_community$list_extra$List_Extra$updateAt = F3(
+	function (index, fn, list) {
+		if (_elm_lang$core$Native_Utils.cmp(index, 0) < 0) {
+			return list;
+		} else {
+			var tail = A2(_elm_lang$core$List$drop, index, list);
+			var head = A2(_elm_lang$core$List$take, index, list);
+			var _p60 = tail;
+			if (_p60.ctor === '::') {
+				return A2(
+					_elm_lang$core$Basics_ops['++'],
+					head,
+					{
+						ctor: '::',
+						_0: fn(_p60._0),
+						_1: _p60._1
+					});
+			} else {
+				return list;
+			}
+		}
+	});
+var _elm_community$list_extra$List_Extra$setAt = F2(
+	function (index, value) {
+		return A2(
+			_elm_community$list_extra$List_Extra$updateAt,
+			index,
+			_elm_lang$core$Basics$always(value));
+	});
+var _elm_community$list_extra$List_Extra$updateIf = F3(
+	function (predicate, update, list) {
+		return A2(
+			_elm_lang$core$List$map,
+			function (item) {
+				return predicate(item) ? update(item) : item;
+			},
+			list);
+	});
+var _elm_community$list_extra$List_Extra$replaceIf = F3(
+	function (predicate, replacement, list) {
+		return A3(
+			_elm_community$list_extra$List_Extra$updateIf,
+			predicate,
+			_elm_lang$core$Basics$always(replacement),
+			list);
+	});
+var _elm_community$list_extra$List_Extra$count = function (predicate) {
+	return A2(
+		_elm_lang$core$List$foldl,
+		F2(
+			function (x, acc) {
+				return predicate(x) ? (acc + 1) : acc;
+			}),
+		0);
+};
+var _elm_community$list_extra$List_Extra$findIndices = function (predicate) {
+	var consIndexIf = F3(
+		function (index, x, acc) {
+			return predicate(x) ? {ctor: '::', _0: index, _1: acc} : acc;
+		});
+	return A2(
+		_elm_community$list_extra$List_Extra$indexedFoldr,
+		consIndexIf,
+		{ctor: '[]'});
+};
+var _elm_community$list_extra$List_Extra$findIndexHelp = F3(
+	function (index, predicate, list) {
+		findIndexHelp:
+		while (true) {
+			var _p61 = list;
+			if (_p61.ctor === '[]') {
+				return _elm_lang$core$Maybe$Nothing;
+			} else {
+				if (predicate(_p61._0)) {
+					return _elm_lang$core$Maybe$Just(index);
+				} else {
+					var _v56 = index + 1,
+						_v57 = predicate,
+						_v58 = _p61._1;
+					index = _v56;
+					predicate = _v57;
+					list = _v58;
+					continue findIndexHelp;
+				}
+			}
+		}
+	});
+var _elm_community$list_extra$List_Extra$findIndex = _elm_community$list_extra$List_Extra$findIndexHelp(0);
+var _elm_community$list_extra$List_Extra$splitWhen = F2(
+	function (predicate, list) {
+		return A2(
+			_elm_lang$core$Maybe$map,
+			function (i) {
+				return A2(_elm_community$list_extra$List_Extra$splitAt, i, list);
+			},
+			A2(_elm_community$list_extra$List_Extra$findIndex, predicate, list));
+	});
+var _elm_community$list_extra$List_Extra$elemIndices = function (x) {
+	return _elm_community$list_extra$List_Extra$findIndices(
+		F2(
+			function (x, y) {
+				return _elm_lang$core$Native_Utils.eq(x, y);
+			})(x));
+};
+var _elm_community$list_extra$List_Extra$elemIndex = function (x) {
+	return _elm_community$list_extra$List_Extra$findIndex(
+		F2(
+			function (x, y) {
+				return _elm_lang$core$Native_Utils.eq(x, y);
+			})(x));
+};
+var _elm_community$list_extra$List_Extra$find = F2(
+	function (predicate, list) {
+		find:
+		while (true) {
+			var _p62 = list;
+			if (_p62.ctor === '[]') {
+				return _elm_lang$core$Maybe$Nothing;
+			} else {
+				var _p63 = _p62._0;
+				if (predicate(_p63)) {
+					return _elm_lang$core$Maybe$Just(_p63);
+				} else {
+					var _v60 = predicate,
+						_v61 = _p62._1;
+					predicate = _v60;
+					list = _v61;
+					continue find;
+				}
+			}
+		}
+	});
+var _elm_community$list_extra$List_Extra$notMember = function (x) {
+	return function (_p64) {
+		return !A2(_elm_lang$core$List$member, x, _p64);
+	};
+};
+var _elm_community$list_extra$List_Extra$reverseMap = F2(
+	function (f, xs) {
+		return A3(
+			_elm_lang$core$List$foldl,
+			F2(
+				function (x, acc) {
+					return {
+						ctor: '::',
+						_0: f(x),
+						_1: acc
+					};
+				}),
+			{ctor: '[]'},
+			xs);
+	});
+var _elm_community$list_extra$List_Extra$andThen = _elm_lang$core$List$concatMap;
+var _elm_community$list_extra$List_Extra$lift2 = F3(
+	function (f, la, lb) {
+		return A2(
+			_elm_community$list_extra$List_Extra$andThen,
+			function (a) {
+				return A2(
+					_elm_community$list_extra$List_Extra$andThen,
+					function (b) {
+						return {
+							ctor: '::',
+							_0: A2(f, a, b),
+							_1: {ctor: '[]'}
+						};
+					},
+					lb);
+			},
+			la);
+	});
+var _elm_community$list_extra$List_Extra$cartesianProduct = function (ll) {
+	var _p65 = ll;
+	if (_p65.ctor === '[]') {
+		return {
+			ctor: '::',
+			_0: {ctor: '[]'},
+			_1: {ctor: '[]'}
+		};
+	} else {
+		return A3(
+			_elm_community$list_extra$List_Extra$lift2,
+			F2(
+				function (x, y) {
+					return {ctor: '::', _0: x, _1: y};
+				}),
+			_p65._0,
+			_elm_community$list_extra$List_Extra$cartesianProduct(_p65._1));
+	}
+};
+var _elm_community$list_extra$List_Extra$lift3 = F4(
+	function (f, la, lb, lc) {
+		return A2(
+			_elm_community$list_extra$List_Extra$andThen,
+			function (a) {
+				return A2(
+					_elm_community$list_extra$List_Extra$andThen,
+					function (b) {
+						return A2(
+							_elm_community$list_extra$List_Extra$andThen,
+							function (c) {
+								return {
+									ctor: '::',
+									_0: A3(f, a, b, c),
+									_1: {ctor: '[]'}
+								};
+							},
+							lc);
+					},
+					lb);
+			},
+			la);
+	});
+var _elm_community$list_extra$List_Extra$lift4 = F5(
+	function (f, la, lb, lc, ld) {
+		return A2(
+			_elm_community$list_extra$List_Extra$andThen,
+			function (a) {
+				return A2(
+					_elm_community$list_extra$List_Extra$andThen,
+					function (b) {
+						return A2(
+							_elm_community$list_extra$List_Extra$andThen,
+							function (c) {
+								return A2(
+									_elm_community$list_extra$List_Extra$andThen,
+									function (d) {
+										return {
+											ctor: '::',
+											_0: A4(f, a, b, c, d),
+											_1: {ctor: '[]'}
+										};
+									},
+									ld);
+							},
+							lc);
+					},
+					lb);
+			},
+			la);
+	});
+var _elm_community$list_extra$List_Extra$andMap = F2(
+	function (l, fl) {
+		return A3(
+			_elm_lang$core$List$map2,
+			F2(
+				function (x, y) {
+					return x(y);
+				}),
+			fl,
+			l);
+	});
+var _elm_community$list_extra$List_Extra$uniqueHelp = F4(
+	function (f, existing, remaining, accumulator) {
+		uniqueHelp:
+		while (true) {
+			var _p66 = remaining;
+			if (_p66.ctor === '[]') {
+				return _elm_lang$core$List$reverse(accumulator);
+			} else {
+				var _p68 = _p66._1;
+				var _p67 = _p66._0;
+				var computedFirst = f(_p67);
+				if (A2(_elm_lang$core$Set$member, computedFirst, existing)) {
+					var _v64 = f,
+						_v65 = existing,
+						_v66 = _p68,
+						_v67 = accumulator;
+					f = _v64;
+					existing = _v65;
+					remaining = _v66;
+					accumulator = _v67;
+					continue uniqueHelp;
+				} else {
+					var _v68 = f,
+						_v69 = A2(_elm_lang$core$Set$insert, computedFirst, existing),
+						_v70 = _p68,
+						_v71 = {ctor: '::', _0: _p67, _1: accumulator};
+					f = _v68;
+					existing = _v69;
+					remaining = _v70;
+					accumulator = _v71;
+					continue uniqueHelp;
+				}
+			}
+		}
+	});
+var _elm_community$list_extra$List_Extra$uniqueBy = F2(
+	function (f, list) {
+		return A4(
+			_elm_community$list_extra$List_Extra$uniqueHelp,
+			f,
+			_elm_lang$core$Set$empty,
+			list,
+			{ctor: '[]'});
+	});
+var _elm_community$list_extra$List_Extra$allDifferentBy = F2(
+	function (f, list) {
+		return _elm_lang$core$Native_Utils.eq(
+			_elm_lang$core$List$length(list),
+			_elm_lang$core$List$length(
+				A2(_elm_community$list_extra$List_Extra$uniqueBy, f, list)));
+	});
+var _elm_community$list_extra$List_Extra$allDifferent = function (list) {
+	return A2(_elm_community$list_extra$List_Extra$allDifferentBy, _elm_lang$core$Basics$identity, list);
+};
+var _elm_community$list_extra$List_Extra$unique = function (list) {
+	return A4(
+		_elm_community$list_extra$List_Extra$uniqueHelp,
+		_elm_lang$core$Basics$identity,
+		_elm_lang$core$Set$empty,
+		list,
+		{ctor: '[]'});
+};
+var _elm_community$list_extra$List_Extra$dropWhile = F2(
+	function (predicate, list) {
+		dropWhile:
+		while (true) {
+			var _p69 = list;
+			if (_p69.ctor === '[]') {
+				return {ctor: '[]'};
+			} else {
+				if (predicate(_p69._0)) {
+					var _v73 = predicate,
+						_v74 = _p69._1;
+					predicate = _v73;
+					list = _v74;
+					continue dropWhile;
+				} else {
+					return list;
+				}
+			}
+		}
+	});
+var _elm_community$list_extra$List_Extra$takeWhile = function (predicate) {
+	var takeWhileMemo = F2(
+		function (memo, list) {
+			takeWhileMemo:
+			while (true) {
+				var _p70 = list;
+				if (_p70.ctor === '[]') {
+					return _elm_lang$core$List$reverse(memo);
+				} else {
+					var _p71 = _p70._0;
+					if (predicate(_p71)) {
+						var _v76 = {ctor: '::', _0: _p71, _1: memo},
+							_v77 = _p70._1;
+						memo = _v76;
+						list = _v77;
+						continue takeWhileMemo;
+					} else {
+						return _elm_lang$core$List$reverse(memo);
+					}
+				}
+			}
+		});
+	return takeWhileMemo(
+		{ctor: '[]'});
+};
+var _elm_community$list_extra$List_Extra$span = F2(
+	function (p, xs) {
+		return {
+			ctor: '_Tuple2',
+			_0: A2(_elm_community$list_extra$List_Extra$takeWhile, p, xs),
+			_1: A2(_elm_community$list_extra$List_Extra$dropWhile, p, xs)
+		};
+	});
+var _elm_community$list_extra$List_Extra$break = function (p) {
+	return _elm_community$list_extra$List_Extra$span(
+		function (_p72) {
+			return !p(_p72);
+		});
+};
+var _elm_community$list_extra$List_Extra$groupWhile = F2(
+	function (eq, xs_) {
+		var _p73 = xs_;
+		if (_p73.ctor === '[]') {
+			return {ctor: '[]'};
+		} else {
+			var _p75 = _p73._0;
+			var _p74 = A2(
+				_elm_community$list_extra$List_Extra$span,
+				eq(_p75),
+				_p73._1);
+			var ys = _p74._0;
+			var zs = _p74._1;
+			return {
+				ctor: '::',
+				_0: {ctor: '::', _0: _p75, _1: ys},
+				_1: A2(_elm_community$list_extra$List_Extra$groupWhile, eq, zs)
+			};
+		}
+	});
+var _elm_community$list_extra$List_Extra$group = _elm_community$list_extra$List_Extra$groupWhile(
+	F2(
+		function (x, y) {
+			return _elm_lang$core$Native_Utils.eq(x, y);
+		}));
+var _elm_community$list_extra$List_Extra$minimumBy = F2(
+	function (f, ls) {
+		var minBy = F2(
+			function (x, _p76) {
+				var _p77 = _p76;
+				var _p78 = _p77._1;
+				var fx = f(x);
+				return (_elm_lang$core$Native_Utils.cmp(fx, _p78) < 0) ? {ctor: '_Tuple2', _0: x, _1: fx} : {ctor: '_Tuple2', _0: _p77._0, _1: _p78};
+			});
+		var _p79 = ls;
+		if (_p79.ctor === '::') {
+			if (_p79._1.ctor === '[]') {
+				return _elm_lang$core$Maybe$Just(_p79._0);
+			} else {
+				var _p80 = _p79._0;
+				return _elm_lang$core$Maybe$Just(
+					_elm_lang$core$Tuple$first(
+						A3(
+							_elm_lang$core$List$foldl,
+							minBy,
+							{
+								ctor: '_Tuple2',
+								_0: _p80,
+								_1: f(_p80)
+							},
+							_p79._1)));
+			}
+		} else {
+			return _elm_lang$core$Maybe$Nothing;
+		}
+	});
+var _elm_community$list_extra$List_Extra$maximumBy = F2(
+	function (f, ls) {
+		var maxBy = F2(
+			function (x, _p81) {
+				var _p82 = _p81;
+				var _p83 = _p82._1;
+				var fx = f(x);
+				return (_elm_lang$core$Native_Utils.cmp(fx, _p83) > 0) ? {ctor: '_Tuple2', _0: x, _1: fx} : {ctor: '_Tuple2', _0: _p82._0, _1: _p83};
+			});
+		var _p84 = ls;
+		if (_p84.ctor === '::') {
+			if (_p84._1.ctor === '[]') {
+				return _elm_lang$core$Maybe$Just(_p84._0);
+			} else {
+				var _p85 = _p84._0;
+				return _elm_lang$core$Maybe$Just(
+					_elm_lang$core$Tuple$first(
+						A3(
+							_elm_lang$core$List$foldl,
+							maxBy,
+							{
+								ctor: '_Tuple2',
+								_0: _p85,
+								_1: f(_p85)
+							},
+							_p84._1)));
+			}
+		} else {
+			return _elm_lang$core$Maybe$Nothing;
+		}
+	});
+var _elm_community$list_extra$List_Extra$uncons = function (xs) {
+	var _p86 = xs;
+	if (_p86.ctor === '[]') {
+		return _elm_lang$core$Maybe$Nothing;
+	} else {
+		return _elm_lang$core$Maybe$Just(
+			{ctor: '_Tuple2', _0: _p86._0, _1: _p86._1});
+	}
+};
+var _elm_community$list_extra$List_Extra$swapAt = F3(
+	function (index1, index2, l) {
+		swapAt:
+		while (true) {
+			if (_elm_lang$core$Native_Utils.eq(index1, index2) || (_elm_lang$core$Native_Utils.cmp(index1, 0) < 0)) {
+				return l;
+			} else {
+				if (_elm_lang$core$Native_Utils.cmp(index1, index2) > 0) {
+					var _v84 = index2,
+						_v85 = index1,
+						_v86 = l;
+					index1 = _v84;
+					index2 = _v85;
+					l = _v86;
+					continue swapAt;
+				} else {
+					var _p87 = A2(_elm_community$list_extra$List_Extra$splitAt, index1, l);
+					var part1 = _p87._0;
+					var tail1 = _p87._1;
+					var _p88 = A2(_elm_community$list_extra$List_Extra$splitAt, index2 - index1, tail1);
+					var head2 = _p88._0;
+					var tail2 = _p88._1;
+					var _p89 = {
+						ctor: '_Tuple2',
+						_0: _elm_community$list_extra$List_Extra$uncons(head2),
+						_1: _elm_community$list_extra$List_Extra$uncons(tail2)
+					};
+					if (((((_p89.ctor === '_Tuple2') && (_p89._0.ctor === 'Just')) && (_p89._0._0.ctor === '_Tuple2')) && (_p89._1.ctor === 'Just')) && (_p89._1._0.ctor === '_Tuple2')) {
+						return _elm_lang$core$List$concat(
+							{
+								ctor: '::',
+								_0: part1,
+								_1: {
+									ctor: '::',
+									_0: {ctor: '::', _0: _p89._1._0._0, _1: _p89._0._0._1},
+									_1: {
+										ctor: '::',
+										_0: {ctor: '::', _0: _p89._0._0._0, _1: _p89._1._0._1},
+										_1: {ctor: '[]'}
+									}
+								}
+							});
+					} else {
+						return l;
+					}
+				}
+			}
+		}
+	});
+var _elm_community$list_extra$List_Extra$cycleHelp = F3(
+	function (acc, n, list) {
+		cycleHelp:
+		while (true) {
+			if (_elm_lang$core$Native_Utils.cmp(n, 0) > 0) {
+				var _v88 = A2(_elm_community$list_extra$List_Extra$reverseAppend, list, acc),
+					_v89 = n - 1,
+					_v90 = list;
+				acc = _v88;
+				n = _v89;
+				list = _v90;
+				continue cycleHelp;
+			} else {
+				return acc;
+			}
+		}
+	});
+var _elm_community$list_extra$List_Extra$cycle = F2(
+	function (len, list) {
+		var cycleLength = _elm_lang$core$List$length(list);
+		return (_elm_lang$core$Native_Utils.eq(cycleLength, 0) || _elm_lang$core$Native_Utils.eq(cycleLength, len)) ? list : ((_elm_lang$core$Native_Utils.cmp(cycleLength, len) < 0) ? _elm_lang$core$List$reverse(
+			A2(
+				_elm_community$list_extra$List_Extra$reverseAppend,
+				A2(
+					_elm_lang$core$List$take,
+					A2(_elm_lang$core$Basics$rem, len, cycleLength),
+					list),
+				A3(
+					_elm_community$list_extra$List_Extra$cycleHelp,
+					{ctor: '[]'},
+					(len / cycleLength) | 0,
+					list))) : A2(_elm_lang$core$List$take, len, list));
+	});
+var _elm_community$list_extra$List_Extra$initialize = F2(
+	function (n, f) {
+		var step = F2(
+			function (i, acc) {
+				step:
+				while (true) {
+					if (_elm_lang$core$Native_Utils.cmp(i, 0) < 0) {
+						return acc;
+					} else {
+						var _v91 = i - 1,
+							_v92 = {
+							ctor: '::',
+							_0: f(i),
+							_1: acc
+						};
+						i = _v91;
+						acc = _v92;
+						continue step;
+					}
+				}
+			});
+		return A2(
+			step,
+			n - 1,
+			{ctor: '[]'});
+	});
+var _elm_community$list_extra$List_Extra$iterate = F2(
+	function (f, x) {
+		var _p90 = f(x);
+		if (_p90.ctor === 'Just') {
+			return {
+				ctor: '::',
+				_0: x,
+				_1: A2(_elm_community$list_extra$List_Extra$iterate, f, _p90._0)
+			};
+		} else {
+			return {
+				ctor: '::',
+				_0: x,
+				_1: {ctor: '[]'}
+			};
+		}
+	});
+var _elm_community$list_extra$List_Extra$getAt = F2(
+	function (idx, xs) {
+		return (_elm_lang$core$Native_Utils.cmp(idx, 0) < 0) ? _elm_lang$core$Maybe$Nothing : _elm_lang$core$List$head(
+			A2(_elm_lang$core$List$drop, idx, xs));
+	});
+var _elm_community$list_extra$List_Extra_ops = _elm_community$list_extra$List_Extra_ops || {};
+_elm_community$list_extra$List_Extra_ops['!!'] = _elm_lang$core$Basics$flip(_elm_community$list_extra$List_Extra$getAt);
+var _elm_community$list_extra$List_Extra$init = function () {
+	var maybe = F2(
+		function (d, f) {
+			return function (_p91) {
+				return A2(
+					_elm_lang$core$Maybe$withDefault,
+					d,
+					A2(_elm_lang$core$Maybe$map, f, _p91));
+			};
+		});
+	return A2(
+		_elm_lang$core$List$foldr,
+		function (x) {
+			return function (_p92) {
+				return _elm_lang$core$Maybe$Just(
+					A3(
+						maybe,
+						{ctor: '[]'},
+						F2(
+							function (x, y) {
+								return {ctor: '::', _0: x, _1: y};
+							})(x),
+						_p92));
+			};
+		},
+		_elm_lang$core$Maybe$Nothing);
+}();
+var _elm_community$list_extra$List_Extra$last = _elm_community$list_extra$List_Extra$foldl1(
+	_elm_lang$core$Basics$flip(_elm_lang$core$Basics$always));
+
 var _elm_lang$core$Random$onSelfMsg = F3(
 	function (_p1, _p0, seed) {
 		return _elm_lang$core$Task$succeed(seed);
@@ -9065,137 +10577,6 @@ var _elm_community$random_extra$Random_List$shuffle = function (list) {
 				}));
 	}
 };
-
-var _elm_lang$core$Set$foldr = F3(
-	function (f, b, _p0) {
-		var _p1 = _p0;
-		return A3(
-			_elm_lang$core$Dict$foldr,
-			F3(
-				function (k, _p2, b) {
-					return A2(f, k, b);
-				}),
-			b,
-			_p1._0);
-	});
-var _elm_lang$core$Set$foldl = F3(
-	function (f, b, _p3) {
-		var _p4 = _p3;
-		return A3(
-			_elm_lang$core$Dict$foldl,
-			F3(
-				function (k, _p5, b) {
-					return A2(f, k, b);
-				}),
-			b,
-			_p4._0);
-	});
-var _elm_lang$core$Set$toList = function (_p6) {
-	var _p7 = _p6;
-	return _elm_lang$core$Dict$keys(_p7._0);
-};
-var _elm_lang$core$Set$size = function (_p8) {
-	var _p9 = _p8;
-	return _elm_lang$core$Dict$size(_p9._0);
-};
-var _elm_lang$core$Set$member = F2(
-	function (k, _p10) {
-		var _p11 = _p10;
-		return A2(_elm_lang$core$Dict$member, k, _p11._0);
-	});
-var _elm_lang$core$Set$isEmpty = function (_p12) {
-	var _p13 = _p12;
-	return _elm_lang$core$Dict$isEmpty(_p13._0);
-};
-var _elm_lang$core$Set$Set_elm_builtin = function (a) {
-	return {ctor: 'Set_elm_builtin', _0: a};
-};
-var _elm_lang$core$Set$empty = _elm_lang$core$Set$Set_elm_builtin(_elm_lang$core$Dict$empty);
-var _elm_lang$core$Set$singleton = function (k) {
-	return _elm_lang$core$Set$Set_elm_builtin(
-		A2(
-			_elm_lang$core$Dict$singleton,
-			k,
-			{ctor: '_Tuple0'}));
-};
-var _elm_lang$core$Set$insert = F2(
-	function (k, _p14) {
-		var _p15 = _p14;
-		return _elm_lang$core$Set$Set_elm_builtin(
-			A3(
-				_elm_lang$core$Dict$insert,
-				k,
-				{ctor: '_Tuple0'},
-				_p15._0));
-	});
-var _elm_lang$core$Set$fromList = function (xs) {
-	return A3(_elm_lang$core$List$foldl, _elm_lang$core$Set$insert, _elm_lang$core$Set$empty, xs);
-};
-var _elm_lang$core$Set$map = F2(
-	function (f, s) {
-		return _elm_lang$core$Set$fromList(
-			A2(
-				_elm_lang$core$List$map,
-				f,
-				_elm_lang$core$Set$toList(s)));
-	});
-var _elm_lang$core$Set$remove = F2(
-	function (k, _p16) {
-		var _p17 = _p16;
-		return _elm_lang$core$Set$Set_elm_builtin(
-			A2(_elm_lang$core$Dict$remove, k, _p17._0));
-	});
-var _elm_lang$core$Set$union = F2(
-	function (_p19, _p18) {
-		var _p20 = _p19;
-		var _p21 = _p18;
-		return _elm_lang$core$Set$Set_elm_builtin(
-			A2(_elm_lang$core$Dict$union, _p20._0, _p21._0));
-	});
-var _elm_lang$core$Set$intersect = F2(
-	function (_p23, _p22) {
-		var _p24 = _p23;
-		var _p25 = _p22;
-		return _elm_lang$core$Set$Set_elm_builtin(
-			A2(_elm_lang$core$Dict$intersect, _p24._0, _p25._0));
-	});
-var _elm_lang$core$Set$diff = F2(
-	function (_p27, _p26) {
-		var _p28 = _p27;
-		var _p29 = _p26;
-		return _elm_lang$core$Set$Set_elm_builtin(
-			A2(_elm_lang$core$Dict$diff, _p28._0, _p29._0));
-	});
-var _elm_lang$core$Set$filter = F2(
-	function (p, _p30) {
-		var _p31 = _p30;
-		return _elm_lang$core$Set$Set_elm_builtin(
-			A2(
-				_elm_lang$core$Dict$filter,
-				F2(
-					function (k, _p32) {
-						return p(k);
-					}),
-				_p31._0));
-	});
-var _elm_lang$core$Set$partition = F2(
-	function (p, _p33) {
-		var _p34 = _p33;
-		var _p35 = A2(
-			_elm_lang$core$Dict$partition,
-			F2(
-				function (k, _p36) {
-					return p(k);
-				}),
-			_p34._0);
-		var p1 = _p35._0;
-		var p2 = _p35._1;
-		return {
-			ctor: '_Tuple2',
-			_0: _elm_lang$core$Set$Set_elm_builtin(p1),
-			_1: _elm_lang$core$Set$Set_elm_builtin(p2)
-		};
-	});
 
 var _elm_lang$core$Process$kill = _elm_lang$core$Native_Scheduler.kill;
 var _elm_lang$core$Process$sleep = _elm_lang$core$Native_Scheduler.sleep;
@@ -23406,6 +24787,7 @@ var _inkuzmin$elm_multiselect$Multiselect_SelectCss$css = function (_p0) {
 var _inkuzmin$elm_multiselect$Multiselect_SelectCss$MenuId = {ctor: 'MenuId'};
 var _inkuzmin$elm_multiselect$Multiselect_SelectCss$InputId = {ctor: 'InputId'};
 
+var _inkuzmin$elm_multiselect$Multiselect_Keycodes$tab = 9;
 var _inkuzmin$elm_multiselect$Multiselect_Keycodes$backspace = 8;
 var _inkuzmin$elm_multiselect$Multiselect_Keycodes$end = 35;
 var _inkuzmin$elm_multiselect$Multiselect_Keycodes$home = 36;
@@ -24473,40 +25855,54 @@ var _inkuzmin$elm_multiselect$Multiselect$update = F2(
 												{status: _inkuzmin$elm_multiselect$Multiselect$Closed, $protected: true}),
 											{ctor: '[]'});
 									} else {
-										if (_elm_lang$core$Native_Utils.eq(_p44, _inkuzmin$elm_multiselect$Multiselect_Keycodes$backspace)) {
-											if (_elm_lang$core$Native_Utils.eq(model.input, '')) {
-												var _p42 = _inkuzmin$elm_multiselect$Multiselect$lastElem(model.selected);
-												if (_p42.ctor === 'Nothing') {
+										if (_elm_lang$core$Native_Utils.eq(_p44, _inkuzmin$elm_multiselect$Multiselect_Keycodes$tab)) {
+											return A2(
+												_elm_lang$core$Platform_Cmd_ops['!'],
+												_elm_lang$core$Native_Utils.update(
+													model,
+													{status: _inkuzmin$elm_multiselect$Multiselect$Closed}),
+												{ctor: '[]'});
+										} else {
+											if (_elm_lang$core$Native_Utils.eq(_p44, _inkuzmin$elm_multiselect$Multiselect_Keycodes$backspace)) {
+												if (_elm_lang$core$Native_Utils.eq(model.input, '')) {
+													var _p42 = _inkuzmin$elm_multiselect$Multiselect$lastElem(model.selected);
+													if (_p42.ctor === 'Nothing') {
+														return A2(
+															_elm_lang$core$Platform_Cmd_ops['!'],
+															model,
+															{ctor: '[]'});
+													} else {
+														var _p43 = _p42._0;
+														var selected = A2(
+															_elm_lang$core$List$filter,
+															function (value) {
+																return !_elm_lang$core$Native_Utils.eq(value, _p43);
+															},
+															model.selected);
+														return A2(
+															_elm_lang$core$Platform_Cmd_ops['!'],
+															_elm_lang$core$Native_Utils.update(
+																model,
+																{
+																	selected: selected,
+																	filtered: A2(_inkuzmin$elm_multiselect$Multiselect$filter, selected, model.values),
+																	hovered: _elm_lang$core$Maybe$Just(_p43)
+																}),
+															{
+																ctor: '::',
+																_0: A2(
+																	_elm_lang$core$Task$attempt,
+																	_inkuzmin$elm_multiselect$Multiselect$ScrollY,
+																	_elm_lang$dom$Dom_Scroll$y(
+																		A2(_elm_lang$core$Basics_ops['++'], 'multiselectMenu', model.tag))),
+																_1: {ctor: '[]'}
+															});
+													}
+												} else {
 													return A2(
 														_elm_lang$core$Platform_Cmd_ops['!'],
 														model,
 														{ctor: '[]'});
-												} else {
-													var _p43 = _p42._0;
-													var selected = A2(
-														_elm_lang$core$List$filter,
-														function (value) {
-															return !_elm_lang$core$Native_Utils.eq(value, _p43);
-														},
-														model.selected);
-													return A2(
-														_elm_lang$core$Platform_Cmd_ops['!'],
-														_elm_lang$core$Native_Utils.update(
-															model,
-															{
-																selected: selected,
-																filtered: A2(_inkuzmin$elm_multiselect$Multiselect$filter, selected, model.values),
-																hovered: _elm_lang$core$Maybe$Just(_p43)
-															}),
-														{
-															ctor: '::',
-															_0: A2(
-																_elm_lang$core$Task$attempt,
-																_inkuzmin$elm_multiselect$Multiselect$ScrollY,
-																_elm_lang$dom$Dom_Scroll$y(
-																	A2(_elm_lang$core$Basics_ops['++'], 'multiselectMenu', model.tag))),
-															_1: {ctor: '[]'}
-														});
 												}
 											} else {
 												return A2(
@@ -24514,11 +25910,6 @@ var _inkuzmin$elm_multiselect$Multiselect$update = F2(
 													model,
 													{ctor: '[]'});
 											}
-										} else {
-											return A2(
-												_elm_lang$core$Platform_Cmd_ops['!'],
-												model,
-												{ctor: '[]'});
 										}
 									}
 								}
@@ -27795,6 +29186,41 @@ var _user$project$AppCss$general = {
 		}
 	}
 };
+var _user$project$AppCss$GridBlock = {ctor: 'GridBlock'};
+var _user$project$AppCss$Grid = {ctor: 'Grid'};
+var _user$project$AppCss$grid = A2(
+	_rtfeldman$elm_css$Css$class,
+	_user$project$AppCss$Grid,
+	{
+		ctor: '::',
+		_0: _rtfeldman$elm_css$Css$displayFlex,
+		_1: {
+			ctor: '::',
+			_0: _rtfeldman$elm_css$Css$flex(_rtfeldman$elm_css$Css$auto),
+			_1: {
+				ctor: '::',
+				_0: _rtfeldman$elm_css$Css$flexWrap(_rtfeldman$elm_css$Css$wrap),
+				_1: {
+					ctor: '::',
+					_0: _rtfeldman$elm_css$Css$descendants(
+						{
+							ctor: '::',
+							_0: A2(
+								_rtfeldman$elm_css$Css$class,
+								_user$project$AppCss$GridBlock,
+								{
+									ctor: '::',
+									_0: _rtfeldman$elm_css$Css$padding(
+										_rtfeldman$elm_css$Css$px(10)),
+									_1: {ctor: '[]'}
+								}),
+							_1: {ctor: '[]'}
+						}),
+					_1: {ctor: '[]'}
+				}
+			}
+		}
+	});
 var _user$project$AppCss$RightBar = {ctor: 'RightBar'};
 var _user$project$AppCss$rightBar = A2(
 	_rtfeldman$elm_css$Css$class,
@@ -27809,7 +29235,21 @@ var _user$project$AppCss$rightBar = A2(
 				ctor: '::',
 				_0: _rtfeldman$elm_css$Css$padding(
 					_rtfeldman$elm_css$Css$px(10)),
-				_1: {ctor: '[]'}
+				_1: {
+					ctor: '::',
+					_0: _rtfeldman$elm_css$Css$descendants(
+						{
+							ctor: '::',
+							_0: _rtfeldman$elm_css$Css_Elements$h5(
+								{
+									ctor: '::',
+									_0: _rtfeldman$elm_css$Css$marginBottom(_rtfeldman$elm_css$Css$zero),
+									_1: {ctor: '[]'}
+								}),
+							_1: {ctor: '[]'}
+						}),
+					_1: {ctor: '[]'}
+				}
 			}
 		}
 	});
@@ -28391,7 +29831,11 @@ var _user$project$AppCss$css = _rtfeldman$elm_css$Css$stylesheet(
 													_1: {
 														ctor: '::',
 														_0: _user$project$AppCss$leftBar,
-														_1: {ctor: '[]'}
+														_1: {
+															ctor: '::',
+															_0: _user$project$AppCss$grid,
+															_1: {ctor: '[]'}
+														}
 													}
 												}
 											}
@@ -28563,6 +30007,107 @@ var _user$project$Movie$notesView = function (movie) {
 			});
 	}
 };
+var _user$project$Movie$movieOffer = function (offer) {
+	return {
+		ctor: '::',
+		_0: A2(
+			_elm_lang$html$Html$a,
+			{
+				ctor: '::',
+				_0: _elm_lang$html$Html_Attributes$href(offer.url),
+				_1: {
+					ctor: '::',
+					_0: _elm_lang$html$Html_Attributes$target('_blank'),
+					_1: {ctor: '[]'}
+				}
+			},
+			{
+				ctor: '::',
+				_0: _elm_lang$html$Html$text(
+					A2(
+						_elm_lang$core$Basics_ops['++'],
+						_elm_lang$core$Basics$toString(offer.provider),
+						A2(
+							_elm_lang$core$Basics_ops['++'],
+							' ',
+							_elm_lang$core$Basics$toString(offer.offerType)))),
+				_1: {ctor: '[]'}
+			}),
+		_1: {ctor: '[]'}
+	};
+};
+var _user$project$Movie$movieOffers = function (movie) {
+	var _p2 = movie.offers;
+	switch (_p2.ctor) {
+		case 'Loading':
+			return A2(
+				_elm_lang$html$Html$h5,
+				{ctor: '[]'},
+				{
+					ctor: '::',
+					_0: _elm_lang$html$Html$text('Searching for movie viewing options...'),
+					_1: {ctor: '[]'}
+				});
+		case 'NoResults':
+			return A2(
+				_elm_lang$html$Html$h5,
+				{ctor: '[]'},
+				{
+					ctor: '::',
+					_0: _elm_lang$html$Html$text('Movie not found for streaming or purchase'),
+					_1: {ctor: '[]'}
+				});
+		default:
+			return A2(
+				_elm_lang$html$Html$div,
+				{ctor: '[]'},
+				{
+					ctor: '::',
+					_0: A2(
+						_elm_lang$html$Html$h5,
+						{ctor: '[]'},
+						{
+							ctor: '::',
+							_0: _elm_lang$html$Html$text('Watch'),
+							_1: {ctor: '[]'}
+						}),
+					_1: {
+						ctor: '::',
+						_0: A2(
+							_elm_lang$html$Html$div,
+							{
+								ctor: '::',
+								_0: _user$project$AppCss_Helpers$class(
+									{
+										ctor: '::',
+										_0: _user$project$AppCss$Grid,
+										_1: {ctor: '[]'}
+									}),
+								_1: {ctor: '[]'}
+							},
+							A2(
+								_elm_lang$core$List$map,
+								function (offer) {
+									return A2(
+										_elm_lang$html$Html$div,
+										{
+											ctor: '::',
+											_0: _user$project$AppCss_Helpers$class(
+												{
+													ctor: '::',
+													_0: _user$project$AppCss$GridBlock,
+													_1: {ctor: '[]'}
+												}),
+											_1: {ctor: '[]'}
+										},
+										_user$project$Movie$movieOffer(offer));
+								},
+								_p2._0)),
+						_1: {ctor: '[]'}
+					}
+				});
+	}
+};
 var _user$project$Movie$movieModalBase = F2(
 	function (closeModal, contents) {
 		return A2(
@@ -28663,8 +30208,8 @@ var _user$project$Movie$moviePoster = function (movie) {
 var _user$project$Movie$movieCard = F3(
 	function (focusMovie, selectedGenres, movie) {
 		var filtered = function () {
-			var _p2 = _elm_lang$core$Set$size(selectedGenres);
-			if (_p2 === 0) {
+			var _p3 = _elm_lang$core$Set$size(selectedGenres);
+			if (_p3 === 0) {
 				return false;
 			} else {
 				return _elm_lang$core$Native_Utils.eq(
@@ -28884,24 +30429,28 @@ var _user$project$Movie$movieModal = F2(
 												{ctor: '[]'},
 												A2(
 													_elm_lang$core$List$map,
-													function (_p3) {
-														var _p4 = _p3;
+													function (_p4) {
+														var _p5 = _p4;
 														return A2(
 															_elm_lang$html$Html$a,
 															{
 																ctor: '::',
 																_0: _elm_lang$html$Html_Attributes$href(
-																	A2(_elm_lang$core$Basics_ops['++'], '?genres=', _p4._0)),
+																	A2(_elm_lang$core$Basics_ops['++'], '?genres=', _p5._0)),
 																_1: {ctor: '[]'}
 															},
 															{
 																ctor: '::',
-																_0: _elm_lang$html$Html$text(_p4._1),
+																_0: _elm_lang$html$Html$text(_p5._1),
 																_1: {ctor: '[]'}
 															});
 													},
 													_elm_lang$core$Set$toList(movie.movie.genres))),
-											_1: {ctor: '[]'}
+											_1: {
+												ctor: '::',
+												_0: _user$project$Movie$movieOffers(movie),
+												_1: {ctor: '[]'}
+											}
 										}
 									}
 								}
@@ -29002,19 +30551,19 @@ var _user$project$Movie$offlineMovieModal = F2(
 									{ctor: '[]'},
 									A2(
 										_elm_lang$core$List$map,
-										function (_p5) {
-											var _p6 = _p5;
+										function (_p6) {
+											var _p7 = _p6;
 											return A2(
 												_elm_lang$html$Html$a,
 												{
 													ctor: '::',
 													_0: _elm_lang$html$Html_Attributes$href(
-														A2(_elm_lang$core$Basics_ops['++'], '?genres=', _p6._0)),
+														A2(_elm_lang$core$Basics_ops['++'], '?genres=', _p7._0)),
 													_1: {ctor: '[]'}
 												},
 												{
 													ctor: '::',
-													_0: _elm_lang$html$Html$text(_p6._1),
+													_0: _elm_lang$html$Html$text(_p7._1),
 													_1: {ctor: '[]'}
 												});
 										},
@@ -29028,8 +30577,8 @@ var _user$project$Movie$offlineMovieModal = F2(
 	});
 var _user$project$Movie$matchGenres = F2(
 	function (genres, movie) {
-		var _p7 = _elm_lang$core$Set$size(genres);
-		if (_p7 === 0) {
+		var _p8 = _elm_lang$core$Set$size(genres);
+		if (_p8 === 0) {
 			return true;
 		} else {
 			return _elm_lang$core$Native_Utils.cmp(
@@ -29039,16 +30588,16 @@ var _user$project$Movie$matchGenres = F2(
 		}
 	});
 var _user$project$Movie$watchDate = function (movie) {
-	var _p8 = movie.watched;
-	if (_p8.ctor === 'Unwatched') {
+	var _p9 = movie.watched;
+	if (_p9.ctor === 'Unwatched') {
 		return _elm_lang$core$Maybe$Nothing;
 	} else {
-		return _elm_lang$core$Maybe$Just(_p8._0);
+		return _elm_lang$core$Maybe$Just(_p9._0);
 	}
 };
 var _user$project$Movie$isWatched = function (movie) {
-	var _p9 = movie.watched;
-	if (_p9.ctor === 'Unwatched') {
+	var _p10 = movie.watched;
+	if (_p10.ctor === 'Unwatched') {
 		return false;
 	} else {
 		return true;
@@ -29075,43 +30624,6 @@ var _user$project$Movie$MovieDetails = F9(
 	function (a, b, c, d, e, f, g, h, i) {
 		return {movie: a, rated: b, runtime: c, director: d, writer: e, actors: f, plot: g, ratings: h, offers: i};
 	});
-var _user$project$Movie$decodeMovieData = function (movie) {
-	return A2(
-		_NoRedInk$elm_decode_pipeline$Json_Decode_Pipeline$hardcoded,
-		{ctor: '[]'},
-		A3(
-			_NoRedInk$elm_decode_pipeline$Json_Decode_Pipeline$required,
-			'Ratings',
-			_elm_lang$core$Json_Decode$list(_user$project$Movie$ratingDecoder),
-			A3(
-				_NoRedInk$elm_decode_pipeline$Json_Decode_Pipeline$required,
-				'Plot',
-				_elm_lang$core$Json_Decode$string,
-				A3(
-					_NoRedInk$elm_decode_pipeline$Json_Decode_Pipeline$required,
-					'Actors',
-					_elm_lang$core$Json_Decode$string,
-					A3(
-						_NoRedInk$elm_decode_pipeline$Json_Decode_Pipeline$required,
-						'Writer',
-						_elm_lang$core$Json_Decode$string,
-						A3(
-							_NoRedInk$elm_decode_pipeline$Json_Decode_Pipeline$required,
-							'Director',
-							_elm_lang$core$Json_Decode$string,
-							A3(
-								_NoRedInk$elm_decode_pipeline$Json_Decode_Pipeline$required,
-								'Runtime',
-								_elm_lang$core$Json_Decode$string,
-								A3(
-									_NoRedInk$elm_decode_pipeline$Json_Decode_Pipeline$required,
-									'Rated',
-									_elm_lang$core$Json_Decode$string,
-									A2(
-										_NoRedInk$elm_decode_pipeline$Json_Decode_Pipeline$hardcoded,
-										movie,
-										_NoRedInk$elm_decode_pipeline$Json_Decode_Pipeline$decode(_user$project$Movie$MovieDetails))))))))));
-};
 var _user$project$Movie$JustWatchSearchResult = F2(
 	function (a, b) {
 		return {title: a, id: b};
@@ -29154,44 +30666,75 @@ var _user$project$Movie$Selected = function (a) {
 	return {ctor: 'Selected', _0: a};
 };
 var _user$project$Movie$NotSelected = {ctor: 'NotSelected'};
-var _user$project$Movie$StreamVideo = {ctor: 'StreamVideo'};
-var _user$project$Movie$RentVideo = {ctor: 'RentVideo'};
-var _user$project$Movie$BuyVideo = {ctor: 'BuyVideo'};
+var _user$project$Movie$Found = function (a) {
+	return {ctor: 'Found', _0: a};
+};
+var _user$project$Movie$NoResults = {ctor: 'NoResults'};
+var _user$project$Movie$Loading = {ctor: 'Loading'};
+var _user$project$Movie$decodeMovieData = function (movie) {
+	return A2(
+		_NoRedInk$elm_decode_pipeline$Json_Decode_Pipeline$hardcoded,
+		_user$project$Movie$Loading,
+		A3(
+			_NoRedInk$elm_decode_pipeline$Json_Decode_Pipeline$required,
+			'Ratings',
+			_elm_lang$core$Json_Decode$list(_user$project$Movie$ratingDecoder),
+			A3(
+				_NoRedInk$elm_decode_pipeline$Json_Decode_Pipeline$required,
+				'Plot',
+				_elm_lang$core$Json_Decode$string,
+				A3(
+					_NoRedInk$elm_decode_pipeline$Json_Decode_Pipeline$required,
+					'Actors',
+					_elm_lang$core$Json_Decode$string,
+					A3(
+						_NoRedInk$elm_decode_pipeline$Json_Decode_Pipeline$required,
+						'Writer',
+						_elm_lang$core$Json_Decode$string,
+						A3(
+							_NoRedInk$elm_decode_pipeline$Json_Decode_Pipeline$required,
+							'Director',
+							_elm_lang$core$Json_Decode$string,
+							A3(
+								_NoRedInk$elm_decode_pipeline$Json_Decode_Pipeline$required,
+								'Runtime',
+								_elm_lang$core$Json_Decode$string,
+								A3(
+									_NoRedInk$elm_decode_pipeline$Json_Decode_Pipeline$required,
+									'Rated',
+									_elm_lang$core$Json_Decode$string,
+									A2(
+										_NoRedInk$elm_decode_pipeline$Json_Decode_Pipeline$hardcoded,
+										movie,
+										_NoRedInk$elm_decode_pipeline$Json_Decode_Pipeline$decode(_user$project$Movie$MovieDetails))))))))));
+};
+var _user$project$Movie$Unknown = {ctor: 'Unknown'};
+var _user$project$Movie$Ads = {ctor: 'Ads'};
+var _user$project$Movie$Streaming = {ctor: 'Streaming'};
+var _user$project$Movie$Rent = {ctor: 'Rent'};
+var _user$project$Movie$Buy = {ctor: 'Buy'};
 var _user$project$Movie$offerTypeDecoder = A2(
-	_elm_lang$core$Json_Decode$andThen,
-	function (str) {
-		var _p10 = str;
-		switch (_p10) {
-			case 'buy':
-				return _elm_lang$core$Json_Decode$succeed(_user$project$Movie$BuyVideo);
-			case 'flatrate':
-				return _elm_lang$core$Json_Decode$succeed(_user$project$Movie$StreamVideo);
-			case 'rent':
-				return _elm_lang$core$Json_Decode$succeed(_user$project$Movie$RentVideo);
-			default:
-				return _elm_lang$core$Json_Decode$fail(
-					A2(_elm_lang$core$Basics_ops['++'], 'Unknown offertype: ', _p10));
-		}
-	},
-	_elm_lang$core$Json_Decode$string);
-var _user$project$Movie$SD = {ctor: 'SD'};
-var _user$project$Movie$HD = {ctor: 'HD'};
-var _user$project$Movie$presentationTypeDecoder = A2(
 	_elm_lang$core$Json_Decode$andThen,
 	function (str) {
 		var _p11 = str;
 		switch (_p11) {
-			case 'hd':
-				return _elm_lang$core$Json_Decode$succeed(_user$project$Movie$HD);
-			case 'sd':
-				return _elm_lang$core$Json_Decode$succeed(_user$project$Movie$SD);
+			case 'buy':
+				return _elm_lang$core$Json_Decode$succeed(_user$project$Movie$Buy);
+			case 'flatrate':
+				return _elm_lang$core$Json_Decode$succeed(_user$project$Movie$Streaming);
+			case 'rent':
+				return _elm_lang$core$Json_Decode$succeed(_user$project$Movie$Rent);
+			case 'ads':
+				return _elm_lang$core$Json_Decode$succeed(_user$project$Movie$Ads);
 			default:
-				return _elm_lang$core$Json_Decode$fail(
-					A2(_elm_lang$core$Basics_ops['++'], 'Unknown PresentationType: ', _p11));
+				return _elm_lang$core$Json_Decode$succeed(_user$project$Movie$Unknown);
 		}
 	},
 	_elm_lang$core$Json_Decode$string);
 var _user$project$Movie$Other = {ctor: 'Other'};
+var _user$project$Movie$Crackle = {ctor: 'Crackle'};
+var _user$project$Movie$Starz = {ctor: 'Starz'};
+var _user$project$Movie$PlayStation = {ctor: 'PlayStation'};
 var _user$project$Movie$Vudu = {ctor: 'Vudu'};
 var _user$project$Movie$Fandango = {ctor: 'Fandango'};
 var _user$project$Movie$Amazon = {ctor: 'Amazon'};
@@ -29199,28 +30742,36 @@ var _user$project$Movie$Netflix = {ctor: 'Netflix'};
 var _user$project$Movie$Hulu = {ctor: 'Hulu'};
 var _user$project$Movie$GooglePlay = {ctor: 'GooglePlay'};
 var _user$project$Movie$Microsoft = {ctor: 'Microsoft'};
-var _user$project$Movie$Apple = {ctor: 'Apple'};
+var _user$project$Movie$Itunes = {ctor: 'Itunes'};
 var _user$project$Movie$providerDecoder = A2(
 	_elm_lang$core$Json_Decode$andThen,
 	function (providerId) {
 		var _p12 = providerId;
 		switch (_p12) {
-			case 15:
-				return _elm_lang$core$Json_Decode$succeed(_user$project$Movie$Hulu);
+			case 2:
+				return _elm_lang$core$Json_Decode$succeed(_user$project$Movie$Itunes);
+			case 3:
+				return _elm_lang$core$Json_Decode$succeed(_user$project$Movie$GooglePlay);
+			case 7:
+				return _elm_lang$core$Json_Decode$succeed(_user$project$Movie$Vudu);
+			case 8:
+				return _elm_lang$core$Json_Decode$succeed(_user$project$Movie$Netflix);
 			case 9:
 				return _elm_lang$core$Json_Decode$succeed(_user$project$Movie$Amazon);
 			case 10:
 				return _elm_lang$core$Json_Decode$succeed(_user$project$Movie$Amazon);
+			case 12:
+				return _elm_lang$core$Json_Decode$succeed(_user$project$Movie$Crackle);
+			case 15:
+				return _elm_lang$core$Json_Decode$succeed(_user$project$Movie$Hulu);
+			case 18:
+				return _elm_lang$core$Json_Decode$succeed(_user$project$Movie$PlayStation);
+			case 43:
+				return _elm_lang$core$Json_Decode$succeed(_user$project$Movie$Starz);
 			case 68:
 				return _elm_lang$core$Json_Decode$succeed(_user$project$Movie$Microsoft);
-			case 3:
-				return _elm_lang$core$Json_Decode$succeed(_user$project$Movie$GooglePlay);
 			case 105:
 				return _elm_lang$core$Json_Decode$succeed(_user$project$Movie$Fandango);
-			case 7:
-				return _elm_lang$core$Json_Decode$succeed(_user$project$Movie$Vudu);
-			case 2:
-				return _elm_lang$core$Json_Decode$succeed(_user$project$Movie$Apple);
 			default:
 				return _elm_lang$core$Json_Decode$succeed(_user$project$Movie$Other);
 		}
@@ -32022,25 +33573,21 @@ var _user$project$Main$Model = F7(
 var _user$project$Main$LoadJustWatchDetails = function (a) {
 	return {ctor: 'LoadJustWatchDetails', _0: a};
 };
-var _user$project$Main$loadJustWatchDetails = function (searchResults) {
-	var _p1 = _elm_lang$core$List$head(searchResults.items);
-	if (_p1.ctor === 'Nothing') {
-		return _elm_lang$core$Platform_Cmd$none;
-	} else {
+var _user$project$Main$loadJustWatchDetails = F2(
+	function (result, movie) {
 		var url = A2(
 			_elm_lang$core$Basics_ops['++'],
 			'https://apis.justwatch.com/content/titles/movie/',
 			A2(
 				_elm_lang$core$Basics_ops['++'],
-				_elm_lang$core$Basics$toString(_p1._0.id),
+				_elm_lang$core$Basics$toString(result.id),
 				'/locale/en_US'));
 		var request = A2(
 			_elm_lang$http$Http$get,
 			url,
-			_user$project$Movie$decodeJustWatchDetails(searchResults.movie));
+			_user$project$Movie$decodeJustWatchDetails(movie));
 		return A2(_elm_lang$http$Http$send, _user$project$Main$LoadJustWatchDetails, request);
-	}
-};
+	});
 var _user$project$Main$LoadJustWatchSearch = function (a) {
 	return {ctor: 'LoadJustWatchSearch', _0: a};
 };
@@ -32103,8 +33650,8 @@ var _user$project$Main$MovieSelected = function (a) {
 };
 var _user$project$Main$update = F2(
 	function (msg, model) {
-		var _p2 = msg;
-		switch (_p2.ctor) {
+		var _p1 = msg;
+		switch (_p1.ctor) {
 			case 'LocationChange':
 				return {ctor: '_Tuple2', _0: model, _1: _elm_lang$core$Platform_Cmd$none};
 			case 'SelectMovie':
@@ -32121,19 +33668,19 @@ var _user$project$Main$update = F2(
 								model.unwatched)))
 				};
 			case 'MovieSelected':
-				var _p3 = _p2._0._0;
-				if (_p3.ctor === 'Just') {
+				var _p2 = _p1._0._0;
+				if (_p2.ctor === 'Just') {
 					return A2(
 						_user$project$Main$openModal,
 						_elm_lang$core$Native_Utils.update(
 							model,
-							{unwatched: _p2._0._1}),
-						_p3._0);
+							{unwatched: _p1._0._1}),
+						_p2._0);
 				} else {
 					return {ctor: '_Tuple2', _0: model, _1: _elm_lang$core$Platform_Cmd$none};
 				}
 			case 'FocusMovie':
-				return A2(_user$project$Main$openModal, model, _p2._0);
+				return A2(_user$project$Main$openModal, model, _p1._0);
 			case 'CloseModal':
 				return {
 					ctor: '_Tuple2',
@@ -32143,16 +33690,16 @@ var _user$project$Main$update = F2(
 					_1: _elm_lang$core$Platform_Cmd$none
 				};
 			case 'LoadMovie':
-				var _p4 = _p2._0;
-				if (_p4.ctor === 'Ok') {
-					var _p5 = _p4._0;
-					var cmd = _user$project$Main$searchJustWatch(_p5);
+				var _p3 = _p1._0;
+				if (_p3.ctor === 'Ok') {
+					var _p4 = _p3._0;
+					var cmd = _user$project$Main$searchJustWatch(_p4);
 					return {
 						ctor: '_Tuple2',
 						_0: _elm_lang$core$Native_Utils.update(
 							model,
 							{
-								focusedMovie: _user$project$Movie$Loaded(_p5)
+								focusedMovie: _user$project$Movie$Loaded(_p4)
 							}),
 						_1: cmd
 					};
@@ -32160,29 +33707,85 @@ var _user$project$Main$update = F2(
 					return {ctor: '_Tuple2', _0: model, _1: _elm_lang$core$Platform_Cmd$none};
 				}
 			case 'LoadJustWatchSearch':
-				var _p6 = _p2._0;
-				if (_p6.ctor === 'Ok') {
-					var _p7 = _p6._0;
-					var x = A2(_elm_lang$core$Debug$log, 'Got results', _p7);
-					return {
-						ctor: '_Tuple2',
-						_0: model,
-						_1: _user$project$Main$loadJustWatchDetails(_p7)
-					};
+				var _p5 = _p1._0;
+				if (_p5.ctor === 'Ok') {
+					var _p9 = _p5._0;
+					var x = A2(_elm_lang$core$Debug$log, 'Got results', _p9);
+					var match = _elm_lang$core$List$head(
+						A2(
+							_elm_lang$core$List$filter,
+							function (m) {
+								return _elm_lang$core$Native_Utils.eq(m.title, _p9.movie.movie.title);
+							},
+							_p9.items));
+					var oldMovieDetails = _p9.movie;
+					var _p6 = function () {
+						var _p7 = match;
+						if (_p7.ctor === 'Nothing') {
+							return {
+								ctor: '_Tuple2',
+								_0: _elm_lang$core$Native_Utils.update(
+									oldMovieDetails,
+									{offers: _user$project$Movie$NoResults}),
+								_1: _elm_lang$core$Platform_Cmd$none
+							};
+						} else {
+							return {
+								ctor: '_Tuple2',
+								_0: _elm_lang$core$Native_Utils.update(
+									oldMovieDetails,
+									{offers: _user$project$Movie$Loading}),
+								_1: A2(_user$project$Main$loadJustWatchDetails, _p7._0, oldMovieDetails)
+							};
+						}
+					}();
+					var newMovieDetails = _p6._0;
+					var cmd = _p6._1;
+					var _p8 = model.focusedMovie;
+					if (_p8.ctor === 'Loaded') {
+						return _elm_lang$core$Native_Utils.eq(_p9.movie.movie.title, _p8._0.movie.title) ? {
+							ctor: '_Tuple2',
+							_0: _elm_lang$core$Native_Utils.update(
+								model,
+								{
+									focusedMovie: _user$project$Movie$Loaded(newMovieDetails)
+								}),
+							_1: cmd
+						} : {ctor: '_Tuple2', _0: model, _1: _elm_lang$core$Platform_Cmd$none};
+					} else {
+						return {ctor: '_Tuple2', _0: model, _1: _elm_lang$core$Platform_Cmd$none};
+					}
 				} else {
 					return {ctor: '_Tuple2', _0: model, _1: _elm_lang$core$Platform_Cmd$none};
 				}
 			case 'LoadJustWatchDetails':
-				var _p8 = _p2._0;
-				if (_p8.ctor === 'Ok') {
-					var _p10 = _p8._0;
-					var oldMovieDetails = _p10.movie;
-					var newMovieDetails = _elm_lang$core$Native_Utils.update(
+				var _p10 = _p1._0;
+				if (_p10.ctor === 'Ok') {
+					var _p12 = _p10._0;
+					var offers = A2(
+						_elm_community$list_extra$List_Extra$uniqueBy,
+						function (m) {
+							return m.url;
+						},
+						_elm_lang$core$List$reverse(
+							A2(
+								_elm_lang$core$List$sortBy,
+								function (a) {
+									return _elm_lang$core$Basics$toString(a.offerType);
+								},
+								_p12.offers)));
+					var oldMovieDetails = _p12.movie;
+					var newMovieDetails = _elm_lang$core$List$isEmpty(offers) ? _elm_lang$core$Native_Utils.update(
 						oldMovieDetails,
-						{offers: _p10.offers});
-					var _p9 = model.focusedMovie;
-					if (_p9.ctor === 'Loaded') {
-						return _elm_lang$core$Native_Utils.eq(_p9._0.movie.title, newMovieDetails.movie.title) ? {
+						{offers: _user$project$Movie$NoResults}) : _elm_lang$core$Native_Utils.update(
+						oldMovieDetails,
+						{
+							offers: _user$project$Movie$Found(offers)
+						});
+					var x = A2(_elm_lang$core$Debug$log, 'Got details!', newMovieDetails);
+					var _p11 = model.focusedMovie;
+					if (_p11.ctor === 'Loaded') {
+						return _elm_lang$core$Native_Utils.eq(_p11._0.movie.title, newMovieDetails.movie.title) ? {
 							ctor: '_Tuple2',
 							_0: _elm_lang$core$Native_Utils.update(
 								model,
@@ -32198,13 +33801,13 @@ var _user$project$Main$update = F2(
 					return {ctor: '_Tuple2', _0: model, _1: _elm_lang$core$Platform_Cmd$none};
 				}
 			default:
-				var _p11 = A2(_inkuzmin$elm_multiselect$Multiselect$update, _p2._0, model.genresMultiselect);
-				var subModel = _p11._0;
-				var subCmd = _p11._1;
+				var _p13 = A2(_inkuzmin$elm_multiselect$Multiselect$update, _p1._0, model.genresMultiselect);
+				var subModel = _p13._0;
+				var subCmd = _p13._1;
 				var selectedGenres = _elm_lang$core$Set$fromList(subModel.selected);
 				var newUrl = function () {
-					var _p12 = _elm_lang$core$List$length(subModel.selected);
-					if (_p12 === 0) {
+					var _p14 = _elm_lang$core$List$length(subModel.selected);
+					if (_p14 === 0) {
 						return model.location.origin;
 					} else {
 						return A2(
@@ -32218,9 +33821,9 @@ var _user$project$Main$update = F2(
 								'+',
 								A2(
 									_elm_lang$core$List$map,
-									function (_p13) {
-										var _p14 = _p13;
-										return _p14._0;
+									function (_p15) {
+										var _p16 = _p15;
+										return _p16._0;
 									},
 									subModel.selected)));
 					}
@@ -32345,12 +33948,12 @@ var _user$project$Main$appHeader = function (model) {
 };
 var _user$project$Main$view = function (model) {
 	var modal = function () {
-		var _p15 = model.focusedMovie;
-		switch (_p15.ctor) {
+		var _p17 = model.focusedMovie;
+		switch (_p17.ctor) {
 			case 'Loaded':
-				return A2(_user$project$Movie$movieModal, _p15._0, _user$project$Main$CloseModal);
+				return A2(_user$project$Movie$movieModal, _p17._0, _user$project$Main$CloseModal);
 			case 'Selected':
-				return A2(_user$project$Movie$offlineMovieModal, _p15._0, _user$project$Main$CloseModal);
+				return A2(_user$project$Movie$offlineMovieModal, _p17._0, _user$project$Main$CloseModal);
 			default:
 				return A2(
 					_elm_lang$html$Html$div,
@@ -32467,7 +34070,7 @@ var _user$project$Main$main = A2(
 var Elm = {};
 Elm['Main'] = Elm['Main'] || {};
 if (typeof _user$project$Main$main !== 'undefined') {
-    _user$project$Main$main(Elm['Main'], 'Main', {"types":{"unions":{"Dict.LeafColor":{"args":[],"tags":{"LBBlack":[],"LBlack":[]}},"Time.Date.Date":{"args":[],"tags":{"Date":["{ year : Int, month : Int, day : Int }"]}},"Dom.Error":{"args":[],"tags":{"NotFound":["String"]}},"Movie.WatchState":{"args":[],"tags":{"Watched":["Time.Date.Date"],"Unwatched":[]}},"Dict.Dict":{"args":["k","v"],"tags":{"RBNode_elm_builtin":["Dict.NColor","k","v","Dict.Dict k v","Dict.Dict k v"],"RBEmpty_elm_builtin":["Dict.LeafColor"]}},"Movie.OfferType":{"args":[],"tags":{"BuyVideo":[],"StreamVideo":[],"RentVideo":[]}},"Maybe.Maybe":{"args":["a"],"tags":{"Just":["a"],"Nothing":[]}},"Set.Set":{"args":["t"],"tags":{"Set_elm_builtin":["Dict.Dict t ()"]}},"Main.Msg":{"args":[],"tags":{"MultiselectEvent":["Multiselect.Msg"],"LoadJustWatchDetails":["Result.Result Http.Error Movie.JustWatchDetails"],"SelectMovie":[],"LoadJustWatchSearch":["Result.Result Http.Error Movie.JustWatchSearchResults"],"FocusMovie":["Movie.Movie"],"CloseModal":[],"LocationChange":["Navigation.Location"],"LoadMovie":["Result.Result Http.Error Movie.MovieDetails"],"MovieSelected":["( Maybe.Maybe Movie.Movie, List Movie.Movie )"]}},"Movie.Provider":{"args":[],"tags":{"Other":[],"Fandango":[],"Amazon":[],"Microsoft":[],"Netflix":[],"Hulu":[],"Vudu":[],"GooglePlay":[],"Apple":[]}},"Dict.NColor":{"args":[],"tags":{"BBlack":[],"Red":[],"NBlack":[],"Black":[]}},"Http.Error":{"args":[],"tags":{"BadUrl":["String"],"NetworkError":[],"Timeout":[],"BadStatus":["Http.Response String"],"BadPayload":["String","Http.Response String"]}},"Result.Result":{"args":["error","value"],"tags":{"Ok":["value"],"Err":["error"]}},"Multiselect.Msg":{"args":[],"tags":{"ClearInput":[],"OnHover":["( String, String )"],"Toggle":[],"FocusResult":["Result.Result Dom.Error ()"],"Adjust":["Float"],"Start":[],"ClickOnComponent":[],"RemoveItem":["( String, String )"],"Clear":[],"OnSelect":["( String, String )"],"ScrollY":["Result.Result Dom.Error Float"],"ScrollResult":["Result.Result Dom.Error ()"],"DisableProtection":[],"Shortcut":["Int"],"Filter":["String"],"Click":["Mouse.Position"]}}},"aliases":{"Movie.MovieDetails":{"args":[],"type":"{ movie : Movie.Movie , rated : String , runtime : String , director : String , writer : String , actors : String , plot : String , ratings : List Movie.Rating , offers : List Movie.JustWatchOffer }"},"Movie.JustWatchOffer":{"args":[],"type":"{ offerType : Movie.OfferType , provider : Movie.Provider , url : String }"},"Http.Response":{"args":["body"],"type":"{ url : String , status : { code : Int, message : String } , headers : Dict.Dict String String , body : body }"},"Movie.JustWatchSearchResults":{"args":[],"type":"{ items : List Movie.JustWatchSearchResult , movie : Movie.MovieDetails }"},"Genre.Genre":{"args":[],"type":"( String, String )"},"Mouse.Position":{"args":[],"type":"{ x : Int, y : Int }"},"Movie.Movie":{"args":[],"type":"{ title : String , url : String , img : String , year : Int , runtime : Int , genres : Set.Set Genre.Genre , watched : Movie.WatchState }"},"Movie.Rating":{"args":[],"type":"{ source : String, value : String }"},"Movie.JustWatchDetails":{"args":[],"type":"{ offers : List Movie.JustWatchOffer, movie : Movie.MovieDetails }"},"Movie.JustWatchSearchResult":{"args":[],"type":"{ title : String, id : Int }"},"Navigation.Location":{"args":[],"type":"{ href : String , host : String , hostname : String , protocol : String , origin : String , port_ : String , pathname : String , search : String , hash : String , username : String , password : String }"}},"message":"Main.Msg"},"versions":{"elm":"0.18.0"}});
+    _user$project$Main$main(Elm['Main'], 'Main', {"types":{"unions":{"Dict.LeafColor":{"args":[],"tags":{"LBBlack":[],"LBlack":[]}},"Time.Date.Date":{"args":[],"tags":{"Date":["{ year : Int, month : Int, day : Int }"]}},"Movie.MovieOffers":{"args":[],"tags":{"Found":["List Movie.JustWatchOffer"],"Loading":[],"NoResults":[]}},"Dom.Error":{"args":[],"tags":{"NotFound":["String"]}},"Movie.WatchState":{"args":[],"tags":{"Watched":["Time.Date.Date"],"Unwatched":[]}},"Dict.Dict":{"args":["k","v"],"tags":{"RBNode_elm_builtin":["Dict.NColor","k","v","Dict.Dict k v","Dict.Dict k v"],"RBEmpty_elm_builtin":["Dict.LeafColor"]}},"Movie.OfferType":{"args":[],"tags":{"Streaming":[],"Rent":[],"Unknown":[],"Buy":[],"Ads":[]}},"Maybe.Maybe":{"args":["a"],"tags":{"Just":["a"],"Nothing":[]}},"Set.Set":{"args":["t"],"tags":{"Set_elm_builtin":["Dict.Dict t ()"]}},"Main.Msg":{"args":[],"tags":{"MultiselectEvent":["Multiselect.Msg"],"LoadJustWatchDetails":["Result.Result Http.Error Movie.JustWatchDetails"],"SelectMovie":[],"LoadJustWatchSearch":["Result.Result Http.Error Movie.JustWatchSearchResults"],"FocusMovie":["Movie.Movie"],"CloseModal":[],"LocationChange":["Navigation.Location"],"LoadMovie":["Result.Result Http.Error Movie.MovieDetails"],"MovieSelected":["( Maybe.Maybe Movie.Movie, List Movie.Movie )"]}},"Movie.Provider":{"args":[],"tags":{"Other":[],"Fandango":[],"PlayStation":[],"Starz":[],"Amazon":[],"Microsoft":[],"Netflix":[],"Hulu":[],"Vudu":[],"GooglePlay":[],"Itunes":[],"Crackle":[]}},"Dict.NColor":{"args":[],"tags":{"BBlack":[],"Red":[],"NBlack":[],"Black":[]}},"Http.Error":{"args":[],"tags":{"BadUrl":["String"],"NetworkError":[],"Timeout":[],"BadStatus":["Http.Response String"],"BadPayload":["String","Http.Response String"]}},"Result.Result":{"args":["error","value"],"tags":{"Ok":["value"],"Err":["error"]}},"Multiselect.Msg":{"args":[],"tags":{"ClearInput":[],"OnHover":["( String, String )"],"Toggle":[],"FocusResult":["Result.Result Dom.Error ()"],"Adjust":["Float"],"Start":[],"ClickOnComponent":[],"RemoveItem":["( String, String )"],"Clear":[],"OnSelect":["( String, String )"],"ScrollY":["Result.Result Dom.Error Float"],"ScrollResult":["Result.Result Dom.Error ()"],"DisableProtection":[],"Shortcut":["Int"],"Filter":["String"],"Click":["Mouse.Position"]}}},"aliases":{"Movie.MovieDetails":{"args":[],"type":"{ movie : Movie.Movie , rated : String , runtime : String , director : String , writer : String , actors : String , plot : String , ratings : List Movie.Rating , offers : Movie.MovieOffers }"},"Movie.JustWatchOffer":{"args":[],"type":"{ offerType : Movie.OfferType , provider : Movie.Provider , url : String }"},"Http.Response":{"args":["body"],"type":"{ url : String , status : { code : Int, message : String } , headers : Dict.Dict String String , body : body }"},"Movie.JustWatchSearchResults":{"args":[],"type":"{ items : List Movie.JustWatchSearchResult , movie : Movie.MovieDetails }"},"Genre.Genre":{"args":[],"type":"( String, String )"},"Mouse.Position":{"args":[],"type":"{ x : Int, y : Int }"},"Movie.Movie":{"args":[],"type":"{ title : String , url : String , img : String , year : Int , runtime : Int , genres : Set.Set Genre.Genre , watched : Movie.WatchState }"},"Movie.Rating":{"args":[],"type":"{ source : String, value : String }"},"Movie.JustWatchDetails":{"args":[],"type":"{ offers : List Movie.JustWatchOffer, movie : Movie.MovieDetails }"},"Movie.JustWatchSearchResult":{"args":[],"type":"{ title : String, id : Int }"},"Navigation.Location":{"args":[],"type":"{ href : String , host : String , hostname : String , protocol : String , origin : String , port_ : String , pathname : String , search : String , hash : String , username : String , password : String }"}},"message":"Main.Msg"},"versions":{"elm":"0.18.0"}});
 }
 
 if (typeof define === "function" && define['amd'])

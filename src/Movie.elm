@@ -1,6 +1,6 @@
 module Movie exposing (..)
 
-import Html exposing (Html, div, img, text, a, button, p, h2, ul, b, li)
+import Html exposing (Html, div, img, text, a, button, p, h2, h5, ul, b, li)
 import Html.Attributes exposing (src, href, target, type_, autofocus)
 import Html.Events exposing (onClick)
 import AppCss.Helpers exposing (class, classList)
@@ -38,6 +38,12 @@ type alias Rating =
     }
 
 
+type MovieOffers
+    = Loading
+    | NoResults
+    | Found (List JustWatchOffer)
+
+
 type alias MovieDetails =
     { movie : Movie
     , rated : String
@@ -47,7 +53,7 @@ type alias MovieDetails =
     , actors : String
     , plot : String
     , ratings : List Rating
-    , offers : List JustWatchOffer
+    , offers : MovieOffers
     }
 
 
@@ -62,7 +68,7 @@ decodeMovieData movie =
         |> Json.Decode.Pipeline.required "Actors" Decode.string
         |> Json.Decode.Pipeline.required "Plot" Decode.string
         |> Json.Decode.Pipeline.required "Ratings" (Decode.list ratingDecoder)
-        |> Json.Decode.Pipeline.hardcoded []
+        |> Json.Decode.Pipeline.hardcoded Loading
 
 
 ratingDecoder : Decode.Decoder Rating
@@ -104,9 +110,11 @@ searchResultDecoder =
 
 
 type OfferType
-    = BuyVideo
-    | RentVideo
-    | StreamVideo
+    = Buy
+    | Rent
+    | Streaming
+    | Ads
+    | Unknown
 
 
 offerTypeDecoder : Decode.Decoder OfferType
@@ -116,43 +124,24 @@ offerTypeDecoder =
             (\str ->
                 case str of
                     "buy" ->
-                        Decode.succeed BuyVideo
+                        Decode.succeed Buy
 
                     "flatrate" ->
-                        Decode.succeed StreamVideo
+                        Decode.succeed Streaming
 
                     "rent" ->
-                        Decode.succeed RentVideo
+                        Decode.succeed Rent
 
-                    other ->
-                        Decode.fail <| "Unknown offertype: " ++ other
-            )
+                    "ads" ->
+                        Decode.succeed Ads
 
-
-type PresentationType
-    = HD
-    | SD
-
-
-presentationTypeDecoder : Decode.Decoder PresentationType
-presentationTypeDecoder =
-    Decode.string
-        |> Decode.andThen
-            (\str ->
-                case str of
-                    "hd" ->
-                        Decode.succeed HD
-
-                    "sd" ->
-                        Decode.succeed SD
-
-                    other ->
-                        Decode.fail <| "Unknown PresentationType: " ++ other
+                    unknown ->
+                        Decode.succeed Unknown
             )
 
 
 type Provider
-    = Apple
+    = Itunes
     | Microsoft
     | GooglePlay
     | Hulu
@@ -160,6 +149,9 @@ type Provider
     | Amazon
     | Fandango
     | Vudu
+    | PlayStation
+    | Starz
+    | Crackle
     | Other
 
 
@@ -169,8 +161,17 @@ providerDecoder =
         |> Decode.andThen
             (\providerId ->
                 case providerId of
-                    15 ->
-                        Decode.succeed Hulu
+                    2 ->
+                        Decode.succeed Itunes
+
+                    3 ->
+                        Decode.succeed GooglePlay
+
+                    7 ->
+                        Decode.succeed Vudu
+
+                    8 ->
+                        Decode.succeed Netflix
 
                     9 ->
                         Decode.succeed Amazon
@@ -178,20 +179,23 @@ providerDecoder =
                     10 ->
                         Decode.succeed Amazon
 
+                    12 ->
+                        Decode.succeed Crackle
+
+                    15 ->
+                        Decode.succeed Hulu
+
+                    18 ->
+                        Decode.succeed PlayStation
+
+                    43 ->
+                        Decode.succeed Starz
+
                     68 ->
                         Decode.succeed Microsoft
 
-                    3 ->
-                        Decode.succeed GooglePlay
-
                     105 ->
                         Decode.succeed Fandango
-
-                    7 ->
-                        Decode.succeed Vudu
-
-                    2 ->
-                        Decode.succeed Apple
 
                     other ->
                         Decode.succeed Other
@@ -324,6 +328,33 @@ movieModalBase closeModal contents =
         )
 
 
+movieOffer : JustWatchOffer -> List (Html msg)
+movieOffer offer =
+    [ a [ href offer.url, target "_blank" ]
+        [ text ((toString offer.provider) ++ " " ++ (toString offer.offerType))
+        ]
+    ]
+
+
+movieOffers : MovieDetails -> Html msg
+movieOffers movie =
+    case movie.offers of
+        Loading ->
+            h5 [] [ text "Searching for movie viewing options..." ]
+
+        NoResults ->
+            h5 [] [ text "Movie not found for streaming or purchase" ]
+
+        Found offers ->
+            div []
+                [ h5 [] [ text "Watch" ]
+                , div [ class [ Style.Grid ] ]
+                    (offers
+                        |> List.map (\offer -> div [ class [ Style.GridBlock ] ] (movieOffer offer))
+                    )
+                ]
+
+
 movieModal : MovieDetails -> msg -> Html msg
 movieModal movie closeModal =
     movieModalBase closeModal
@@ -345,6 +376,7 @@ movieModal movie closeModal =
                     |> Set.toList
                     |> List.map (\( g, t ) -> a [ href ("?genres=" ++ g) ] [ text t ])
                 )
+            , movieOffers movie
             ]
         ]
 

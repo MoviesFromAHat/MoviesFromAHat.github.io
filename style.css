@@ -365,6 +365,10 @@ a:hover {
     padding: 10px;
 }
 
+.RightBar  h5 {
+    margin-bottom: 0;
+}
+
 .LeftBar {
     display: flex;
     flex-direction: column;
@@ -379,6 +383,16 @@ a:hover {
     .LeftBar {
         max-width: none;
     }
+}
+
+.Grid {
+    display: flex;
+    flex: auto;
+    flex-wrap: wrap;
+}
+
+.Grid  .GridBlock {
+    padding: 10px;
 }
 
 body {

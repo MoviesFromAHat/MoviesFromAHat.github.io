@@ -26,6 +26,8 @@ type CssClasses
     | InfoBlock
     | LeftBar
     | RightBar
+    | Grid
+    | GridBlock
 
 
 colors =
@@ -200,6 +202,11 @@ rightBar =
         [ displayFlex
         , flex auto
         , padding (px 10)
+        , descendants
+            [ Css.Elements.h5
+                [ marginBottom zero
+                ]
+            ]
         ]
 
 
@@ -247,6 +254,19 @@ moviesList =
         ]
 
 
+grid =
+    class Grid
+        [ displayFlex
+        , flex auto
+        , flexWrap wrap
+        , descendants
+            [ class GridBlock
+                [ padding (px 10)
+                ]
+            ]
+        ]
+
+
 css : Stylesheet
 css =
     stylesheet
@@ -263,5 +283,6 @@ css =
                , infoBlock
                , rightBar
                , leftBar
+               , grid
                ]
         )

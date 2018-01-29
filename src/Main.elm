@@ -2,7 +2,7 @@ module Main exposing (..)
 
 -- Our Imports
 
-import Movie exposing (Movie, movieCard, matchGenres, MovieDetails, MovieSelection, movieModal, offlineMovieModal, JustWatchSearchResults, JustWatchDetails)
+import Movie exposing (Movie, movieCard, matchGenres, MovieDetails, MovieSelection, movieModal, offlineMovieModal, JustWatchSearchResults, JustWatchSearchResult, JustWatchDetails, MovieOffers)
 import Genre exposing (Genre)
 import MovieList exposing (..)
 import AppCss.Helpers exposing (class)
@@ -23,6 +23,7 @@ import Set exposing (Set)
 import Navigation
 import Http
 import Task
+import List.Extra exposing (uniqueBy)
 
 
 main : Program Never Model Msg
@@ -130,21 +131,16 @@ searchJustWatch movie =
         Http.send LoadJustWatchSearch request
 
 
-loadJustWatchDetails : JustWatchSearchResults -> Cmd Msg
-loadJustWatchDetails searchResults =
-    case List.head searchResults.items of
-        Nothing ->
-            Cmd.none
+loadJustWatchDetails : JustWatchSearchResult -> MovieDetails -> Cmd Msg
+loadJustWatchDetails result movie =
+    let
+        url =
+            "https://apis.justwatch.com/content/titles/movie/" ++ (toString result.id) ++ "/locale/en_US"
 
-        Just result ->
-            let
-                url =
-                    "https://apis.justwatch.com/content/titles/movie/" ++ (toString result.id) ++ "/locale/en_US"
-
-                request =
-                    Http.get url (Movie.decodeJustWatchDetails searchResults.movie)
-            in
-                Http.send LoadJustWatchDetails request
+        request =
+            Http.get url (Movie.decodeJustWatchDetails movie)
+    in
+        Http.send LoadJustWatchDetails request
 
 
 openModal : Model -> Movie -> ( Model, Cmd Msg )
@@ -200,11 +196,36 @@ update msg model =
             case result of
                 Ok searchResults ->
                     let
+                        oldMovieDetails =
+                            searchResults.movie
+
+                        match =
+                            searchResults.items
+                                |> List.filter (\m -> m.title == searchResults.movie.movie.title)
+                                |> List.head
+
+                        ( newMovieDetails, cmd ) =
+                            case match of
+                                Nothing ->
+                                    ( { oldMovieDetails | offers = Movie.NoResults }, Cmd.none )
+
+                                Just result ->
+                                    ( { oldMovieDetails | offers = Movie.Loading }, loadJustWatchDetails result oldMovieDetails )
+
                         x =
                             Debug.log "Got results"
                                 searchResults
                     in
-                        ( model, loadJustWatchDetails searchResults )
+                        -- when results are loaded, we don't want to use them unless the movie is still focused
+                        case model.focusedMovie of
+                            Movie.Loaded movieDetails ->
+                                if searchResults.movie.movie.title == movieDetails.movie.title then
+                                    ( { model | focusedMovie = Movie.Loaded newMovieDetails }, cmd )
+                                else
+                                    ( model, Cmd.none )
+
+                            _ ->
+                                ( model, Cmd.none )
 
                 _ ->
                     ( model, Cmd.none )
@@ -216,8 +237,17 @@ update msg model =
                         oldMovieDetails =
                             justWatchDetails.movie
 
+                        offers =
+                            justWatchDetails.offers
+                                |> List.sortBy (\a -> (toString a.offerType))
+                                |> List.reverse
+                                |> uniqueBy (\m -> m.url)
+
                         newMovieDetails =
-                            { oldMovieDetails | offers = justWatchDetails.offers }
+                            if List.isEmpty offers then
+                                { oldMovieDetails | offers = Movie.NoResults }
+                            else
+                                { oldMovieDetails | offers = Movie.Found offers }
 
                         x =
                             Debug.log "Got details!" newMovieDetails
