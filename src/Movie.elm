@@ -10,6 +10,7 @@ import Set exposing (Set)
 import Genre exposing (Genre)
 import Json.Decode as Decode exposing (string, list)
 import Json.Decode.Pipeline exposing (decode, hardcoded, optional, required)
+import JustWatchProviders exposing (..)
 
 
 -- Types
@@ -36,6 +37,11 @@ type alias Rating =
     { source : String
     , value : String
     }
+
+
+type WatchState
+    = Unwatched
+    | Watched Date
 
 
 type MovieOffers
@@ -109,99 +115,6 @@ searchResultDecoder =
         |> Json.Decode.Pipeline.required "id" Decode.int
 
 
-type OfferType
-    = Buy
-    | Rent
-    | Streaming
-    | Ads
-    | Unknown
-
-
-offerTypeDecoder : Decode.Decoder OfferType
-offerTypeDecoder =
-    Decode.string
-        |> Decode.andThen
-            (\str ->
-                case str of
-                    "buy" ->
-                        Decode.succeed Buy
-
-                    "flatrate" ->
-                        Decode.succeed Streaming
-
-                    "rent" ->
-                        Decode.succeed Rent
-
-                    "ads" ->
-                        Decode.succeed Ads
-
-                    unknown ->
-                        Decode.succeed Unknown
-            )
-
-
-type Provider
-    = Itunes
-    | Microsoft
-    | GooglePlay
-    | Hulu
-    | Netflix
-    | Amazon
-    | Fandango
-    | Vudu
-    | PlayStation
-    | Starz
-    | Crackle
-    | Other
-
-
-providerDecoder : Decode.Decoder Provider
-providerDecoder =
-    Decode.int
-        |> Decode.andThen
-            (\providerId ->
-                case providerId of
-                    2 ->
-                        Decode.succeed Itunes
-
-                    3 ->
-                        Decode.succeed GooglePlay
-
-                    7 ->
-                        Decode.succeed Vudu
-
-                    8 ->
-                        Decode.succeed Netflix
-
-                    9 ->
-                        Decode.succeed Amazon
-
-                    10 ->
-                        Decode.succeed Amazon
-
-                    12 ->
-                        Decode.succeed Crackle
-
-                    15 ->
-                        Decode.succeed Hulu
-
-                    18 ->
-                        Decode.succeed PlayStation
-
-                    43 ->
-                        Decode.succeed Starz
-
-                    68 ->
-                        Decode.succeed Microsoft
-
-                    105 ->
-                        Decode.succeed Fandango
-
-                    other ->
-                        Decode.succeed Other
-            )
-
-
 type alias JustWatchOffer =
     { offerType : OfferType
     , provider : Provider
@@ -220,13 +133,8 @@ decodeJustWatchOffer =
 decodeJustWatchDetails : MovieDetails -> Decode.Decoder JustWatchDetails
 decodeJustWatchDetails movie =
     Json.Decode.Pipeline.decode JustWatchDetails
-        |> Json.Decode.Pipeline.required "offers" (Decode.list decodeJustWatchOffer)
+        |> Json.Decode.Pipeline.optional "offers" (Decode.list decodeJustWatchOffer) []
         |> Json.Decode.Pipeline.hardcoded movie
-
-
-type WatchState
-    = Unwatched
-    | Watched Date
 
 
 

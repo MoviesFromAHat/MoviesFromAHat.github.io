@@ -29940,6 +29940,115 @@ var _user$project$Genre$fromQueryString = function (location) {
 							location))))));
 };
 
+var _user$project$JustWatchProviders$Unknown = {ctor: 'Unknown'};
+var _user$project$JustWatchProviders$Free = {ctor: 'Free'};
+var _user$project$JustWatchProviders$Ads = {ctor: 'Ads'};
+var _user$project$JustWatchProviders$Streaming = {ctor: 'Streaming'};
+var _user$project$JustWatchProviders$Rent = {ctor: 'Rent'};
+var _user$project$JustWatchProviders$Buy = {ctor: 'Buy'};
+var _user$project$JustWatchProviders$offerTypeDecoder = A2(
+	_elm_lang$core$Json_Decode$andThen,
+	function (str) {
+		var _p0 = str;
+		switch (_p0) {
+			case 'buy':
+				return _elm_lang$core$Json_Decode$succeed(_user$project$JustWatchProviders$Buy);
+			case 'flatrate':
+				return _elm_lang$core$Json_Decode$succeed(_user$project$JustWatchProviders$Streaming);
+			case 'rent':
+				return _elm_lang$core$Json_Decode$succeed(_user$project$JustWatchProviders$Rent);
+			case 'ads':
+				return _elm_lang$core$Json_Decode$succeed(_user$project$JustWatchProviders$Ads);
+			case 'free':
+				return _elm_lang$core$Json_Decode$succeed(_user$project$JustWatchProviders$Free);
+			default:
+				return _elm_lang$core$Json_Decode$succeed(_user$project$JustWatchProviders$Unknown);
+		}
+	},
+	_elm_lang$core$Json_Decode$string);
+var _user$project$JustWatchProviders$Other = {ctor: 'Other'};
+var _user$project$JustWatchProviders$Realeyz = {ctor: 'Realeyz'};
+var _user$project$JustWatchProviders$FX = {ctor: 'FX'};
+var _user$project$JustWatchProviders$Shudder = {ctor: 'Shudder'};
+var _user$project$JustWatchProviders$MaxGo = {ctor: 'MaxGo'};
+var _user$project$JustWatchProviders$HBO_Now = {ctor: 'HBO_Now'};
+var _user$project$JustWatchProviders$HBO_Go = {ctor: 'HBO_Go'};
+var _user$project$JustWatchProviders$Yahoo = {ctor: 'Yahoo'};
+var _user$project$JustWatchProviders$TubiTV = {ctor: 'TubiTV'};
+var _user$project$JustWatchProviders$Fandor = {ctor: 'Fandor'};
+var _user$project$JustWatchProviders$Filmstruck = {ctor: 'Filmstruck'};
+var _user$project$JustWatchProviders$Showtime = {ctor: 'Showtime'};
+var _user$project$JustWatchProviders$Epix = {ctor: 'Epix'};
+var _user$project$JustWatchProviders$Crackle = {ctor: 'Crackle'};
+var _user$project$JustWatchProviders$Starz = {ctor: 'Starz'};
+var _user$project$JustWatchProviders$PlayStation = {ctor: 'PlayStation'};
+var _user$project$JustWatchProviders$Vudu = {ctor: 'Vudu'};
+var _user$project$JustWatchProviders$Fandango = {ctor: 'Fandango'};
+var _user$project$JustWatchProviders$Amazon = {ctor: 'Amazon'};
+var _user$project$JustWatchProviders$Netflix = {ctor: 'Netflix'};
+var _user$project$JustWatchProviders$Hulu = {ctor: 'Hulu'};
+var _user$project$JustWatchProviders$GooglePlay = {ctor: 'GooglePlay'};
+var _user$project$JustWatchProviders$Microsoft = {ctor: 'Microsoft'};
+var _user$project$JustWatchProviders$Itunes = {ctor: 'Itunes'};
+var _user$project$JustWatchProviders$providerDecoder = A2(
+	_elm_lang$core$Json_Decode$andThen,
+	function (providerId) {
+		var _p1 = providerId;
+		switch (_p1) {
+			case 2:
+				return _elm_lang$core$Json_Decode$succeed(_user$project$JustWatchProviders$Itunes);
+			case 3:
+				return _elm_lang$core$Json_Decode$succeed(_user$project$JustWatchProviders$GooglePlay);
+			case 7:
+				return _elm_lang$core$Json_Decode$succeed(_user$project$JustWatchProviders$Vudu);
+			case 8:
+				return _elm_lang$core$Json_Decode$succeed(_user$project$JustWatchProviders$Netflix);
+			case 9:
+				return _elm_lang$core$Json_Decode$succeed(_user$project$JustWatchProviders$Amazon);
+			case 10:
+				return _elm_lang$core$Json_Decode$succeed(_user$project$JustWatchProviders$Amazon);
+			case 12:
+				return _elm_lang$core$Json_Decode$succeed(_user$project$JustWatchProviders$Crackle);
+			case 14:
+				return _elm_lang$core$Json_Decode$succeed(_user$project$JustWatchProviders$Realeyz);
+			case 15:
+				return _elm_lang$core$Json_Decode$succeed(_user$project$JustWatchProviders$Hulu);
+			case 18:
+				return _elm_lang$core$Json_Decode$succeed(_user$project$JustWatchProviders$PlayStation);
+			case 25:
+				return _elm_lang$core$Json_Decode$succeed(_user$project$JustWatchProviders$Fandor);
+			case 27:
+				return _elm_lang$core$Json_Decode$succeed(_user$project$JustWatchProviders$HBO_Now);
+			case 31:
+				return _elm_lang$core$Json_Decode$succeed(_user$project$JustWatchProviders$HBO_Go);
+			case 34:
+				return _elm_lang$core$Json_Decode$succeed(_user$project$JustWatchProviders$Epix);
+			case 37:
+				return _elm_lang$core$Json_Decode$succeed(_user$project$JustWatchProviders$Showtime);
+			case 43:
+				return _elm_lang$core$Json_Decode$succeed(_user$project$JustWatchProviders$Starz);
+			case 68:
+				return _elm_lang$core$Json_Decode$succeed(_user$project$JustWatchProviders$Microsoft);
+			case 73:
+				return _elm_lang$core$Json_Decode$succeed(_user$project$JustWatchProviders$TubiTV);
+			case 92:
+				return _elm_lang$core$Json_Decode$succeed(_user$project$JustWatchProviders$Yahoo);
+			case 99:
+				return _elm_lang$core$Json_Decode$succeed(_user$project$JustWatchProviders$Shudder);
+			case 102:
+				return _elm_lang$core$Json_Decode$succeed(_user$project$JustWatchProviders$Filmstruck);
+			case 105:
+				return _elm_lang$core$Json_Decode$succeed(_user$project$JustWatchProviders$Fandango);
+			case 123:
+				return _elm_lang$core$Json_Decode$succeed(_user$project$JustWatchProviders$FX);
+			case 139:
+				return _elm_lang$core$Json_Decode$succeed(_user$project$JustWatchProviders$MaxGo);
+			default:
+				return _elm_lang$core$Json_Decode$succeed(_user$project$JustWatchProviders$Other);
+		}
+	},
+	_elm_lang$core$Json_Decode$int);
+
 var _user$project$Movie$notesView = function (movie) {
 	var _p0 = movie.watched;
 	if (_p0.ctor === 'Unwatched') {
@@ -30659,6 +30768,38 @@ var _user$project$Movie$JustWatchOffer = F3(
 	function (a, b, c) {
 		return {offerType: a, provider: b, url: c};
 	});
+var _user$project$Movie$decodeJustWatchOffer = A3(
+	_NoRedInk$elm_decode_pipeline$Json_Decode_Pipeline$requiredAt,
+	{
+		ctor: '::',
+		_0: 'urls',
+		_1: {
+			ctor: '::',
+			_0: 'standard_web',
+			_1: {ctor: '[]'}
+		}
+	},
+	_elm_lang$core$Json_Decode$string,
+	A3(
+		_NoRedInk$elm_decode_pipeline$Json_Decode_Pipeline$required,
+		'provider_id',
+		_user$project$JustWatchProviders$providerDecoder,
+		A3(
+			_NoRedInk$elm_decode_pipeline$Json_Decode_Pipeline$required,
+			'monetization_type',
+			_user$project$JustWatchProviders$offerTypeDecoder,
+			_NoRedInk$elm_decode_pipeline$Json_Decode_Pipeline$decode(_user$project$Movie$JustWatchOffer))));
+var _user$project$Movie$decodeJustWatchDetails = function (movie) {
+	return A2(
+		_NoRedInk$elm_decode_pipeline$Json_Decode_Pipeline$hardcoded,
+		movie,
+		A4(
+			_NoRedInk$elm_decode_pipeline$Json_Decode_Pipeline$optional,
+			'offers',
+			_elm_lang$core$Json_Decode$list(_user$project$Movie$decodeJustWatchOffer),
+			{ctor: '[]'},
+			_NoRedInk$elm_decode_pipeline$Json_Decode_Pipeline$decode(_user$project$Movie$JustWatchDetails)));
+};
 var _user$project$Movie$Loaded = function (a) {
 	return {ctor: 'Loaded', _0: a};
 };
@@ -30666,6 +30807,10 @@ var _user$project$Movie$Selected = function (a) {
 	return {ctor: 'Selected', _0: a};
 };
 var _user$project$Movie$NotSelected = {ctor: 'NotSelected'};
+var _user$project$Movie$Watched = function (a) {
+	return {ctor: 'Watched', _0: a};
+};
+var _user$project$Movie$Unwatched = {ctor: 'Unwatched'};
 var _user$project$Movie$Found = function (a) {
 	return {ctor: 'Found', _0: a};
 };
@@ -30708,110 +30853,6 @@ var _user$project$Movie$decodeMovieData = function (movie) {
 										movie,
 										_NoRedInk$elm_decode_pipeline$Json_Decode_Pipeline$decode(_user$project$Movie$MovieDetails))))))))));
 };
-var _user$project$Movie$Unknown = {ctor: 'Unknown'};
-var _user$project$Movie$Ads = {ctor: 'Ads'};
-var _user$project$Movie$Streaming = {ctor: 'Streaming'};
-var _user$project$Movie$Rent = {ctor: 'Rent'};
-var _user$project$Movie$Buy = {ctor: 'Buy'};
-var _user$project$Movie$offerTypeDecoder = A2(
-	_elm_lang$core$Json_Decode$andThen,
-	function (str) {
-		var _p11 = str;
-		switch (_p11) {
-			case 'buy':
-				return _elm_lang$core$Json_Decode$succeed(_user$project$Movie$Buy);
-			case 'flatrate':
-				return _elm_lang$core$Json_Decode$succeed(_user$project$Movie$Streaming);
-			case 'rent':
-				return _elm_lang$core$Json_Decode$succeed(_user$project$Movie$Rent);
-			case 'ads':
-				return _elm_lang$core$Json_Decode$succeed(_user$project$Movie$Ads);
-			default:
-				return _elm_lang$core$Json_Decode$succeed(_user$project$Movie$Unknown);
-		}
-	},
-	_elm_lang$core$Json_Decode$string);
-var _user$project$Movie$Other = {ctor: 'Other'};
-var _user$project$Movie$Crackle = {ctor: 'Crackle'};
-var _user$project$Movie$Starz = {ctor: 'Starz'};
-var _user$project$Movie$PlayStation = {ctor: 'PlayStation'};
-var _user$project$Movie$Vudu = {ctor: 'Vudu'};
-var _user$project$Movie$Fandango = {ctor: 'Fandango'};
-var _user$project$Movie$Amazon = {ctor: 'Amazon'};
-var _user$project$Movie$Netflix = {ctor: 'Netflix'};
-var _user$project$Movie$Hulu = {ctor: 'Hulu'};
-var _user$project$Movie$GooglePlay = {ctor: 'GooglePlay'};
-var _user$project$Movie$Microsoft = {ctor: 'Microsoft'};
-var _user$project$Movie$Itunes = {ctor: 'Itunes'};
-var _user$project$Movie$providerDecoder = A2(
-	_elm_lang$core$Json_Decode$andThen,
-	function (providerId) {
-		var _p12 = providerId;
-		switch (_p12) {
-			case 2:
-				return _elm_lang$core$Json_Decode$succeed(_user$project$Movie$Itunes);
-			case 3:
-				return _elm_lang$core$Json_Decode$succeed(_user$project$Movie$GooglePlay);
-			case 7:
-				return _elm_lang$core$Json_Decode$succeed(_user$project$Movie$Vudu);
-			case 8:
-				return _elm_lang$core$Json_Decode$succeed(_user$project$Movie$Netflix);
-			case 9:
-				return _elm_lang$core$Json_Decode$succeed(_user$project$Movie$Amazon);
-			case 10:
-				return _elm_lang$core$Json_Decode$succeed(_user$project$Movie$Amazon);
-			case 12:
-				return _elm_lang$core$Json_Decode$succeed(_user$project$Movie$Crackle);
-			case 15:
-				return _elm_lang$core$Json_Decode$succeed(_user$project$Movie$Hulu);
-			case 18:
-				return _elm_lang$core$Json_Decode$succeed(_user$project$Movie$PlayStation);
-			case 43:
-				return _elm_lang$core$Json_Decode$succeed(_user$project$Movie$Starz);
-			case 68:
-				return _elm_lang$core$Json_Decode$succeed(_user$project$Movie$Microsoft);
-			case 105:
-				return _elm_lang$core$Json_Decode$succeed(_user$project$Movie$Fandango);
-			default:
-				return _elm_lang$core$Json_Decode$succeed(_user$project$Movie$Other);
-		}
-	},
-	_elm_lang$core$Json_Decode$int);
-var _user$project$Movie$decodeJustWatchOffer = A3(
-	_NoRedInk$elm_decode_pipeline$Json_Decode_Pipeline$requiredAt,
-	{
-		ctor: '::',
-		_0: 'urls',
-		_1: {
-			ctor: '::',
-			_0: 'standard_web',
-			_1: {ctor: '[]'}
-		}
-	},
-	_elm_lang$core$Json_Decode$string,
-	A3(
-		_NoRedInk$elm_decode_pipeline$Json_Decode_Pipeline$required,
-		'provider_id',
-		_user$project$Movie$providerDecoder,
-		A3(
-			_NoRedInk$elm_decode_pipeline$Json_Decode_Pipeline$required,
-			'monetization_type',
-			_user$project$Movie$offerTypeDecoder,
-			_NoRedInk$elm_decode_pipeline$Json_Decode_Pipeline$decode(_user$project$Movie$JustWatchOffer))));
-var _user$project$Movie$decodeJustWatchDetails = function (movie) {
-	return A2(
-		_NoRedInk$elm_decode_pipeline$Json_Decode_Pipeline$hardcoded,
-		movie,
-		A3(
-			_NoRedInk$elm_decode_pipeline$Json_Decode_Pipeline$required,
-			'offers',
-			_elm_lang$core$Json_Decode$list(_user$project$Movie$decodeJustWatchOffer),
-			_NoRedInk$elm_decode_pipeline$Json_Decode_Pipeline$decode(_user$project$Movie$JustWatchDetails)));
-};
-var _user$project$Movie$Watched = function (a) {
-	return {ctor: 'Watched', _0: a};
-};
-var _user$project$Movie$Unwatched = {ctor: 'Unwatched'};
 
 var _user$project$MovieList$movies = A2(
 	_elm_lang$core$List$map,
@@ -34070,7 +34111,7 @@ var _user$project$Main$main = A2(
 var Elm = {};
 Elm['Main'] = Elm['Main'] || {};
 if (typeof _user$project$Main$main !== 'undefined') {
-    _user$project$Main$main(Elm['Main'], 'Main', {"types":{"unions":{"Dict.LeafColor":{"args":[],"tags":{"LBBlack":[],"LBlack":[]}},"Time.Date.Date":{"args":[],"tags":{"Date":["{ year : Int, month : Int, day : Int }"]}},"Movie.MovieOffers":{"args":[],"tags":{"Found":["List Movie.JustWatchOffer"],"Loading":[],"NoResults":[]}},"Dom.Error":{"args":[],"tags":{"NotFound":["String"]}},"Movie.WatchState":{"args":[],"tags":{"Watched":["Time.Date.Date"],"Unwatched":[]}},"Dict.Dict":{"args":["k","v"],"tags":{"RBNode_elm_builtin":["Dict.NColor","k","v","Dict.Dict k v","Dict.Dict k v"],"RBEmpty_elm_builtin":["Dict.LeafColor"]}},"Movie.OfferType":{"args":[],"tags":{"Streaming":[],"Rent":[],"Unknown":[],"Buy":[],"Ads":[]}},"Maybe.Maybe":{"args":["a"],"tags":{"Just":["a"],"Nothing":[]}},"Set.Set":{"args":["t"],"tags":{"Set_elm_builtin":["Dict.Dict t ()"]}},"Main.Msg":{"args":[],"tags":{"MultiselectEvent":["Multiselect.Msg"],"LoadJustWatchDetails":["Result.Result Http.Error Movie.JustWatchDetails"],"SelectMovie":[],"LoadJustWatchSearch":["Result.Result Http.Error Movie.JustWatchSearchResults"],"FocusMovie":["Movie.Movie"],"CloseModal":[],"LocationChange":["Navigation.Location"],"LoadMovie":["Result.Result Http.Error Movie.MovieDetails"],"MovieSelected":["( Maybe.Maybe Movie.Movie, List Movie.Movie )"]}},"Movie.Provider":{"args":[],"tags":{"Other":[],"Fandango":[],"PlayStation":[],"Starz":[],"Amazon":[],"Microsoft":[],"Netflix":[],"Hulu":[],"Vudu":[],"GooglePlay":[],"Itunes":[],"Crackle":[]}},"Dict.NColor":{"args":[],"tags":{"BBlack":[],"Red":[],"NBlack":[],"Black":[]}},"Http.Error":{"args":[],"tags":{"BadUrl":["String"],"NetworkError":[],"Timeout":[],"BadStatus":["Http.Response String"],"BadPayload":["String","Http.Response String"]}},"Result.Result":{"args":["error","value"],"tags":{"Ok":["value"],"Err":["error"]}},"Multiselect.Msg":{"args":[],"tags":{"ClearInput":[],"OnHover":["( String, String )"],"Toggle":[],"FocusResult":["Result.Result Dom.Error ()"],"Adjust":["Float"],"Start":[],"ClickOnComponent":[],"RemoveItem":["( String, String )"],"Clear":[],"OnSelect":["( String, String )"],"ScrollY":["Result.Result Dom.Error Float"],"ScrollResult":["Result.Result Dom.Error ()"],"DisableProtection":[],"Shortcut":["Int"],"Filter":["String"],"Click":["Mouse.Position"]}}},"aliases":{"Movie.MovieDetails":{"args":[],"type":"{ movie : Movie.Movie , rated : String , runtime : String , director : String , writer : String , actors : String , plot : String , ratings : List Movie.Rating , offers : Movie.MovieOffers }"},"Movie.JustWatchOffer":{"args":[],"type":"{ offerType : Movie.OfferType , provider : Movie.Provider , url : String }"},"Http.Response":{"args":["body"],"type":"{ url : String , status : { code : Int, message : String } , headers : Dict.Dict String String , body : body }"},"Movie.JustWatchSearchResults":{"args":[],"type":"{ items : List Movie.JustWatchSearchResult , movie : Movie.MovieDetails }"},"Genre.Genre":{"args":[],"type":"( String, String )"},"Mouse.Position":{"args":[],"type":"{ x : Int, y : Int }"},"Movie.Movie":{"args":[],"type":"{ title : String , url : String , img : String , year : Int , runtime : Int , genres : Set.Set Genre.Genre , watched : Movie.WatchState }"},"Movie.Rating":{"args":[],"type":"{ source : String, value : String }"},"Movie.JustWatchDetails":{"args":[],"type":"{ offers : List Movie.JustWatchOffer, movie : Movie.MovieDetails }"},"Movie.JustWatchSearchResult":{"args":[],"type":"{ title : String, id : Int }"},"Navigation.Location":{"args":[],"type":"{ href : String , host : String , hostname : String , protocol : String , origin : String , port_ : String , pathname : String , search : String , hash : String , username : String , password : String }"}},"message":"Main.Msg"},"versions":{"elm":"0.18.0"}});
+    _user$project$Main$main(Elm['Main'], 'Main', {"types":{"unions":{"JustWatchProviders.Provider":{"args":[],"tags":{"MaxGo":[],"Other":[],"HBO_Now":[],"Realeyz":[],"Fandango":[],"Yahoo":[],"PlayStation":[],"Starz":[],"FX":[],"Showtime":[],"Amazon":[],"Shudder":[],"Epix":[],"Microsoft":[],"Netflix":[],"Hulu":[],"HBO_Go":[],"Vudu":[],"GooglePlay":[],"Itunes":[],"TubiTV":[],"Fandor":[],"Filmstruck":[],"Crackle":[]}},"Dict.LeafColor":{"args":[],"tags":{"LBBlack":[],"LBlack":[]}},"Time.Date.Date":{"args":[],"tags":{"Date":["{ year : Int, month : Int, day : Int }"]}},"Movie.MovieOffers":{"args":[],"tags":{"Found":["List Movie.JustWatchOffer"],"Loading":[],"NoResults":[]}},"Dom.Error":{"args":[],"tags":{"NotFound":["String"]}},"Movie.WatchState":{"args":[],"tags":{"Watched":["Time.Date.Date"],"Unwatched":[]}},"Dict.Dict":{"args":["k","v"],"tags":{"RBNode_elm_builtin":["Dict.NColor","k","v","Dict.Dict k v","Dict.Dict k v"],"RBEmpty_elm_builtin":["Dict.LeafColor"]}},"Maybe.Maybe":{"args":["a"],"tags":{"Just":["a"],"Nothing":[]}},"Set.Set":{"args":["t"],"tags":{"Set_elm_builtin":["Dict.Dict t ()"]}},"Main.Msg":{"args":[],"tags":{"MultiselectEvent":["Multiselect.Msg"],"LoadJustWatchDetails":["Result.Result Http.Error Movie.JustWatchDetails"],"SelectMovie":[],"LoadJustWatchSearch":["Result.Result Http.Error Movie.JustWatchSearchResults"],"FocusMovie":["Movie.Movie"],"CloseModal":[],"LocationChange":["Navigation.Location"],"LoadMovie":["Result.Result Http.Error Movie.MovieDetails"],"MovieSelected":["( Maybe.Maybe Movie.Movie, List Movie.Movie )"]}},"Dict.NColor":{"args":[],"tags":{"BBlack":[],"Red":[],"NBlack":[],"Black":[]}},"JustWatchProviders.OfferType":{"args":[],"tags":{"Free":[],"Streaming":[],"Rent":[],"Unknown":[],"Buy":[],"Ads":[]}},"Http.Error":{"args":[],"tags":{"BadUrl":["String"],"NetworkError":[],"Timeout":[],"BadStatus":["Http.Response String"],"BadPayload":["String","Http.Response String"]}},"Result.Result":{"args":["error","value"],"tags":{"Ok":["value"],"Err":["error"]}},"Multiselect.Msg":{"args":[],"tags":{"ClearInput":[],"OnHover":["( String, String )"],"Toggle":[],"FocusResult":["Result.Result Dom.Error ()"],"Adjust":["Float"],"Start":[],"ClickOnComponent":[],"RemoveItem":["( String, String )"],"Clear":[],"OnSelect":["( String, String )"],"ScrollY":["Result.Result Dom.Error Float"],"ScrollResult":["Result.Result Dom.Error ()"],"DisableProtection":[],"Shortcut":["Int"],"Filter":["String"],"Click":["Mouse.Position"]}}},"aliases":{"Movie.MovieDetails":{"args":[],"type":"{ movie : Movie.Movie , rated : String , runtime : String , director : String , writer : String , actors : String , plot : String , ratings : List Movie.Rating , offers : Movie.MovieOffers }"},"Movie.JustWatchOffer":{"args":[],"type":"{ offerType : JustWatchProviders.OfferType , provider : JustWatchProviders.Provider , url : String }"},"Http.Response":{"args":["body"],"type":"{ url : String , status : { code : Int, message : String } , headers : Dict.Dict String String , body : body }"},"Movie.JustWatchSearchResults":{"args":[],"type":"{ items : List Movie.JustWatchSearchResult , movie : Movie.MovieDetails }"},"Genre.Genre":{"args":[],"type":"( String, String )"},"Mouse.Position":{"args":[],"type":"{ x : Int, y : Int }"},"Movie.Movie":{"args":[],"type":"{ title : String , url : String , img : String , year : Int , runtime : Int , genres : Set.Set Genre.Genre , watched : Movie.WatchState }"},"Movie.Rating":{"args":[],"type":"{ source : String, value : String }"},"Movie.JustWatchDetails":{"args":[],"type":"{ offers : List Movie.JustWatchOffer, movie : Movie.MovieDetails }"},"Movie.JustWatchSearchResult":{"args":[],"type":"{ title : String, id : Int }"},"Navigation.Location":{"args":[],"type":"{ href : String , host : String , hostname : String , protocol : String , origin : String , port_ : String , pathname : String , search : String , hash : String , username : String , password : String }"}},"message":"Main.Msg"},"versions":{"elm":"0.18.0"}});
 }
 
 if (typeof define === "function" && define['amd'])
