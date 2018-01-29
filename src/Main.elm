@@ -179,15 +179,11 @@ update msg model =
         LoadMovie result ->
             case result of
                 Ok movie ->
-                    let
-                        cmd =
-                            searchJustWatch movie
-                    in
-                        ( { model
-                            | focusedMovie = Movie.Loaded movie
-                          }
-                        , cmd
-                        )
+                    ( { model
+                        | focusedMovie = Movie.Loaded movie
+                      }
+                    , searchJustWatch movie
+                    )
 
                 _ ->
                     ( model, Cmd.none )
@@ -247,7 +243,7 @@ update msg model =
                             if List.isEmpty offers then
                                 { oldMovieDetails | offers = Movie.NoResults }
                             else
-                                { oldMovieDetails | offers = Movie.Found offers }
+                                { oldMovieDetails | offers = Movie.Results offers }
 
                         x =
                             Debug.log "Got details!" newMovieDetails

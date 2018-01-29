@@ -47,7 +47,7 @@ type WatchState
 type MovieOffers
     = Loading
     | NoResults
-    | Found (List JustWatchOffer)
+    | Results (List JustWatchOffer)
 
 
 type alias MovieDetails =
@@ -253,7 +253,7 @@ movieOffers movie =
         NoResults ->
             h5 [] [ text "Movie not found for streaming or purchase" ]
 
-        Found offers ->
+        Results offers ->
             div []
                 [ h5 [] [ text "Watch" ]
                 , div [ class [ Style.Grid ] ]
