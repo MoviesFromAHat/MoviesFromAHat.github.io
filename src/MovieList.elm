@@ -951,5 +951,13 @@ movies =
       , genres = [ "comedy", "action" ]
       , watched = Unwatched
       }
+    , { title = "Dudes & Dragons"
+      , url = "http://www.imdb.com/title/tt2170369/"
+      , img = "dudes-dragons.jpg"
+      , year = 2015
+      , runtime = 122
+      , genres = [ "comedy", "adventure" ]
+      , watched = Unwatched
+      }
     ]
         |> List.map (\m -> { m | genres = Genre.fromFlatList m.genres })
