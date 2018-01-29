@@ -47,6 +47,7 @@ type alias MovieDetails =
     , actors : String
     , plot : String
     , ratings : List Rating
+    , offers : List JustWatchOffer
     }
 
 
@@ -61,6 +62,7 @@ decodeMovieData movie =
         |> Json.Decode.Pipeline.required "Actors" Decode.string
         |> Json.Decode.Pipeline.required "Plot" Decode.string
         |> Json.Decode.Pipeline.required "Ratings" (Decode.list ratingDecoder)
+        |> Json.Decode.Pipeline.hardcoded []
 
 
 ratingDecoder : Decode.Decoder Rating
@@ -78,18 +80,21 @@ type alias JustWatchSearchResult =
 
 type alias JustWatchSearchResults =
     { items : List JustWatchSearchResult
+    , movie : MovieDetails
     }
 
 
 type alias JustWatchDetails =
     { offers : List JustWatchOffer
+    , movie : MovieDetails
     }
 
 
-decodeJustWatchSearch : Movie -> Decode.Decoder JustWatchSearchResults
+decodeJustWatchSearch : MovieDetails -> Decode.Decoder JustWatchSearchResults
 decodeJustWatchSearch movie =
     Json.Decode.Pipeline.decode JustWatchSearchResults
         |> Json.Decode.Pipeline.required "items" (Decode.list searchResultDecoder)
+        |> Json.Decode.Pipeline.hardcoded movie
 
 
 searchResultDecoder =
@@ -208,10 +213,11 @@ decodeJustWatchOffer =
         |> Json.Decode.Pipeline.requiredAt [ "urls", "standard_web" ] Decode.string
 
 
-decodeJustWatchDetails : Decode.Decoder JustWatchDetails
-decodeJustWatchDetails =
+decodeJustWatchDetails : MovieDetails -> Decode.Decoder JustWatchDetails
+decodeJustWatchDetails movie =
     Json.Decode.Pipeline.decode JustWatchDetails
         |> Json.Decode.Pipeline.required "offers" (Decode.list decodeJustWatchOffer)
+        |> Json.Decode.Pipeline.hardcoded movie
 
 
 type WatchState

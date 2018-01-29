@@ -118,11 +118,11 @@ fetchMovie movie =
         Http.send LoadMovie request
 
 
-searchJustWatch : Movie -> Cmd Msg
+searchJustWatch : MovieDetails -> Cmd Msg
 searchJustWatch movie =
     let
         url =
-            "https://apis.justwatch.com/content/titles/en_US/popular?body=" ++ (Http.encodeUri ("{ \"query\": \" " ++ movie.title ++ "\"}"))
+            "https://apis.justwatch.com/content/titles/en_US/popular?body=" ++ (Http.encodeUri ("{ \"query\": \" " ++ movie.movie.title ++ "\"}"))
 
         request =
             Http.get url (Movie.decodeJustWatchSearch movie)
@@ -142,7 +142,7 @@ loadJustWatchDetails searchResults =
                     "https://apis.justwatch.com/content/titles/movie/" ++ (toString result.id) ++ "/locale/en_US"
 
                 request =
-                    Http.get url (Movie.decodeJustWatchDetails)
+                    Http.get url (Movie.decodeJustWatchDetails searchResults.movie)
             in
                 Http.send LoadJustWatchDetails request
 
@@ -185,7 +185,7 @@ update msg model =
                 Ok movie ->
                     let
                         cmd =
-                            searchJustWatch movie.movie
+                            searchJustWatch movie
                     in
                         ( { model
                             | focusedMovie = Movie.Loaded movie
@@ -213,10 +213,25 @@ update msg model =
             case result of
                 Ok justWatchDetails ->
                     let
+                        oldMovieDetails =
+                            justWatchDetails.movie
+
+                        newMovieDetails =
+                            { oldMovieDetails | offers = justWatchDetails.offers }
+
                         x =
-                            Debug.log "Got details!" justWatchDetails
+                            Debug.log "Got details!" newMovieDetails
                     in
-                        ( model, Cmd.none )
+                        -- when results are loaded, we don't want to use them unless the movie is still focused
+                        case model.focusedMovie of
+                            Movie.Loaded movieDetails ->
+                                if movieDetails.movie.title == newMovieDetails.movie.title then
+                                    ( { model | focusedMovie = Movie.Loaded newMovieDetails }, Cmd.none )
+                                else
+                                    ( model, Cmd.none )
+
+                            _ ->
+                                ( model, Cmd.none )
 
                 _ ->
                     ( model, Cmd.none )
