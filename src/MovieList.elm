@@ -917,7 +917,7 @@ movies =
       , year = 1988
       , runtime = 93
       , genres = [ "music", "comedy" ]
-      , watched = Unwatched
+      , watched = Watched (date 2018 01 25)
       }
     , { title = "Boyhood"
       , url = "http://www.imdb.com/title/tt1065073/"
