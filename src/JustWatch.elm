@@ -1,5 +1,6 @@
 module JustWatch exposing (..)
 
+import Json.Encode as Encode
 import Json.Decode as Decode exposing (string, list)
 import Json.Decode.Pipeline exposing (decode, hardcoded, optional, required)
 import Http exposing (encodeUri)
@@ -22,7 +23,13 @@ type OfferType
 
 movieSearchUrl : String -> String
 movieSearchUrl title =
-    "https://apis.justwatch.com/content/titles/en_US/popular?body=" ++ (Http.encodeUri ("{ \"query\": \" " ++ title ++ "\"}"))
+    -- generic JSON object
+    Encode.object [ ( "query", Encode.string title ) ]
+        -- Encode to json { "query": "thetitle" }
+        |> Encode.encode 0
+        -- Encode for uri
+        |> Http.encodeUri
+        |> String.append "https://apis.justwatch.com/content/titles/en_US/popular?body="
 
 
 movieDetailUrl : Int -> String

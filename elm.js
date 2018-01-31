@@ -29951,13 +29951,22 @@ var _user$project$JustWatch$movieDetailUrl = function (id) {
 };
 var _user$project$JustWatch$movieSearchUrl = function (title) {
 	return A2(
-		_elm_lang$core$Basics_ops['++'],
+		_elm_lang$core$String$append,
 		'https://apis.justwatch.com/content/titles/en_US/popular?body=',
 		_elm_lang$http$Http$encodeUri(
 			A2(
-				_elm_lang$core$Basics_ops['++'],
-				'{ \"query\": \" ',
-				A2(_elm_lang$core$Basics_ops['++'], title, '\"}'))));
+				_elm_lang$core$Json_Encode$encode,
+				0,
+				_elm_lang$core$Json_Encode$object(
+					{
+						ctor: '::',
+						_0: {
+							ctor: '_Tuple2',
+							_0: 'query',
+							_1: _elm_lang$core$Json_Encode$string(title)
+						},
+						_1: {ctor: '[]'}
+					}))));
 };
 var _user$project$JustWatch$JustWatchSearchResult = F2(
 	function (a, b) {
