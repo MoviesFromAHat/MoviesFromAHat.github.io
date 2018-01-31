@@ -29968,7 +29968,7 @@ var _user$project$JustWatch$movieSearchUrl = function (title) {
 						_1: {ctor: '[]'}
 					}))));
 };
-var _user$project$JustWatch$JustWatchSearchResult = F2(
+var _user$project$JustWatch$SearchResult = F2(
 	function (a, b) {
 		return {title: a, id: b};
 	});
@@ -29980,19 +29980,16 @@ var _user$project$JustWatch$searchResultDecoder = A3(
 		_NoRedInk$elm_decode_pipeline$Json_Decode_Pipeline$required,
 		'title',
 		_elm_lang$core$Json_Decode$string,
-		_NoRedInk$elm_decode_pipeline$Json_Decode_Pipeline$decode(_user$project$JustWatch$JustWatchSearchResult)));
-var _user$project$JustWatch$JustWatchSearchResults = function (a) {
-	return {items: a};
-};
-var _user$project$JustWatch$decodeJustWatchSearch = A3(
-	_NoRedInk$elm_decode_pipeline$Json_Decode_Pipeline$required,
-	'items',
-	_elm_lang$core$Json_Decode$list(_user$project$JustWatch$searchResultDecoder),
-	_NoRedInk$elm_decode_pipeline$Json_Decode_Pipeline$decode(_user$project$JustWatch$JustWatchSearchResults));
-var _user$project$JustWatch$JustWatchDetails = function (a) {
-	return {offers: a};
-};
-var _user$project$JustWatch$JustWatchOffer = F3(
+		_NoRedInk$elm_decode_pipeline$Json_Decode_Pipeline$decode(_user$project$JustWatch$SearchResult)));
+var _user$project$JustWatch$decodeSearch = A2(
+	_elm_lang$core$Json_Decode$at,
+	{
+		ctor: '::',
+		_0: 'items',
+		_1: {ctor: '[]'}
+	},
+	_elm_lang$core$Json_Decode$list(_user$project$JustWatch$searchResultDecoder));
+var _user$project$JustWatch$Offer = F3(
 	function (a, b, c) {
 		return {offerType: a, provider: b, url: c};
 	});
@@ -30109,7 +30106,7 @@ var _user$project$JustWatch$providerDecoder = A2(
 		}
 	},
 	_elm_lang$core$Json_Decode$int);
-var _user$project$JustWatch$decodeJustWatchOffer = A3(
+var _user$project$JustWatch$decodeOffer = A3(
 	_NoRedInk$elm_decode_pipeline$Json_Decode_Pipeline$requiredAt,
 	{
 		ctor: '::',
@@ -30129,13 +30126,25 @@ var _user$project$JustWatch$decodeJustWatchOffer = A3(
 			_NoRedInk$elm_decode_pipeline$Json_Decode_Pipeline$required,
 			'monetization_type',
 			_user$project$JustWatch$offerTypeDecoder,
-			_NoRedInk$elm_decode_pipeline$Json_Decode_Pipeline$decode(_user$project$JustWatch$JustWatchOffer))));
-var _user$project$JustWatch$decodeJustWatchDetails = A4(
-	_NoRedInk$elm_decode_pipeline$Json_Decode_Pipeline$optional,
-	'offers',
-	_elm_lang$core$Json_Decode$list(_user$project$JustWatch$decodeJustWatchOffer),
-	{ctor: '[]'},
-	_NoRedInk$elm_decode_pipeline$Json_Decode_Pipeline$decode(_user$project$JustWatch$JustWatchDetails));
+			_NoRedInk$elm_decode_pipeline$Json_Decode_Pipeline$decode(_user$project$JustWatch$Offer))));
+var _user$project$JustWatch$decodeDetails = _elm_lang$core$Json_Decode$oneOf(
+	{
+		ctor: '::',
+		_0: A2(
+			_elm_lang$core$Json_Decode$at,
+			{
+				ctor: '::',
+				_0: 'offers',
+				_1: {ctor: '[]'}
+			},
+			_elm_lang$core$Json_Decode$list(_user$project$JustWatch$decodeOffer)),
+		_1: {
+			ctor: '::',
+			_0: _elm_lang$core$Json_Decode$succeed(
+				{ctor: '[]'}),
+			_1: {ctor: '[]'}
+		}
+	});
 
 var _user$project$Movie$notesView = function (movie) {
 	var _p0 = movie.watched;
@@ -33578,7 +33587,7 @@ var _user$project$Main$handleJustWatchSearchResults = F2(
 				function (m) {
 					return _elm_lang$core$Native_Utils.eq(m.title, movie.movie.title);
 				},
-				searchResults.items));
+				searchResults));
 		var _p0 = match;
 		if (_p0.ctor === 'Nothing') {
 			return _elm_lang$core$Task$fail(
@@ -33592,7 +33601,7 @@ var _user$project$Main$handleJustWatchSearchResults = F2(
 		} else {
 			var url = _user$project$JustWatch$movieDetailUrl(_p0._0.id);
 			return _elm_lang$http$Http$toTask(
-				A2(_elm_lang$http$Http$get, url, _user$project$JustWatch$decodeJustWatchDetails));
+				A2(_elm_lang$http$Http$get, url, _user$project$JustWatch$decodeDetails));
 		}
 	});
 var _user$project$Main$init = function (location) {
@@ -33670,7 +33679,7 @@ var _user$project$Main$handleJustWatchDetails = F2(
 						function (a) {
 							return _elm_lang$core$Basics$toString(a.offerType);
 						},
-						_p2._0.offers)));
+						_p2._0)));
 			var newMovieDetails = _elm_lang$core$List$isEmpty(offers) ? _elm_lang$core$Native_Utils.update(
 				movie,
 				{offers: _user$project$JustWatch$NoResults}) : _elm_lang$core$Native_Utils.update(
@@ -33692,7 +33701,7 @@ var _user$project$Main$searchJustWatch = function (movie) {
 		_elm_lang$core$Task$andThen,
 		_user$project$Main$handleJustWatchSearchResults(movie),
 		_elm_lang$http$Http$toTask(
-			A2(_elm_lang$http$Http$get, url, _user$project$JustWatch$decodeJustWatchSearch)));
+			A2(_elm_lang$http$Http$get, url, _user$project$JustWatch$decodeSearch)));
 	return A2(
 		_elm_lang$core$Task$attempt,
 		_user$project$Main$handleJustWatchDetails(movie),
@@ -34083,7 +34092,7 @@ var _user$project$Main$main = A2(
 var Elm = {};
 Elm['Main'] = Elm['Main'] || {};
 if (typeof _user$project$Main$main !== 'undefined') {
-    _user$project$Main$main(Elm['Main'], 'Main', {"types":{"unions":{"JustWatch.MovieOffers":{"args":[],"tags":{"Results":["List JustWatch.JustWatchOffer"],"Loading":[],"NoResults":[]}},"Dict.LeafColor":{"args":[],"tags":{"LBBlack":[],"LBlack":[]}},"Time.Date.Date":{"args":[],"tags":{"Date":["{ year : Int, month : Int, day : Int }"]}},"Dom.Error":{"args":[],"tags":{"NotFound":["String"]}},"Movie.WatchState":{"args":[],"tags":{"Watched":["Time.Date.Date"],"Unwatched":[]}},"Dict.Dict":{"args":["k","v"],"tags":{"RBNode_elm_builtin":["Dict.NColor","k","v","Dict.Dict k v","Dict.Dict k v"],"RBEmpty_elm_builtin":["Dict.LeafColor"]}},"Maybe.Maybe":{"args":["a"],"tags":{"Just":["a"],"Nothing":[]}},"Set.Set":{"args":["t"],"tags":{"Set_elm_builtin":["Dict.Dict t ()"]}},"Main.Msg":{"args":[],"tags":{"MultiselectEvent":["Multiselect.Msg"],"LoadJustWatchDetails":["Movie.MovieDetails"],"SelectMovie":[],"FocusMovie":["Movie.Movie"],"CloseModal":[],"LocationChange":["Navigation.Location"],"LoadMovie":["Result.Result Http.Error Movie.MovieDetails"],"MovieSelected":["( Maybe.Maybe Movie.Movie, List Movie.Movie )"]}},"JustWatch.OfferType":{"args":[],"tags":{"Free":[],"Streaming":[],"Rent":[],"Unknown":[],"Buy":[],"Ads":[]}},"Dict.NColor":{"args":[],"tags":{"BBlack":[],"Red":[],"NBlack":[],"Black":[]}},"Http.Error":{"args":[],"tags":{"BadUrl":["String"],"NetworkError":[],"Timeout":[],"BadStatus":["Http.Response String"],"BadPayload":["String","Http.Response String"]}},"Result.Result":{"args":["error","value"],"tags":{"Ok":["value"],"Err":["error"]}},"Multiselect.Msg":{"args":[],"tags":{"ClearInput":[],"OnHover":["( String, String )"],"Toggle":[],"FocusResult":["Result.Result Dom.Error ()"],"Adjust":["Float"],"Start":[],"ClickOnComponent":[],"RemoveItem":["( String, String )"],"Clear":[],"OnSelect":["( String, String )"],"ScrollY":["Result.Result Dom.Error Float"],"ScrollResult":["Result.Result Dom.Error ()"],"DisableProtection":[],"Shortcut":["Int"],"Filter":["String"],"Click":["Mouse.Position"]}},"JustWatch.Provider":{"args":[],"tags":{"MaxGo":[],"Other":[],"HBO_Now":[],"Realeyz":[],"Fandango":[],"Yahoo":[],"PlayStation":[],"Starz":[],"FX":[],"Showtime":[],"Amazon":[],"Shudder":[],"Epix":[],"Microsoft":[],"Netflix":[],"Hulu":[],"HBO_Go":[],"Vudu":[],"GooglePlay":[],"Itunes":[],"TubiTV":[],"Fandor":[],"Filmstruck":[],"Crackle":[]}}},"aliases":{"Movie.MovieDetails":{"args":[],"type":"{ movie : Movie.Movie , rated : String , runtime : String , director : String , writer : String , actors : String , plot : String , ratings : List Movie.Rating , offers : JustWatch.MovieOffers }"},"Http.Response":{"args":["body"],"type":"{ url : String , status : { code : Int, message : String } , headers : Dict.Dict String String , body : body }"},"JustWatch.JustWatchOffer":{"args":[],"type":"{ offerType : JustWatch.OfferType , provider : JustWatch.Provider , url : String }"},"Genre.Genre":{"args":[],"type":"( String, String )"},"Mouse.Position":{"args":[],"type":"{ x : Int, y : Int }"},"Movie.Movie":{"args":[],"type":"{ title : String , url : String , img : String , year : Int , runtime : Int , genres : Set.Set Genre.Genre , watched : Movie.WatchState }"},"Movie.Rating":{"args":[],"type":"{ source : String, value : String }"},"Navigation.Location":{"args":[],"type":"{ href : String , host : String , hostname : String , protocol : String , origin : String , port_ : String , pathname : String , search : String , hash : String , username : String , password : String }"}},"message":"Main.Msg"},"versions":{"elm":"0.18.0"}});
+    _user$project$Main$main(Elm['Main'], 'Main', {"types":{"unions":{"JustWatch.MovieOffers":{"args":[],"tags":{"Results":["List JustWatch.Offer"],"Loading":[],"NoResults":[]}},"Dict.LeafColor":{"args":[],"tags":{"LBBlack":[],"LBlack":[]}},"Time.Date.Date":{"args":[],"tags":{"Date":["{ year : Int, month : Int, day : Int }"]}},"Dom.Error":{"args":[],"tags":{"NotFound":["String"]}},"Movie.WatchState":{"args":[],"tags":{"Watched":["Time.Date.Date"],"Unwatched":[]}},"Dict.Dict":{"args":["k","v"],"tags":{"RBNode_elm_builtin":["Dict.NColor","k","v","Dict.Dict k v","Dict.Dict k v"],"RBEmpty_elm_builtin":["Dict.LeafColor"]}},"Maybe.Maybe":{"args":["a"],"tags":{"Just":["a"],"Nothing":[]}},"Set.Set":{"args":["t"],"tags":{"Set_elm_builtin":["Dict.Dict t ()"]}},"Main.Msg":{"args":[],"tags":{"MultiselectEvent":["Multiselect.Msg"],"LoadJustWatchDetails":["Movie.MovieDetails"],"SelectMovie":[],"FocusMovie":["Movie.Movie"],"CloseModal":[],"LocationChange":["Navigation.Location"],"LoadMovie":["Result.Result Http.Error Movie.MovieDetails"],"MovieSelected":["( Maybe.Maybe Movie.Movie, List Movie.Movie )"]}},"JustWatch.OfferType":{"args":[],"tags":{"Free":[],"Streaming":[],"Rent":[],"Unknown":[],"Buy":[],"Ads":[]}},"Dict.NColor":{"args":[],"tags":{"BBlack":[],"Red":[],"NBlack":[],"Black":[]}},"Http.Error":{"args":[],"tags":{"BadUrl":["String"],"NetworkError":[],"Timeout":[],"BadStatus":["Http.Response String"],"BadPayload":["String","Http.Response String"]}},"Result.Result":{"args":["error","value"],"tags":{"Ok":["value"],"Err":["error"]}},"Multiselect.Msg":{"args":[],"tags":{"ClearInput":[],"OnHover":["( String, String )"],"Toggle":[],"FocusResult":["Result.Result Dom.Error ()"],"Adjust":["Float"],"Start":[],"ClickOnComponent":[],"RemoveItem":["( String, String )"],"Clear":[],"OnSelect":["( String, String )"],"ScrollY":["Result.Result Dom.Error Float"],"ScrollResult":["Result.Result Dom.Error ()"],"DisableProtection":[],"Shortcut":["Int"],"Filter":["String"],"Click":["Mouse.Position"]}},"JustWatch.Provider":{"args":[],"tags":{"MaxGo":[],"Other":[],"HBO_Now":[],"Realeyz":[],"Fandango":[],"Yahoo":[],"PlayStation":[],"Starz":[],"FX":[],"Showtime":[],"Amazon":[],"Shudder":[],"Epix":[],"Microsoft":[],"Netflix":[],"Hulu":[],"HBO_Go":[],"Vudu":[],"GooglePlay":[],"Itunes":[],"TubiTV":[],"Fandor":[],"Filmstruck":[],"Crackle":[]}}},"aliases":{"Movie.MovieDetails":{"args":[],"type":"{ movie : Movie.Movie , rated : String , runtime : String , director : String , writer : String , actors : String , plot : String , ratings : List Movie.Rating , offers : JustWatch.MovieOffers }"},"JustWatch.Offer":{"args":[],"type":"{ offerType : JustWatch.OfferType , provider : JustWatch.Provider , url : String }"},"Http.Response":{"args":["body"],"type":"{ url : String , status : { code : Int, message : String } , headers : Dict.Dict String String , body : body }"},"Genre.Genre":{"args":[],"type":"( String, String )"},"Mouse.Position":{"args":[],"type":"{ x : Int, y : Int }"},"Movie.Movie":{"args":[],"type":"{ title : String , url : String , img : String , year : Int , runtime : Int , genres : Set.Set Genre.Genre , watched : Movie.WatchState }"},"Movie.Rating":{"args":[],"type":"{ source : String, value : String }"},"Navigation.Location":{"args":[],"type":"{ href : String , host : String , hostname : String , protocol : String , origin : String , port_ : String , pathname : String , search : String , hash : String , username : String , password : String }"}},"message":"Main.Msg"},"versions":{"elm":"0.18.0"}});
 }
 
 if (typeof define === "function" && define['amd'])

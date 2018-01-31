@@ -7,7 +7,7 @@ import Genre exposing (Genre)
 import MovieList exposing (..)
 import AppCss.Helpers exposing (class)
 import AppCss exposing (..)
-import JustWatch exposing (JustWatchSearchResults, JustWatchSearchResult, JustWatchDetails, MovieOffers)
+import JustWatch exposing (MovieOffers)
 
 
 -- External Imports
@@ -131,18 +131,18 @@ searchJustWatch movie =
             JustWatch.movieSearchUrl movie.movie.title
 
         request =
-            Http.get url JustWatch.decodeJustWatchSearch
+            Http.get url JustWatch.decodeSearch
                 |> Http.toTask
                 |> andThen (handleJustWatchSearchResults movie)
     in
         Task.attempt (handleJustWatchDetails movie) request
 
 
-handleJustWatchSearchResults : MovieDetails -> JustWatchSearchResults -> Task.Task Http.Error JustWatchDetails
+handleJustWatchSearchResults : MovieDetails -> List JustWatch.SearchResult -> Task.Task Http.Error (List JustWatch.Offer)
 handleJustWatchSearchResults movie searchResults =
     let
         match =
-            searchResults.items
+            searchResults
                 |> List.filter (\m -> m.title == movie.movie.title)
                 |> List.head
     in
@@ -158,17 +158,17 @@ handleJustWatchSearchResults movie searchResults =
                     url =
                         JustWatch.movieDetailUrl result.id
                 in
-                    Http.get url JustWatch.decodeJustWatchDetails
+                    Http.get url JustWatch.decodeDetails
                         |> Http.toTask
 
 
-handleJustWatchDetails : MovieDetails -> Result e JustWatchDetails -> Msg
+handleJustWatchDetails : MovieDetails -> Result e (List JustWatch.Offer) -> Msg
 handleJustWatchDetails movie result =
     case result of
-        Ok justWatchDetails ->
+        Ok results ->
             let
                 offers =
-                    justWatchDetails.offers
+                    results
                         |> List.sortBy (\a -> (toString a.offerType))
                         |> List.reverse
                         |> uniqueBy (\m -> m.url)

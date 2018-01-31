@@ -10,7 +10,7 @@ import Set exposing (Set)
 import Genre exposing (Genre)
 import Json.Decode as Decode exposing (string, list)
 import Json.Decode.Pipeline exposing (decode, hardcoded, optional, required)
-import JustWatch exposing (..)
+import JustWatch
 
 
 -- Types
@@ -53,7 +53,7 @@ type alias MovieDetails =
     , actors : String
     , plot : String
     , ratings : List Rating
-    , offers : MovieOffers
+    , offers : JustWatch.MovieOffers
     }
 
 
@@ -68,7 +68,7 @@ decodeMovieData movie =
         |> Json.Decode.Pipeline.required "Actors" Decode.string
         |> Json.Decode.Pipeline.required "Plot" Decode.string
         |> Json.Decode.Pipeline.required "Ratings" (Decode.list ratingDecoder)
-        |> Json.Decode.Pipeline.hardcoded Loading
+        |> Json.Decode.Pipeline.hardcoded JustWatch.Loading
 
 
 ratingDecoder : Decode.Decoder Rating
@@ -177,7 +177,7 @@ movieModalBase closeModal contents =
         )
 
 
-movieOffer : JustWatchOffer -> List (Html msg)
+movieOffer : JustWatch.Offer -> List (Html msg)
 movieOffer offer =
     [ a [ href offer.url, target "_blank" ]
         [ text ((toString offer.provider) ++ " " ++ (toString offer.offerType))
@@ -188,13 +188,13 @@ movieOffer offer =
 movieOffers : MovieDetails -> Html msg
 movieOffers movie =
     case movie.offers of
-        Loading ->
+        JustWatch.Loading ->
             h5 [] [ text "Searching for movie viewing options..." ]
 
-        NoResults ->
+        JustWatch.NoResults ->
             h5 [] [ text "Movie not found for streaming or purchase" ]
 
-        Results offers ->
+        JustWatch.Results offers ->
             div []
                 [ h5 [] [ text "Watch" ]
                 , div [ class [ Style.Grid ] ]

@@ -9,7 +9,7 @@ import Http exposing (encodeUri)
 type MovieOffers
     = Loading
     | NoResults
-    | Results (List JustWatchOffer)
+    | Results (List Offer)
 
 
 type OfferType
@@ -37,54 +37,45 @@ movieDetailUrl id =
     "https://apis.justwatch.com/content/titles/movie/" ++ (toString id) ++ "/locale/en_US"
 
 
-type alias JustWatchSearchResult =
+type alias SearchResult =
     { title : String
     , id : Int
     }
 
 
-type alias JustWatchSearchResults =
-    { items : List JustWatchSearchResult
-    }
+decodeSearch : Decode.Decoder (List SearchResult)
+decodeSearch =
+    Decode.at [ "items" ] (Decode.list searchResultDecoder)
 
 
-type alias JustWatchDetails =
-    { offers : List JustWatchOffer
-    }
-
-
-decodeJustWatchSearch : Decode.Decoder JustWatchSearchResults
-decodeJustWatchSearch =
-    Json.Decode.Pipeline.decode JustWatchSearchResults
-        |> Json.Decode.Pipeline.required "items" (Decode.list searchResultDecoder)
-
-
-searchResultDecoder : Decode.Decoder JustWatchSearchResult
+searchResultDecoder : Decode.Decoder SearchResult
 searchResultDecoder =
-    Json.Decode.Pipeline.decode JustWatchSearchResult
+    Json.Decode.Pipeline.decode SearchResult
         |> Json.Decode.Pipeline.required "title" Decode.string
         |> Json.Decode.Pipeline.required "id" Decode.int
 
 
-type alias JustWatchOffer =
+type alias Offer =
     { offerType : OfferType
     , provider : Provider
     , url : String
     }
 
 
-decodeJustWatchOffer : Decode.Decoder JustWatchOffer
-decodeJustWatchOffer =
-    Json.Decode.Pipeline.decode JustWatchOffer
+decodeOffer : Decode.Decoder Offer
+decodeOffer =
+    Json.Decode.Pipeline.decode Offer
         |> Json.Decode.Pipeline.required "monetization_type" offerTypeDecoder
         |> Json.Decode.Pipeline.required "provider_id" providerDecoder
         |> Json.Decode.Pipeline.requiredAt [ "urls", "standard_web" ] Decode.string
 
 
-decodeJustWatchDetails : Decode.Decoder JustWatchDetails
-decodeJustWatchDetails =
-    Json.Decode.Pipeline.decode JustWatchDetails
-        |> Json.Decode.Pipeline.optional "offers" (Decode.list decodeJustWatchOffer) []
+decodeDetails : Decode.Decoder (List Offer)
+decodeDetails =
+    Decode.oneOf
+        [ Decode.at [ "offers" ] (Decode.list decodeOffer)
+        , Decode.succeed []
+        ]
 
 
 offerTypeDecoder : Decode.Decoder OfferType
