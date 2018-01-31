@@ -2,11 +2,12 @@ module Main exposing (..)
 
 -- Our Imports
 
-import Movie exposing (Movie, movieCard, matchGenres, MovieDetails, MovieSelection, movieModal, offlineMovieModal, JustWatchSearchResults, JustWatchSearchResult, JustWatchDetails, MovieOffers)
+import Movie exposing (Movie, movieCard, matchGenres, MovieDetails, MovieSelection, movieModal, offlineMovieModal)
 import Genre exposing (Genre)
 import MovieList exposing (..)
 import AppCss.Helpers exposing (class)
 import AppCss exposing (..)
+import JustWatch exposing (JustWatchSearchResults, JustWatchSearchResult, JustWatchDetails, MovieOffers)
 
 
 -- External Imports
@@ -22,8 +23,9 @@ import Random.List as RandList
 import Set exposing (Set)
 import Navigation
 import Http
-import Task
+import Task exposing (andThen)
 import List.Extra exposing (uniqueBy)
+import Dict
 
 
 main : Program Never Model Msg
@@ -103,8 +105,7 @@ type Msg
     | MultiselectEvent Multiselect.Msg
     | LocationChange Navigation.Location
     | LoadMovie (Result Http.Error MovieDetails)
-    | LoadJustWatchSearch (Result Http.Error JustWatchSearchResults)
-    | LoadJustWatchDetails (Result Http.Error JustWatchDetails)
+    | LoadJustWatchDetails MovieDetails
 
 
 fetchMovie : Movie -> Cmd Msg
@@ -119,28 +120,73 @@ fetchMovie movie =
         Http.send LoadMovie request
 
 
+
+-- Search Justwatch.com for movie details
+
+
 searchJustWatch : MovieDetails -> Cmd Msg
 searchJustWatch movie =
     let
         url =
-            "https://apis.justwatch.com/content/titles/en_US/popular?body=" ++ (Http.encodeUri ("{ \"query\": \" " ++ movie.movie.title ++ "\"}"))
+            JustWatch.movieSearchUrl movie.movie.title
 
         request =
-            Http.get url (Movie.decodeJustWatchSearch movie)
+            Http.get url JustWatch.decodeJustWatchSearch
+                |> Http.toTask
+                |> andThen (handleJustWatchSearchResults movie)
     in
-        Http.send LoadJustWatchSearch request
+        Task.attempt (handleJustWatchDetails movie) request
 
 
-loadJustWatchDetails : JustWatchSearchResult -> MovieDetails -> Cmd Msg
-loadJustWatchDetails result movie =
+handleJustWatchSearchResults : MovieDetails -> JustWatchSearchResults -> Task.Task Http.Error JustWatchDetails
+handleJustWatchSearchResults movie searchResults =
     let
-        url =
-            "https://apis.justwatch.com/content/titles/movie/" ++ (toString result.id) ++ "/locale/en_US"
-
-        request =
-            Http.get url (Movie.decodeJustWatchDetails movie)
+        match =
+            searchResults.items
+                |> List.filter (\m -> m.title == movie.movie.title)
+                |> List.head
     in
-        Http.send LoadJustWatchDetails request
+        case match of
+            Nothing ->
+                -- We got a response, but it didn't have any matching items, so fail with 404
+                Http.Response "" { code = 404, message = "Not Found" } Dict.empty ""
+                    |> Http.BadStatus
+                    |> Task.fail
+
+            Just result ->
+                let
+                    url =
+                        JustWatch.movieDetailUrl result.id
+                in
+                    Http.get url JustWatch.decodeJustWatchDetails
+                        |> Http.toTask
+
+
+handleJustWatchDetails : MovieDetails -> Result e JustWatchDetails -> Msg
+handleJustWatchDetails movie result =
+    case result of
+        Ok justWatchDetails ->
+            let
+                offers =
+                    justWatchDetails.offers
+                        |> List.sortBy (\a -> (toString a.offerType))
+                        |> List.reverse
+                        |> uniqueBy (\m -> m.url)
+
+                newMovieDetails =
+                    if List.isEmpty offers then
+                        { movie | offers = JustWatch.NoResults }
+                    else
+                        { movie | offers = JustWatch.Results offers }
+            in
+                LoadJustWatchDetails newMovieDetails
+
+        Err e ->
+            LoadJustWatchDetails { movie | offers = JustWatch.NoResults }
+
+
+
+-- end justwatch
 
 
 openModal : Model -> Movie -> ( Model, Cmd Msg )
@@ -188,76 +234,14 @@ update msg model =
                 _ ->
                     ( model, Cmd.none )
 
-        LoadJustWatchSearch result ->
-            case result of
-                Ok searchResults ->
-                    let
-                        oldMovieDetails =
-                            searchResults.movie
-
-                        match =
-                            searchResults.items
-                                |> List.filter (\m -> m.title == searchResults.movie.movie.title)
-                                |> List.head
-
-                        ( newMovieDetails, cmd ) =
-                            case match of
-                                Nothing ->
-                                    ( { oldMovieDetails | offers = Movie.NoResults }, Cmd.none )
-
-                                Just result ->
-                                    ( { oldMovieDetails | offers = Movie.Loading }, loadJustWatchDetails result oldMovieDetails )
-
-                        x =
-                            Debug.log "Got results"
-                                searchResults
-                    in
-                        -- when results are loaded, we don't want to use them unless the movie is still focused
-                        case model.focusedMovie of
-                            Movie.Loaded movieDetails ->
-                                if searchResults.movie.movie.title == movieDetails.movie.title then
-                                    ( { model | focusedMovie = Movie.Loaded newMovieDetails }, cmd )
-                                else
-                                    ( model, Cmd.none )
-
-                            _ ->
-                                ( model, Cmd.none )
-
-                _ ->
-                    ( model, Cmd.none )
-
-        LoadJustWatchDetails result ->
-            case result of
-                Ok justWatchDetails ->
-                    let
-                        oldMovieDetails =
-                            justWatchDetails.movie
-
-                        offers =
-                            justWatchDetails.offers
-                                |> List.sortBy (\a -> (toString a.offerType))
-                                |> List.reverse
-                                |> uniqueBy (\m -> m.url)
-
-                        newMovieDetails =
-                            if List.isEmpty offers then
-                                { oldMovieDetails | offers = Movie.NoResults }
-                            else
-                                { oldMovieDetails | offers = Movie.Results offers }
-
-                        x =
-                            Debug.log "Got details!" newMovieDetails
-                    in
-                        -- when results are loaded, we don't want to use them unless the movie is still focused
-                        case model.focusedMovie of
-                            Movie.Loaded movieDetails ->
-                                if movieDetails.movie.title == newMovieDetails.movie.title then
-                                    ( { model | focusedMovie = Movie.Loaded newMovieDetails }, Cmd.none )
-                                else
-                                    ( model, Cmd.none )
-
-                            _ ->
-                                ( model, Cmd.none )
+        LoadJustWatchDetails movieDetails ->
+            -- when results are loaded, we don't want to use them unless the movie is still focused
+            case model.focusedMovie of
+                Movie.Loaded focusedMovie ->
+                    if movieDetails.movie.title == focusedMovie.movie.title then
+                        ( { model | focusedMovie = Movie.Loaded movieDetails }, Cmd.none )
+                    else
+                        ( model, Cmd.none )
 
                 _ ->
                     ( model, Cmd.none )

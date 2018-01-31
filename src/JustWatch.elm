@@ -1,7 +1,14 @@
-module JustWatchProviders exposing (..)
+module JustWatch exposing (..)
 
 import Json.Decode as Decode exposing (string, list)
 import Json.Decode.Pipeline exposing (decode, hardcoded, optional, required)
+import Http exposing (encodeUri)
+
+
+type MovieOffers
+    = Loading
+    | NoResults
+    | Results (List JustWatchOffer)
 
 
 type OfferType
@@ -11,6 +18,66 @@ type OfferType
     | Ads
     | Free
     | Unknown
+
+
+movieSearchUrl : String -> String
+movieSearchUrl title =
+    "https://apis.justwatch.com/content/titles/en_US/popular?body=" ++ (Http.encodeUri ("{ \"query\": \" " ++ title ++ "\"}"))
+
+
+movieDetailUrl : Int -> String
+movieDetailUrl id =
+    "https://apis.justwatch.com/content/titles/movie/" ++ (toString id) ++ "/locale/en_US"
+
+
+type alias JustWatchSearchResult =
+    { title : String
+    , id : Int
+    }
+
+
+type alias JustWatchSearchResults =
+    { items : List JustWatchSearchResult
+    }
+
+
+type alias JustWatchDetails =
+    { offers : List JustWatchOffer
+    }
+
+
+decodeJustWatchSearch : Decode.Decoder JustWatchSearchResults
+decodeJustWatchSearch =
+    Json.Decode.Pipeline.decode JustWatchSearchResults
+        |> Json.Decode.Pipeline.required "items" (Decode.list searchResultDecoder)
+
+
+searchResultDecoder : Decode.Decoder JustWatchSearchResult
+searchResultDecoder =
+    Json.Decode.Pipeline.decode JustWatchSearchResult
+        |> Json.Decode.Pipeline.required "title" Decode.string
+        |> Json.Decode.Pipeline.required "id" Decode.int
+
+
+type alias JustWatchOffer =
+    { offerType : OfferType
+    , provider : Provider
+    , url : String
+    }
+
+
+decodeJustWatchOffer : Decode.Decoder JustWatchOffer
+decodeJustWatchOffer =
+    Json.Decode.Pipeline.decode JustWatchOffer
+        |> Json.Decode.Pipeline.required "monetization_type" offerTypeDecoder
+        |> Json.Decode.Pipeline.required "provider_id" providerDecoder
+        |> Json.Decode.Pipeline.requiredAt [ "urls", "standard_web" ] Decode.string
+
+
+decodeJustWatchDetails : Decode.Decoder JustWatchDetails
+decodeJustWatchDetails =
+    Json.Decode.Pipeline.decode JustWatchDetails
+        |> Json.Decode.Pipeline.optional "offers" (Decode.list decodeJustWatchOffer) []
 
 
 offerTypeDecoder : Decode.Decoder OfferType

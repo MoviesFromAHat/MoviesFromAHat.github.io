@@ -10,7 +10,7 @@ import Set exposing (Set)
 import Genre exposing (Genre)
 import Json.Decode as Decode exposing (string, list)
 import Json.Decode.Pipeline exposing (decode, hardcoded, optional, required)
-import JustWatchProviders exposing (..)
+import JustWatch exposing (..)
 
 
 -- Types
@@ -42,12 +42,6 @@ type alias Rating =
 type WatchState
     = Unwatched
     | Watched Date
-
-
-type MovieOffers
-    = Loading
-    | NoResults
-    | Results (List JustWatchOffer)
 
 
 type alias MovieDetails =
@@ -82,59 +76,6 @@ ratingDecoder =
     Json.Decode.Pipeline.decode Rating
         |> Json.Decode.Pipeline.required "Source" Decode.string
         |> Json.Decode.Pipeline.required "Value" Decode.string
-
-
-type alias JustWatchSearchResult =
-    { title : String
-    , id : Int
-    }
-
-
-type alias JustWatchSearchResults =
-    { items : List JustWatchSearchResult
-    , movie : MovieDetails
-    }
-
-
-type alias JustWatchDetails =
-    { offers : List JustWatchOffer
-    , movie : MovieDetails
-    }
-
-
-decodeJustWatchSearch : MovieDetails -> Decode.Decoder JustWatchSearchResults
-decodeJustWatchSearch movie =
-    Json.Decode.Pipeline.decode JustWatchSearchResults
-        |> Json.Decode.Pipeline.required "items" (Decode.list searchResultDecoder)
-        |> Json.Decode.Pipeline.hardcoded movie
-
-
-searchResultDecoder =
-    Json.Decode.Pipeline.decode JustWatchSearchResult
-        |> Json.Decode.Pipeline.required "title" Decode.string
-        |> Json.Decode.Pipeline.required "id" Decode.int
-
-
-type alias JustWatchOffer =
-    { offerType : OfferType
-    , provider : Provider
-    , url : String
-    }
-
-
-decodeJustWatchOffer : Decode.Decoder JustWatchOffer
-decodeJustWatchOffer =
-    Json.Decode.Pipeline.decode JustWatchOffer
-        |> Json.Decode.Pipeline.required "monetization_type" offerTypeDecoder
-        |> Json.Decode.Pipeline.required "provider_id" providerDecoder
-        |> Json.Decode.Pipeline.requiredAt [ "urls", "standard_web" ] Decode.string
-
-
-decodeJustWatchDetails : MovieDetails -> Decode.Decoder JustWatchDetails
-decodeJustWatchDetails movie =
-    Json.Decode.Pipeline.decode JustWatchDetails
-        |> Json.Decode.Pipeline.optional "offers" (Decode.list decodeJustWatchOffer) []
-        |> Json.Decode.Pipeline.hardcoded movie
 
 
 
