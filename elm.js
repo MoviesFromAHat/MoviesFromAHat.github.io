@@ -33352,7 +33352,8 @@ var _user$project$MovieList$movies = A2(
 																																																																																																																						_1: {ctor: '[]'}
 																																																																																																																					}
 																																																																																																																				},
-																																																																																																																				watched: _user$project$Movie$Unwatched
+																																																																																																																				watched: _user$project$Movie$Watched(
+																																																																																																																					A3(_elm_community$elm_time$Time_Date$date, 2018, 1, 25))
 																																																																																																																			},
 																																																																																																																			_1: {
 																																																																																																																				ctor: '::',
@@ -33426,7 +33427,27 @@ var _user$project$MovieList$movies = A2(
 																																																																																																																								},
 																																																																																																																								watched: _user$project$Movie$Unwatched
 																																																																																																																							},
-																																																																																																																							_1: {ctor: '[]'}
+																																																																																																																							_1: {
+																																																																																																																								ctor: '::',
+																																																																																																																								_0: {
+																																																																																																																									title: 'Dudes & Dragons',
+																																																																																																																									url: 'http://www.imdb.com/title/tt2170369/',
+																																																																																																																									img: 'dudes-dragons.jpg',
+																																																																																																																									year: 2015,
+																																																																																																																									runtime: 122,
+																																																																																																																									genres: {
+																																																																																																																										ctor: '::',
+																																																																																																																										_0: 'comedy',
+																																																																																																																										_1: {
+																																																																																																																											ctor: '::',
+																																																																																																																											_0: 'adventure',
+																																																																																																																											_1: {ctor: '[]'}
+																																																																																																																										}
+																																																																																																																									},
+																																																																																																																									watched: _user$project$Movie$Unwatched
+																																																																																																																								},
+																																																																																																																								_1: {ctor: '[]'}
+																																																																																																																							}
 																																																																																																																						}
 																																																																																																																					}
 																																																																																																																				}
@@ -33711,7 +33732,7 @@ var _user$project$Main$LoadMovie = function (a) {
 	return {ctor: 'LoadMovie', _0: a};
 };
 var _user$project$Main$fetchMovie = function (movie) {
-	var url = A2(_elm_lang$core$Basics_ops['++'], 'http://www.omdbapi.com/?apiKey=6f7301bf&t=', movie.title);
+	var url = A2(_elm_lang$core$Basics_ops['++'], 'https://www.omdbapi.com/?apiKey=6f7301bf&t=', movie.title);
 	var request = A2(
 		_elm_lang$http$Http$get,
 		url,

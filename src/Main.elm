@@ -112,7 +112,7 @@ fetchMovie : Movie -> Cmd Msg
 fetchMovie movie =
     let
         url =
-            "http://www.omdbapi.com/?apiKey=6f7301bf&t=" ++ movie.title
+            "https://www.omdbapi.com/?apiKey=6f7301bf&t=" ++ movie.title
 
         request =
             Http.get url (Movie.decodeMovieData movie)
