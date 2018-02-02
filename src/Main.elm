@@ -167,6 +167,9 @@ handleJustWatchDetails movie result =
     case result of
         Ok results ->
             let
+                x =
+                    Debug.log "Loaded justwatch details" results
+
                 offers =
                     results
                         |> List.sortBy (\a -> (toString a.offerType))
@@ -182,7 +185,11 @@ handleJustWatchDetails movie result =
                 LoadJustWatchDetails newMovieDetails
 
         Err e ->
-            LoadJustWatchDetails { movie | offers = JustWatch.NoResults }
+            let
+                x =
+                    Debug.log "Error loading details" e
+            in
+                LoadJustWatchDetails { movie | offers = JustWatch.NoResults }
 
 
 

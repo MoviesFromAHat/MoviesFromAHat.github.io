@@ -33689,6 +33689,7 @@ var _user$project$Main$handleJustWatchDetails = F2(
 	function (movie, result) {
 		var _p2 = result;
 		if (_p2.ctor === 'Ok') {
+			var _p3 = _p2._0;
 			var offers = A2(
 				_elm_community$list_extra$List_Extra$uniqueBy,
 				function (m) {
@@ -33700,7 +33701,7 @@ var _user$project$Main$handleJustWatchDetails = F2(
 						function (a) {
 							return _elm_lang$core$Basics$toString(a.offerType);
 						},
-						_p2._0)));
+						_p3)));
 			var newMovieDetails = _elm_lang$core$List$isEmpty(offers) ? _elm_lang$core$Native_Utils.update(
 				movie,
 				{offers: _user$project$JustWatch$NoResults}) : _elm_lang$core$Native_Utils.update(
@@ -33708,8 +33709,10 @@ var _user$project$Main$handleJustWatchDetails = F2(
 				{
 					offers: _user$project$JustWatch$Results(offers)
 				});
+			var x = A2(_elm_lang$core$Debug$log, 'Loaded justwatch details', _p3);
 			return _user$project$Main$LoadJustWatchDetails(newMovieDetails);
 		} else {
+			var x = A2(_elm_lang$core$Debug$log, 'Error loading details', _p2._0);
 			return _user$project$Main$LoadJustWatchDetails(
 				_elm_lang$core$Native_Utils.update(
 					movie,
@@ -33772,8 +33775,8 @@ var _user$project$Main$MovieSelected = function (a) {
 };
 var _user$project$Main$update = F2(
 	function (msg, model) {
-		var _p3 = msg;
-		switch (_p3.ctor) {
+		var _p4 = msg;
+		switch (_p4.ctor) {
 			case 'LocationChange':
 				return {ctor: '_Tuple2', _0: model, _1: _elm_lang$core$Platform_Cmd$none};
 			case 'SelectMovie':
@@ -33790,19 +33793,19 @@ var _user$project$Main$update = F2(
 								model.unwatched)))
 				};
 			case 'MovieSelected':
-				var _p4 = _p3._0._0;
-				if (_p4.ctor === 'Just') {
+				var _p5 = _p4._0._0;
+				if (_p5.ctor === 'Just') {
 					return A2(
 						_user$project$Main$openModal,
 						_elm_lang$core$Native_Utils.update(
 							model,
-							{unwatched: _p3._0._1}),
-						_p4._0);
+							{unwatched: _p4._0._1}),
+						_p5._0);
 				} else {
 					return {ctor: '_Tuple2', _0: model, _1: _elm_lang$core$Platform_Cmd$none};
 				}
 			case 'FocusMovie':
-				return A2(_user$project$Main$openModal, model, _p3._0);
+				return A2(_user$project$Main$openModal, model, _p4._0);
 			case 'CloseModal':
 				return {
 					ctor: '_Tuple2',
@@ -33812,31 +33815,31 @@ var _user$project$Main$update = F2(
 					_1: _elm_lang$core$Platform_Cmd$none
 				};
 			case 'LoadMovie':
-				var _p5 = _p3._0;
-				if (_p5.ctor === 'Ok') {
-					var _p6 = _p5._0;
+				var _p6 = _p4._0;
+				if (_p6.ctor === 'Ok') {
+					var _p7 = _p6._0;
 					return {
 						ctor: '_Tuple2',
 						_0: _elm_lang$core$Native_Utils.update(
 							model,
 							{
-								focusedMovie: _user$project$Movie$Loaded(_p6)
+								focusedMovie: _user$project$Movie$Loaded(_p7)
 							}),
-						_1: _user$project$Main$searchJustWatch(_p6)
+						_1: _user$project$Main$searchJustWatch(_p7)
 					};
 				} else {
 					return {ctor: '_Tuple2', _0: model, _1: _elm_lang$core$Platform_Cmd$none};
 				}
 			case 'LoadJustWatchDetails':
-				var _p8 = _p3._0;
-				var _p7 = model.focusedMovie;
-				if (_p7.ctor === 'Loaded') {
-					return _elm_lang$core$Native_Utils.eq(_p8.movie.title, _p7._0.movie.title) ? {
+				var _p9 = _p4._0;
+				var _p8 = model.focusedMovie;
+				if (_p8.ctor === 'Loaded') {
+					return _elm_lang$core$Native_Utils.eq(_p9.movie.title, _p8._0.movie.title) ? {
 						ctor: '_Tuple2',
 						_0: _elm_lang$core$Native_Utils.update(
 							model,
 							{
-								focusedMovie: _user$project$Movie$Loaded(_p8)
+								focusedMovie: _user$project$Movie$Loaded(_p9)
 							}),
 						_1: _elm_lang$core$Platform_Cmd$none
 					} : {ctor: '_Tuple2', _0: model, _1: _elm_lang$core$Platform_Cmd$none};
@@ -33844,13 +33847,13 @@ var _user$project$Main$update = F2(
 					return {ctor: '_Tuple2', _0: model, _1: _elm_lang$core$Platform_Cmd$none};
 				}
 			default:
-				var _p9 = A2(_inkuzmin$elm_multiselect$Multiselect$update, _p3._0, model.genresMultiselect);
-				var subModel = _p9._0;
-				var subCmd = _p9._1;
+				var _p10 = A2(_inkuzmin$elm_multiselect$Multiselect$update, _p4._0, model.genresMultiselect);
+				var subModel = _p10._0;
+				var subCmd = _p10._1;
 				var selectedGenres = _elm_lang$core$Set$fromList(subModel.selected);
 				var newUrl = function () {
-					var _p10 = _elm_lang$core$List$length(subModel.selected);
-					if (_p10 === 0) {
+					var _p11 = _elm_lang$core$List$length(subModel.selected);
+					if (_p11 === 0) {
 						return model.location.origin;
 					} else {
 						return A2(
@@ -33864,9 +33867,9 @@ var _user$project$Main$update = F2(
 								'+',
 								A2(
 									_elm_lang$core$List$map,
-									function (_p11) {
-										var _p12 = _p11;
-										return _p12._0;
+									function (_p12) {
+										var _p13 = _p12;
+										return _p13._0;
 									},
 									subModel.selected)));
 					}
@@ -33991,12 +33994,12 @@ var _user$project$Main$appHeader = function (model) {
 };
 var _user$project$Main$view = function (model) {
 	var modal = function () {
-		var _p13 = model.focusedMovie;
-		switch (_p13.ctor) {
+		var _p14 = model.focusedMovie;
+		switch (_p14.ctor) {
 			case 'Loaded':
-				return A2(_user$project$Movie$movieModal, _p13._0, _user$project$Main$CloseModal);
+				return A2(_user$project$Movie$movieModal, _p14._0, _user$project$Main$CloseModal);
 			case 'Selected':
-				return A2(_user$project$Movie$offlineMovieModal, _p13._0, _user$project$Main$CloseModal);
+				return A2(_user$project$Movie$offlineMovieModal, _p14._0, _user$project$Main$CloseModal);
 			default:
 				return A2(
 					_elm_lang$html$Html$div,
