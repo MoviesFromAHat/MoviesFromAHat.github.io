@@ -7,6 +7,7 @@ import Genre exposing (Genre)
 import MovieList exposing (..)
 import AppCss.Helpers exposing (class)
 import AppCss exposing (..)
+import JustWatch exposing (MovieOffers)
 
 
 -- External Imports
@@ -22,7 +23,9 @@ import Random.List as RandList
 import Set exposing (Set)
 import Navigation
 import Http
-import Task
+import Task exposing (andThen)
+import List.Extra exposing (uniqueBy)
+import Dict
 
 
 main : Program Never Model Msg
@@ -102,6 +105,7 @@ type Msg
     | MultiselectEvent Multiselect.Msg
     | LocationChange Navigation.Location
     | LoadMovie (Result Http.Error MovieDetails)
+    | LoadJustWatchDetails MovieDetails
 
 
 fetchMovie : Movie -> Cmd Msg
@@ -114,6 +118,75 @@ fetchMovie movie =
             Http.get url (Movie.decodeMovieData movie)
     in
         Http.send LoadMovie request
+
+
+
+-- Search Justwatch.com for movie details
+
+
+searchJustWatch : MovieDetails -> Cmd Msg
+searchJustWatch movie =
+    let
+        url =
+            JustWatch.movieSearchUrl movie.movie.title
+
+        request =
+            Http.get url JustWatch.decodeSearch
+                |> Http.toTask
+                |> andThen (handleJustWatchSearchResults movie)
+    in
+        Task.attempt (handleJustWatchDetails movie) request
+
+
+handleJustWatchSearchResults : MovieDetails -> List JustWatch.SearchResult -> Task.Task Http.Error (List JustWatch.Offer)
+handleJustWatchSearchResults movie searchResults =
+    let
+        match =
+            searchResults
+                |> List.filter (\m -> m.title == movie.movie.title)
+                |> List.head
+    in
+        case match of
+            Nothing ->
+                -- We got a response, but it didn't have any matching items, so fail with 404
+                Http.Response "" { code = 404, message = "Not Found" } Dict.empty ""
+                    |> Http.BadStatus
+                    |> Task.fail
+
+            Just result ->
+                let
+                    url =
+                        JustWatch.movieDetailUrl result.id
+                in
+                    Http.get url JustWatch.decodeDetails
+                        |> Http.toTask
+
+
+handleJustWatchDetails : MovieDetails -> Result e (List JustWatch.Offer) -> Msg
+handleJustWatchDetails movie result =
+    case result of
+        Ok results ->
+            let
+                offers =
+                    results
+                        |> List.sortBy (\a -> (toString a.offerType))
+                        |> List.reverse
+                        |> uniqueBy (\m -> m.url)
+
+                newMovieDetails =
+                    if List.isEmpty offers then
+                        { movie | offers = JustWatch.NoResults }
+                    else
+                        { movie | offers = JustWatch.Results offers }
+            in
+                LoadJustWatchDetails newMovieDetails
+
+        Err e ->
+            LoadJustWatchDetails { movie | offers = JustWatch.NoResults }
+
+
+
+-- end justwatch
 
 
 openModal : Model -> Movie -> ( Model, Cmd Msg )
@@ -155,8 +228,20 @@ update msg model =
                     ( { model
                         | focusedMovie = Movie.Loaded movie
                       }
-                    , Cmd.none
+                    , searchJustWatch movie
                     )
+
+                _ ->
+                    ( model, Cmd.none )
+
+        LoadJustWatchDetails movieDetails ->
+            -- when results are loaded, we don't want to use them unless the movie is still focused
+            case model.focusedMovie of
+                Movie.Loaded focusedMovie ->
+                    if movieDetails.movie.title == focusedMovie.movie.title then
+                        ( { model | focusedMovie = Movie.Loaded movieDetails }, Cmd.none )
+                    else
+                        ( model, Cmd.none )
 
                 _ ->
                     ( model, Cmd.none )
@@ -251,7 +336,7 @@ rulesView =
 7. Review the rating & content warnings for the movie. Anyone can veto a movie for content. <sup>*</sup>
 
 
-<sup>*</sup>If a movie is vetoed for content, even if it was your favorite movie ever, please keep your disappointment to yourself. 
+<sup>*</sup>If a movie is vetoed for content, even if it was your favorite movie ever, please keep your disappointment to yourself.
     Even in jest, this can make people feel like they're not welcome because they're "spoiling the fun"
 
 ### Adding movies to the list

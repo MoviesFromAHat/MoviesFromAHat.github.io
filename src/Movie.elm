@@ -1,6 +1,6 @@
 module Movie exposing (..)
 
-import Html exposing (Html, div, img, text, a, button, p, h2, ul, b, li)
+import Html exposing (Html, div, img, text, a, button, p, h2, h5, ul, b, li)
 import Html.Attributes exposing (src, href, target, type_, autofocus)
 import Html.Events exposing (onClick)
 import AppCss.Helpers exposing (class, classList)
@@ -10,6 +10,7 @@ import Set exposing (Set)
 import Genre exposing (Genre)
 import Json.Decode as Decode exposing (string, list)
 import Json.Decode.Pipeline exposing (decode, hardcoded, optional, required)
+import JustWatch
 
 
 -- Types
@@ -38,6 +39,11 @@ type alias Rating =
     }
 
 
+type WatchState
+    = Unwatched
+    | Watched Date
+
+
 type alias MovieDetails =
     { movie : Movie
     , rated : String
@@ -47,6 +53,7 @@ type alias MovieDetails =
     , actors : String
     , plot : String
     , ratings : List Rating
+    , offers : JustWatch.MovieOffers
     }
 
 
@@ -61,6 +68,7 @@ decodeMovieData movie =
         |> Json.Decode.Pipeline.required "Actors" Decode.string
         |> Json.Decode.Pipeline.required "Plot" Decode.string
         |> Json.Decode.Pipeline.required "Ratings" (Decode.list ratingDecoder)
+        |> Json.Decode.Pipeline.hardcoded JustWatch.Loading
 
 
 ratingDecoder : Decode.Decoder Rating
@@ -68,11 +76,6 @@ ratingDecoder =
     Json.Decode.Pipeline.decode Rating
         |> Json.Decode.Pipeline.required "Source" Decode.string
         |> Json.Decode.Pipeline.required "Value" Decode.string
-
-
-type WatchState
-    = Unwatched
-    | Watched Date
 
 
 
@@ -174,6 +177,33 @@ movieModalBase closeModal contents =
         )
 
 
+movieOffer : JustWatch.Offer -> List (Html msg)
+movieOffer offer =
+    [ a [ href offer.url, target "_blank" ]
+        [ text ((toString offer.provider) ++ " " ++ (toString offer.offerType))
+        ]
+    ]
+
+
+movieOffers : MovieDetails -> Html msg
+movieOffers movie =
+    case movie.offers of
+        JustWatch.Loading ->
+            h5 [] [ text "Searching for movie viewing options..." ]
+
+        JustWatch.NoResults ->
+            h5 [] [ text "Movie not found for streaming or purchase" ]
+
+        JustWatch.Results offers ->
+            div []
+                [ h5 [] [ text "Watch" ]
+                , div [ class [ Style.Grid ] ]
+                    (offers
+                        |> List.map (\offer -> div [ class [ Style.GridBlock ] ] (movieOffer offer))
+                    )
+                ]
+
+
 movieModal : MovieDetails -> msg -> Html msg
 movieModal movie closeModal =
     movieModalBase closeModal
@@ -195,6 +225,7 @@ movieModal movie closeModal =
                     |> Set.toList
                     |> List.map (\( g, t ) -> a [ href ("?genres=" ++ g) ] [ text t ])
                 )
+            , movieOffers movie
             ]
         ]
 
