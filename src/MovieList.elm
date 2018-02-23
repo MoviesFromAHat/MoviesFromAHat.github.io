@@ -565,7 +565,7 @@ movies =
       , year = 2005
       , runtime = 93
       , genres = [ "action", "sci-fi" ]
-      , watched = Unwatched
+      , watched = Watched (date 2018 2 22)
       }
     , { title = "The Descent"
       , url = "http://www.imdb.com/title/tt0435625/"
@@ -917,7 +917,7 @@ movies =
       , year = 1988
       , runtime = 93
       , genres = [ "music", "comedy" ]
-      , watched = Watched (date 2018 01 25)
+      , watched = Watched (date 2018 1 25)
       }
     , { title = "Boyhood"
       , url = "http://www.imdb.com/title/tt1065073/"
