@@ -33514,7 +33514,27 @@ var _user$project$MovieList$movies = A2(
 																																																																																																																									},
 																																																																																																																									watched: _user$project$Movie$Unwatched
 																																																																																																																								},
-																																																																																																																								_1: {ctor: '[]'}
+																																																																																																																								_1: {
+																																																																																																																									ctor: '::',
+																																																																																																																									_0: {
+																																																																																																																										title: 'Hors De Prix',
+																																																																																																																										url: 'https://www.imdb.com/title/tt0482088/',
+																																																																																																																										img: 'horsdeprix.jpg',
+																																																																																																																										year: 2006,
+																																																																																																																										runtime: 106,
+																																																																																																																										genres: {
+																																																																																																																											ctor: '::',
+																																																																																																																											_0: 'comedy',
+																																																																																																																											_1: {
+																																																																																																																												ctor: '::',
+																																																																																																																												_0: 'romance',
+																																																																																																																												_1: {ctor: '[]'}
+																																																																																																																											}
+																																																																																																																										},
+																																																																																																																										watched: _user$project$Movie$Unwatched
+																																																																																																																									},
+																																																																																																																									_1: {ctor: '[]'}
+																																																																																																																								}
 																																																																																																																							}
 																																																																																																																						}
 																																																																																																																					}

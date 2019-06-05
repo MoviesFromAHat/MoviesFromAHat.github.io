@@ -959,5 +959,13 @@ movies =
       , genres = [ "comedy", "adventure" ]
       , watched = Unwatched
       }
+    , { title = "Hors De Prix"
+      , url = "https://www.imdb.com/title/tt0482088/"
+      , img = "horsdeprix.jpg"
+      , year = 2006
+      , runtime = 106
+      , genres = [ "comedy", "romance" ]
+      , watched = Unwatched
+      }
     ]
         |> List.map (\m -> { m | genres = Genre.fromFlatList m.genres })
