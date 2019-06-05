@@ -959,5 +959,13 @@ movies =
       , genres = [ "comedy", "adventure" ]
       , watched = Unwatched
       }
+    , { title = "Donnie Darko"
+      , url = "http://www.imdb.com/title/tt0246578/"
+      , img = "donnie-darko.jpg"
+      , year = 2001
+      , runtime = 113
+      , genres = [ "drama", "sci-fi", "thriller" ]
+      , watched = Unwatched
+      }
     ]
         |> List.map (\m -> { m | genres = Genre.fromFlatList m.genres })
