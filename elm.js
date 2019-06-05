@@ -5759,11 +5759,17 @@ var _elm_lang$core$Platform$Router = {ctor: 'Router'};
 
 var _NoRedInk$elm_decode_pipeline$Json_Decode_Pipeline$decode = _elm_lang$core$Json_Decode$succeed;
 var _NoRedInk$elm_decode_pipeline$Json_Decode_Pipeline$resolve = _elm_lang$core$Json_Decode$andThen(_elm_lang$core$Basics$identity);
-var _NoRedInk$elm_decode_pipeline$Json_Decode_Pipeline$custom = _elm_lang$core$Json_Decode$map2(
-	F2(
-		function (x, y) {
-			return y(x);
-		}));
+var _NoRedInk$elm_decode_pipeline$Json_Decode_Pipeline$custom = F2(
+	function (decoder, wrapped) {
+		return A3(
+			_elm_lang$core$Json_Decode$map2,
+			F2(
+				function (x, y) {
+					return x(y);
+				}),
+			wrapped,
+			decoder);
+	});
 var _NoRedInk$elm_decode_pipeline$Json_Decode_Pipeline$hardcoded = function (_p0) {
 	return _NoRedInk$elm_decode_pipeline$Json_Decode_Pipeline$custom(
 		_elm_lang$core$Json_Decode$succeed(_p0));
@@ -5795,7 +5801,15 @@ var _NoRedInk$elm_decode_pipeline$Json_Decode_Pipeline$optionalDecoder = F3(
 					return _elm_lang$core$Json_Decode$fail(_p2._0);
 				}
 			} else {
-				return _elm_lang$core$Json_Decode$succeed(fallback);
+				var _p3 = A2(
+					_elm_lang$core$Json_Decode$decodeValue,
+					_elm_lang$core$Json_Decode$keyValuePairs(_elm_lang$core$Json_Decode$value),
+					input);
+				if (_p3.ctor === 'Ok') {
+					return _elm_lang$core$Json_Decode$succeed(fallback);
+				} else {
+					return _elm_lang$core$Json_Decode$fail(_p3._0);
+				}
 			}
 		};
 		return A2(_elm_lang$core$Json_Decode$andThen, handleResult, _elm_lang$core$Json_Decode$value);
@@ -33649,7 +33663,7 @@ var _user$project$Main$rulesView = A2(
 				_0: A2(
 					_evancz$elm_markdown$Markdown$toHtml,
 					{ctor: '[]'},
-					'\n\n### Selecting the Movie\n\n1. The movie is selected at random just before we watch. No one will know what the selection is until the event.\n2. A movie can be removed from the list by a majority vote (but see #3)\n3. You can only vote to remove a movie if you have seen it\n4. A movie can be tabled to be watched later by a majority vote.\n5. Anyone can vote to table a movie.\n6. A vote to remove also counts as a vote to table.\n7. Review the rating & content warnings for the movie. Anyone can veto a movie for content. <sup>*</sup>\n\n\n<sup>*</sup>If a movie is vetoed for content, even if it was your favorite movie ever, please keep your disappointment to yourself.\n    Even in jest, this can make people feel like they\'re not welcome because they\'re \"spoiling the fun\"\n\n### Adding movies to the list\n\n1. Anyone can add movies to the list.\n2. Movies can be added to the list via a PR against the [git repo](https://github.com/MoviesFromAHat/MoviesFromAHat.github.io/)\n3. We\'re looking for movies that flew under the radar, not blockbusters. (Think \"Krull\", not \"Lord of the Rings\")\n4. Use common sense. You\'ll be watching this with your co-workers. Be mindful of them and the power differentials that exist in the workspace.\n5. No Troma Films. (The Cheely Rule)\n'),
+					'\n\n### Selecting the Movie\n\n1. The movie is selected at random the morning of Movies from a Hat.\n2. A post will be made in the Movies from a Hat group where vetoes can be discussed. The rating and content information will be posted with the movie.\n3. A movie can be removed from the list by a majority vote (but see #4)\n4. You can only vote to remove a movie if you have seen it\n5. A movie can be tabled to be watched later by a majority vote.\n6. Anyone can vote to table a movie.\n7. A vote to remove also counts as a vote to table.\n8. Review the rating & content warnings for the movie. Anyone can veto a movie for content. <sup>*</sup>\n9. Once a final movie has been decided upon an email will be sent out to announce the movie for the day with the rating and content information for people to make an informed decision whether they want to watch.\n\n<sup>*</sup>If a movie is vetoed for content, even if it was your favorite movie ever, please keep your disappointment to yourself.\n    Even in jest, this can make people feel like they\'re not welcome because they\'re \"spoiling the fun\"\n\n### Adding movies to the list\n\n1. Anyone can add movies to the list.\n2. Movies can be added to the list via a PR against the [git repo](https://github.com/MoviesFromAHat/MoviesFromAHat.github.io/)\n3. We\'re looking for movies that flew under the radar, not blockbusters. (Think \"Krull\", not \"Lord of the Rings\")\n4. Use common sense. You\'ll be watching this with your co-workers. Be mindful of them and the power differentials that exist in the workspace.\n5. No Troma Films. (The Cheely Rule)\n'),
 				_1: {ctor: '[]'}
 			}
 		}
