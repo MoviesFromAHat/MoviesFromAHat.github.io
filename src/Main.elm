@@ -334,14 +334,15 @@ rulesView =
 
 ### Selecting the Movie
 
-1. The movie is selected at random just before we watch. No one will know what the selection is until the event.
-2. A movie can be removed from the list by a majority vote (but see #3)
-3. You can only vote to remove a movie if you have seen it
-4. A movie can be tabled to be watched later by a majority vote.
-5. Anyone can vote to table a movie.
-6. A vote to remove also counts as a vote to table.
-7. Review the rating & content warnings for the movie. Anyone can veto a movie for content. <sup>*</sup>
-
+1. The movie is selected at random the morning of Movies from a Hat.
+2. A post will be made in the Movies from a Hat group where vetoes can be discussed. The rating and content information will be posted with the movie.
+3. A movie can be removed from the list by a majority vote (but see #4)
+4. You can only vote to remove a movie if you have seen it
+5. A movie can be tabled to be watched later by a majority vote.
+6. Anyone can vote to table a movie.
+7. A vote to remove also counts as a vote to table.
+8. Review the rating & content warnings for the movie. Anyone can veto a movie for content. <sup>*</sup>
+9. Once a final movie has been decided upon an email will be sent out to announce the movie for the day with the rating and content information for people to make an informed decision whether they want to watch.
 
 <sup>*</sup>If a movie is vetoed for content, even if it was your favorite movie ever, please keep your disappointment to yourself.
     Even in jest, this can make people feel like they're not welcome because they're "spoiling the fun"
