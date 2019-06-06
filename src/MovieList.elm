@@ -967,5 +967,29 @@ movies =
       , genres = [ "comedy", "romance" ]
       , watched = Unwatched
       }
+    , { title = "The Raid"
+      , url = "https://www.imdb.com/title/tt1899353/"
+      , img = "the-raid.jpg"
+      , year = 2011
+      , runtime = 101
+      , genres = [ "action", "thriller" ]
+      , watched = Unwatched
+      }
+    , { title = "Ip Man"
+      , url = "https://www.imdb.com/title/tt0482088/"
+      , img = "ip-man.jpg"
+      , year = 2008
+      , runtime = 106
+      , genres = [ "action", "biography", "drama" ]
+      , watched = Unwatched
+      }
+    , { title = "Bubba Ho Tep"
+      , url = "https://www.imdb.com/title/tt0281686/"
+      , img = "bubba-ho-tep.jpg"
+      , year = 2002
+      , runtime = 92
+      , genres = [ "comedy", "fantasy", "horror" ]
+      , watched = Unwatched
+      }
     ]
         |> List.map (\m -> { m | genres = Genre.fromFlatList m.genres })
