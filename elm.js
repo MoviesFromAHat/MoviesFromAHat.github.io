@@ -29999,6 +29999,7 @@ var _user$project$JustWatch$Results = function (a) {
 var _user$project$JustWatch$NoResults = {ctor: 'NoResults'};
 var _user$project$JustWatch$Loading = {ctor: 'Loading'};
 var _user$project$JustWatch$Unknown = {ctor: 'Unknown'};
+var _user$project$JustWatch$Theater = {ctor: 'Theater'};
 var _user$project$JustWatch$Free = {ctor: 'Free'};
 var _user$project$JustWatch$Ads = {ctor: 'Ads'};
 var _user$project$JustWatch$Streaming = {ctor: 'Streaming'};
@@ -30019,11 +30020,20 @@ var _user$project$JustWatch$offerTypeDecoder = A2(
 				return _elm_lang$core$Json_Decode$succeed(_user$project$JustWatch$Ads);
 			case 'free':
 				return _elm_lang$core$Json_Decode$succeed(_user$project$JustWatch$Free);
+			case 'cinema':
+				return _elm_lang$core$Json_Decode$succeed(_user$project$JustWatch$Theater);
 			default:
 				return _elm_lang$core$Json_Decode$succeed(_user$project$JustWatch$Unknown);
 		}
 	},
 	_elm_lang$core$Json_Decode$string);
+var _user$project$JustWatch$FandangoTickets = {ctor: 'FandangoTickets'};
+var _user$project$JustWatch$Magnolia = {ctor: 'Magnolia'};
+var _user$project$JustWatch$Fubo = {ctor: 'Fubo'};
+var _user$project$JustWatch$Redbox = {ctor: 'Redbox'};
+var _user$project$JustWatch$Hoopla = {ctor: 'Hoopla'};
+var _user$project$JustWatch$Youtube = {ctor: 'Youtube'};
+var _user$project$JustWatch$Sling = {ctor: 'Sling'};
 var _user$project$JustWatch$Other = {ctor: 'Other'};
 var _user$project$JustWatch$Realeyz = {ctor: 'Realeyz'};
 var _user$project$JustWatch$FX = {ctor: 'FX'};
@@ -30085,6 +30095,8 @@ var _user$project$JustWatch$providerDecoder = A2(
 				return _elm_lang$core$Json_Decode$succeed(_user$project$JustWatch$Showtime);
 			case 43:
 				return _elm_lang$core$Json_Decode$succeed(_user$project$JustWatch$Starz);
+			case 60:
+				return _elm_lang$core$Json_Decode$succeed(_user$project$JustWatch$FandangoTickets);
 			case 68:
 				return _elm_lang$core$Json_Decode$succeed(_user$project$JustWatch$Microsoft);
 			case 73:
@@ -30101,6 +30113,18 @@ var _user$project$JustWatch$providerDecoder = A2(
 				return _elm_lang$core$Json_Decode$succeed(_user$project$JustWatch$FX);
 			case 139:
 				return _elm_lang$core$Json_Decode$succeed(_user$project$JustWatch$MaxGo);
+			case 192:
+				return _elm_lang$core$Json_Decode$succeed(_user$project$JustWatch$Youtube);
+			case 212:
+				return _elm_lang$core$Json_Decode$succeed(_user$project$JustWatch$Hoopla);
+			case 257:
+				return _elm_lang$core$Json_Decode$succeed(_user$project$JustWatch$Fubo);
+			case 259:
+				return _elm_lang$core$Json_Decode$succeed(_user$project$JustWatch$Magnolia);
+			case 279:
+				return _elm_lang$core$Json_Decode$succeed(_user$project$JustWatch$Redbox);
+			case 289:
+				return _elm_lang$core$Json_Decode$succeed(_user$project$JustWatch$Amazon);
 			default:
 				return _elm_lang$core$Json_Decode$succeed(_user$project$JustWatch$Other);
 		}
@@ -33832,7 +33856,7 @@ var _user$project$Main$rulesView = A2(
 				_0: A2(
 					_evancz$elm_markdown$Markdown$toHtml,
 					{ctor: '[]'},
-					'\n\n### Selecting the Movie\n\n1. The movie is selected at random the morning of Movies from a Hat.\n2. A post will be made in the Movies from a Hat group where vetoes can be discussed. The rating and content information will be posted with the movie.\n3. A movie can be removed from the list by a majority vote (but see #4)\n4. You can only vote to remove a movie if you have seen it\n5. A movie can be tabled to be watched later by a majority vote.\n6. Anyone can vote to table a movie.\n7. A vote to remove also counts as a vote to table.\n8. Review the rating & content warnings for the movie. Anyone can veto a movie for content. <sup>*</sup>\n9. Once a final movie has been decided upon an email will be sent out to announce the movie for the day with the rating and content information for people to make an informed decision whether they want to watch.\n\n<sup>*</sup>If a movie is vetoed for content, even if it was your favorite movie ever, please keep your disappointment to yourself.\n    Even in jest, this can make people feel like they\'re not welcome because they\'re \"spoiling the fun\"\n\n### Adding movies to the list\n\n1. Anyone can add movies to the list.\n2. Movies can be added to the list via a PR against the [git repo](https://github.com/MoviesFromAHat/MoviesFromAHat.github.io/)\n3. We\'re looking for movies that flew under the radar, not blockbusters. (Think \"Krull\", not \"Lord of the Rings\")\n4. Use common sense. You\'ll be watching this with your co-workers. Be mindful of them and the power differentials that exist in the workspace.\n5. No Troma Films. (The Cheely Rule)\n'),
+					'\n\n### Selecting the Movie\n\n1. The movie is selected at random the morning of Movies from a Hat.\n2. A post will be made in the Movies from a Hat group where vetoes can be discussed. The rating and content information will be posted with the movie.\n3. A movie can be removed from the list by a majority vote (but see #4)\n4. You can only vote to remove a movie if you have seen it\n5. A movie can be tabled to be watched later by a majority vote.\n6. Anyone can vote to table a movie.\n7. A vote to remove also counts as a vote to table.\n8. Review the rating & content warnings for the movie. Anyone can veto a movie for content. <sup>*</sup>\n9. Once a final movie has been decided upon an email will be sent out to announce the movie for the day with the rating and content information for people to make an informed decision whether they want to watch.\n\n<sup>*</sup>If a movie is vetoed for content, even if it was your favorite movie ever, please keep your disappointment to yourself.\n    Even in jest, this can make people feel like they\'re not welcome because they\'re \"spoiling the fun\"\n\n### Adding movies to the list\n\n1. Anyone can add movies to the list.\n2. Movies can be added to the list via a PR against the [git repo](https://github.com/MoviesFromAHat/MoviesFromAHat.github.io/)\n3. We\'re looking for movies that flew under the radar, not blockbusters. (Think \"Krull\", not \"Lord of the Rings\")\n4. Use common sense. You\'ll be watching this with your co-workers. Be mindful of them and the power differentials that exist in the workspace.\n5. Movies with nudity, sexual content, sexual assault, excessive violence or other factors might be quality films, but not appropriate for a workplace viewing. These can be listed to allow sharing of recommended movies, but should tagged as NSFW and will not be chosen to be viewed at work.\n6. No Troma Films. (The Cheely Rule)\n'),
 				_1: {ctor: '[]'}
 			}
 		}
@@ -34396,7 +34420,7 @@ var _user$project$Main$main = A2(
 var Elm = {};
 Elm['Main'] = Elm['Main'] || {};
 if (typeof _user$project$Main$main !== 'undefined') {
-    _user$project$Main$main(Elm['Main'], 'Main', {"types":{"unions":{"JustWatch.MovieOffers":{"args":[],"tags":{"Results":["List JustWatch.Offer"],"Loading":[],"NoResults":[]}},"Dict.LeafColor":{"args":[],"tags":{"LBBlack":[],"LBlack":[]}},"Time.Date.Date":{"args":[],"tags":{"Date":["{ year : Int, month : Int, day : Int }"]}},"Dom.Error":{"args":[],"tags":{"NotFound":["String"]}},"Movie.WatchState":{"args":[],"tags":{"Watched":["Time.Date.Date"],"Unwatched":[]}},"Dict.Dict":{"args":["k","v"],"tags":{"RBNode_elm_builtin":["Dict.NColor","k","v","Dict.Dict k v","Dict.Dict k v"],"RBEmpty_elm_builtin":["Dict.LeafColor"]}},"Maybe.Maybe":{"args":["a"],"tags":{"Just":["a"],"Nothing":[]}},"Set.Set":{"args":["t"],"tags":{"Set_elm_builtin":["Dict.Dict t ()"]}},"Main.Msg":{"args":[],"tags":{"MultiselectEvent":["Multiselect.Msg"],"LoadJustWatchDetails":["Movie.MovieDetails"],"SelectMovie":[],"FocusMovie":["Movie.Movie"],"CloseModal":[],"LocationChange":["Navigation.Location"],"LoadMovie":["Result.Result Http.Error Movie.MovieDetails"],"MovieSelected":["( Maybe.Maybe Movie.Movie, List Movie.Movie )"]}},"JustWatch.OfferType":{"args":[],"tags":{"Free":[],"Streaming":[],"Rent":[],"Unknown":[],"Buy":[],"Ads":[]}},"Dict.NColor":{"args":[],"tags":{"BBlack":[],"Red":[],"NBlack":[],"Black":[]}},"Http.Error":{"args":[],"tags":{"BadUrl":["String"],"NetworkError":[],"Timeout":[],"BadStatus":["Http.Response String"],"BadPayload":["String","Http.Response String"]}},"Result.Result":{"args":["error","value"],"tags":{"Ok":["value"],"Err":["error"]}},"Multiselect.Msg":{"args":[],"tags":{"ClearInput":[],"OnHover":["( String, String )"],"Toggle":[],"FocusResult":["Result.Result Dom.Error ()"],"Adjust":["Float"],"Start":[],"ClickOnComponent":[],"RemoveItem":["( String, String )"],"Clear":[],"OnSelect":["( String, String )"],"ScrollY":["Result.Result Dom.Error Float"],"ScrollResult":["Result.Result Dom.Error ()"],"DisableProtection":[],"Shortcut":["Int"],"Filter":["String"],"Click":["Mouse.Position"]}},"JustWatch.Provider":{"args":[],"tags":{"MaxGo":[],"Other":[],"HBO_Now":[],"Realeyz":[],"Fandango":[],"Yahoo":[],"PlayStation":[],"Starz":[],"FX":[],"Showtime":[],"Amazon":[],"Shudder":[],"Epix":[],"Microsoft":[],"Netflix":[],"Hulu":[],"HBO_Go":[],"Vudu":[],"GooglePlay":[],"Itunes":[],"TubiTV":[],"Fandor":[],"Filmstruck":[],"Crackle":[]}}},"aliases":{"Movie.MovieDetails":{"args":[],"type":"{ movie : Movie.Movie , rated : String , runtime : String , director : String , writer : String , actors : String , plot : String , ratings : List Movie.Rating , offers : JustWatch.MovieOffers }"},"JustWatch.Offer":{"args":[],"type":"{ offerType : JustWatch.OfferType , provider : JustWatch.Provider , url : String }"},"Http.Response":{"args":["body"],"type":"{ url : String , status : { code : Int, message : String } , headers : Dict.Dict String String , body : body }"},"Genre.Genre":{"args":[],"type":"( String, String )"},"Mouse.Position":{"args":[],"type":"{ x : Int, y : Int }"},"Movie.Movie":{"args":[],"type":"{ title : String , url : String , img : String , year : Int , runtime : Int , genres : Set.Set Genre.Genre , watched : Movie.WatchState , nsfw : Bool }"},"Movie.Rating":{"args":[],"type":"{ source : String, value : String }"},"Navigation.Location":{"args":[],"type":"{ href : String , host : String , hostname : String , protocol : String , origin : String , port_ : String , pathname : String , search : String , hash : String , username : String , password : String }"}},"message":"Main.Msg"},"versions":{"elm":"0.18.0"}});
+    _user$project$Main$main(Elm['Main'], 'Main', {"types":{"unions":{"JustWatch.MovieOffers":{"args":[],"tags":{"Results":["List JustWatch.Offer"],"Loading":[],"NoResults":[]}},"Dict.LeafColor":{"args":[],"tags":{"LBBlack":[],"LBlack":[]}},"Time.Date.Date":{"args":[],"tags":{"Date":["{ year : Int, month : Int, day : Int }"]}},"Dom.Error":{"args":[],"tags":{"NotFound":["String"]}},"Movie.WatchState":{"args":[],"tags":{"Watched":["Time.Date.Date"],"Unwatched":[]}},"Dict.Dict":{"args":["k","v"],"tags":{"RBNode_elm_builtin":["Dict.NColor","k","v","Dict.Dict k v","Dict.Dict k v"],"RBEmpty_elm_builtin":["Dict.LeafColor"]}},"Maybe.Maybe":{"args":["a"],"tags":{"Just":["a"],"Nothing":[]}},"Set.Set":{"args":["t"],"tags":{"Set_elm_builtin":["Dict.Dict t ()"]}},"Main.Msg":{"args":[],"tags":{"MultiselectEvent":["Multiselect.Msg"],"LoadJustWatchDetails":["Movie.MovieDetails"],"SelectMovie":[],"FocusMovie":["Movie.Movie"],"CloseModal":[],"LocationChange":["Navigation.Location"],"LoadMovie":["Result.Result Http.Error Movie.MovieDetails"],"MovieSelected":["( Maybe.Maybe Movie.Movie, List Movie.Movie )"]}},"JustWatch.OfferType":{"args":[],"tags":{"Free":[],"Streaming":[],"Rent":[],"Unknown":[],"Theater":[],"Buy":[],"Ads":[]}},"Dict.NColor":{"args":[],"tags":{"BBlack":[],"Red":[],"NBlack":[],"Black":[]}},"Http.Error":{"args":[],"tags":{"BadUrl":["String"],"NetworkError":[],"Timeout":[],"BadStatus":["Http.Response String"],"BadPayload":["String","Http.Response String"]}},"Result.Result":{"args":["error","value"],"tags":{"Ok":["value"],"Err":["error"]}},"Multiselect.Msg":{"args":[],"tags":{"ClearInput":[],"OnHover":["( String, String )"],"Toggle":[],"FocusResult":["Result.Result Dom.Error ()"],"Adjust":["Float"],"Start":[],"ClickOnComponent":[],"RemoveItem":["( String, String )"],"Clear":[],"OnSelect":["( String, String )"],"ScrollY":["Result.Result Dom.Error Float"],"ScrollResult":["Result.Result Dom.Error ()"],"DisableProtection":[],"Shortcut":["Int"],"Filter":["String"],"Click":["Mouse.Position"]}},"JustWatch.Provider":{"args":[],"tags":{"MaxGo":[],"Other":[],"HBO_Now":[],"Realeyz":[],"Fandango":[],"FandangoTickets":[],"Youtube":[],"Hoopla":[],"Yahoo":[],"Redbox":[],"PlayStation":[],"Starz":[],"Fubo":[],"FX":[],"Showtime":[],"Amazon":[],"Magnolia":[],"Shudder":[],"Epix":[],"Microsoft":[],"Netflix":[],"Hulu":[],"Sling":[],"HBO_Go":[],"Vudu":[],"GooglePlay":[],"Itunes":[],"TubiTV":[],"Fandor":[],"Filmstruck":[],"Crackle":[]}}},"aliases":{"Movie.MovieDetails":{"args":[],"type":"{ movie : Movie.Movie , rated : String , runtime : String , director : String , writer : String , actors : String , plot : String , ratings : List Movie.Rating , offers : JustWatch.MovieOffers }"},"JustWatch.Offer":{"args":[],"type":"{ offerType : JustWatch.OfferType , provider : JustWatch.Provider , url : String }"},"Http.Response":{"args":["body"],"type":"{ url : String , status : { code : Int, message : String } , headers : Dict.Dict String String , body : body }"},"Genre.Genre":{"args":[],"type":"( String, String )"},"Mouse.Position":{"args":[],"type":"{ x : Int, y : Int }"},"Movie.Movie":{"args":[],"type":"{ title : String , url : String , img : String , year : Int , runtime : Int , genres : Set.Set Genre.Genre , watched : Movie.WatchState , nsfw : Bool }"},"Movie.Rating":{"args":[],"type":"{ source : String, value : String }"},"Navigation.Location":{"args":[],"type":"{ href : String , host : String , hostname : String , protocol : String , origin : String , port_ : String , pathname : String , search : String , hash : String , username : String , password : String }"}},"message":"Main.Msg"},"versions":{"elm":"0.18.0"}});
 }
 
 if (typeof define === "function" && define['amd'])
