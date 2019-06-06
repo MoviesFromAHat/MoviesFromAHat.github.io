@@ -30,6 +30,7 @@ type alias Movie =
     , runtime : Int
     , genres : Set Genre
     , watched : WatchState
+    , nsfw : Bool
     }
 
 
