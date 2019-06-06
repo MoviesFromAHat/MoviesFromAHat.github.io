@@ -976,7 +976,7 @@ movies =
       , watched = Unwatched
       }
     , { title = "Ip Man"
-      , url = "https://www.imdb.com/title/tt0482088/"
+      , url = "https://www.imdb.com/title/tt1220719/"
       , img = "ip-man.jpg"
       , year = 2008
       , runtime = 106
@@ -989,6 +989,14 @@ movies =
       , year = 2002
       , runtime = 92
       , genres = [ "comedy", "fantasy", "horror" ]
+      , watched = Unwatched
+      }
+    , { title = "Time Bandits"
+      , url = "https://www.imdb.com/title/tt0081633/"
+      , img = "time-bandits.jpg"
+      , year = 1981
+      , runtime = 110
+      , genres = [ "comedy", "fantasy", "adventure" ]
       , watched = Unwatched
       }
     ]

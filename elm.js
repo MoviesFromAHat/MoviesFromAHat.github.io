@@ -33556,7 +33556,7 @@ var _user$project$MovieList$movies = A2(
 																																																																																																																											ctor: '::',
 																																																																																																																											_0: {
 																																																																																																																												title: 'Ip Man',
-																																																																																																																												url: 'https://www.imdb.com/title/tt0482088/',
+																																																																																																																												url: 'https://www.imdb.com/title/tt1220719/',
 																																																																																																																												img: 'ip-man.jpg',
 																																																																																																																												year: 2008,
 																																																																																																																												runtime: 106,
@@ -33598,7 +33598,31 @@ var _user$project$MovieList$movies = A2(
 																																																																																																																													},
 																																																																																																																													watched: _user$project$Movie$Unwatched
 																																																																																																																												},
-																																																																																																																												_1: {ctor: '[]'}
+																																																																																																																												_1: {
+																																																																																																																													ctor: '::',
+																																																																																																																													_0: {
+																																																																																																																														title: 'Time Bandits',
+																																																																																																																														url: 'https://www.imdb.com/title/tt0081633/',
+																																																																																																																														img: 'time-bandits.jpg',
+																																																																																																																														year: 1981,
+																																																																																																																														runtime: 110,
+																																																																																																																														genres: {
+																																																																																																																															ctor: '::',
+																																																																																																																															_0: 'comedy',
+																																																																																																																															_1: {
+																																																																																																																																ctor: '::',
+																																																																																																																																_0: 'fantasy',
+																																																																																																																																_1: {
+																																																																																																																																	ctor: '::',
+																																																																																																																																	_0: 'adventure',
+																																																																																																																																	_1: {ctor: '[]'}
+																																																																																																																																}
+																																																																																																																															}
+																																																																																																																														},
+																																																																																																																														watched: _user$project$Movie$Unwatched
+																																																																																																																													},
+																																																																																																																													_1: {ctor: '[]'}
+																																																																																																																												}
 																																																																																																																											}
 																																																																																																																										}
 																																																																																																																									}
