@@ -18,6 +18,7 @@ type OfferType
     | Streaming
     | Ads
     | Free
+    | Theater
     | Unknown
 
 
@@ -99,6 +100,9 @@ offerTypeDecoder =
                     "free" ->
                         Decode.succeed Free
 
+                    "cinema" ->
+                        Decode.succeed Theater
+
                     unknown ->
                         Decode.succeed Unknown
             )
@@ -129,6 +133,13 @@ type Provider
     | FX
     | Realeyz
     | Other
+    | Sling
+    | Youtube
+    | Hoopla
+    | Redbox
+    | Fubo
+    | Magnolia
+    | FandangoTickets
 
 
 providerDecoder : Decode.Decoder Provider
@@ -185,6 +196,9 @@ providerDecoder =
                     43 ->
                         Decode.succeed Starz
 
+                    60 ->
+                        Decode.succeed FandangoTickets
+
                     68 ->
                         Decode.succeed Microsoft
 
@@ -208,6 +222,24 @@ providerDecoder =
 
                     139 ->
                         Decode.succeed MaxGo
+
+                    192 ->
+                        Decode.succeed Youtube
+
+                    212 ->
+                        Decode.succeed Hoopla
+
+                    257 ->
+                        Decode.succeed Fubo
+
+                    259 ->
+                        Decode.succeed Magnolia
+
+                    279 ->
+                        Decode.succeed Redbox
+
+                    289 ->
+                        Decode.succeed Amazon
 
                     other ->
                         Decode.succeed Other
