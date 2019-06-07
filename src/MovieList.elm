@@ -14,6 +14,7 @@ movies =
       , runtime = 109
       , genres = [ "comedy", "horror", "romance" ]
       , watched = Watched (date 2017 10 5)
+      , nsfw = True
       }
     , { title = "Cool Hand Luke"
       , url = "http://www.imdb.com/title/tt0061512"
@@ -22,6 +23,7 @@ movies =
       , runtime = 126
       , genres = [ "crime", "drama" ]
       , watched = Unwatched
+      , nsfw = False
       }
     , { title = "The Hidden"
       , url = "http://www.imdb.com/title/tt0093185/"
@@ -30,6 +32,7 @@ movies =
       , runtime = 96
       , genres = [ "action", "crime", "horror" ]
       , watched = Unwatched
+      , nsfw = False
       }
     , { title = "Tombstone"
       , url = "http://www.imdb.com/title/tt0108358/"
@@ -38,6 +41,7 @@ movies =
       , runtime = 130
       , genres = [ "action", "drama", "history", "western" ]
       , watched = Unwatched
+      , nsfw = False
       }
     , { title = "Collateral"
       , url = "http://www.imdb.com/title/tt0369339/"
@@ -46,6 +50,7 @@ movies =
       , runtime = 120
       , genres = [ "crime", "drama", "thriller" ]
       , watched = Unwatched
+      , nsfw = False
       }
     , { title = "Roman Holiday"
       , url = "http://www.imdb.com/title/tt0046250/"
@@ -54,6 +59,7 @@ movies =
       , runtime = 118
       , genres = [ "comedy", "romance" ]
       , watched = Unwatched
+      , nsfw = False
       }
     , { title = "The Magnificent Seven"
       , url = "http://www.imdb.com/title/tt0054047/"
@@ -62,6 +68,7 @@ movies =
       , runtime = 128
       , genres = [ "action", "adventure", "western" ]
       , watched = Unwatched
+      , nsfw = False
       }
     , { title = "Sanjuro"
       , url = "http://www.imdb.com/title/tt0056443/"
@@ -70,6 +77,7 @@ movies =
       , runtime = 96
       , genres = [ "action", "drama", "thriller" ]
       , watched = Unwatched
+      , nsfw = False
       }
     , { title = "The Birds"
       , url = "http://www.imdb.com/title/tt0056869/"
@@ -78,6 +86,7 @@ movies =
       , runtime = 119
       , genres = [ "horror" ]
       , watched = Unwatched
+      , nsfw = False
       }
     , { title = "Dr. Strangelove or: How I Learned to Stop Worrying and Love the Bomb"
       , url = "http://www.imdb.com/title/tt0057012/"
@@ -86,6 +95,7 @@ movies =
       , runtime = 95
       , genres = [ "comedy", "war" ]
       , watched = Unwatched
+      , nsfw = False
       }
     , { title = "A Clockwork Orange"
       , url = "http://www.imdb.com/title/tt0066921/"
@@ -94,6 +104,7 @@ movies =
       , runtime = 136
       , genres = [ "crime", "drama", "sci-fi" ]
       , watched = Unwatched
+      , nsfw = True
       }
     , { title = "The Andromeda Strain"
       , url = "http://www.imdb.com/title/tt0066769/"
@@ -102,6 +113,7 @@ movies =
       , runtime = 131
       , genres = [ "sci-fi", "thriller" ]
       , watched = Unwatched
+      , nsfw = False
       }
     , { title = "Enter the Dragon"
       , url = "http://www.imdb.com/title/tt0070034/"
@@ -110,6 +122,7 @@ movies =
       , runtime = 102
       , genres = [ "action", "crime", "drama" ]
       , watched = Watched (date 2017 11 30)
+      , nsfw = False
       }
     , { title = "The Sting"
       , url = "http://www.imdb.com/title/tt0070735/"
@@ -118,6 +131,7 @@ movies =
       , runtime = 129
       , genres = [ "comedy", "crime", "drama" ]
       , watched = Unwatched
+      , nsfw = False
       }
     , { title = "Westworld"
       , url = "http://www.imdb.com/title/tt0070909/"
@@ -126,6 +140,7 @@ movies =
       , runtime = 88
       , genres = [ "action", "sci-fi", "thriller" ]
       , watched = Unwatched
+      , nsfw = False
       }
     , { title = "Death Race 2000"
       , url = "http://www.imdb.com/title/tt0072856/"
@@ -134,6 +149,7 @@ movies =
       , runtime = 80
       , genres = [ "action", "comedy", "sci-fi" ]
       , watched = Unwatched
+      , nsfw = False
       }
     , { title = "Monty Python and the Holy Grail"
       , url = "http://www.imdb.com/title/tt0071853/"
@@ -142,6 +158,7 @@ movies =
       , runtime = 91
       , genres = [ "adventure", "comedy", "fantasy" ]
       , watched = Unwatched
+      , nsfw = False
       }
     , { title = "The Jerk"
       , url = "http://www.imdb.com/title/tt0079367/"
@@ -150,6 +167,7 @@ movies =
       , runtime = 94
       , genres = [ "comedy" ]
       , watched = Unwatched
+      , nsfw = False
       }
     , { title = "Super Fuzz"
       , url = "http://www.imdb.com/title/tt0082924/"
@@ -158,6 +176,7 @@ movies =
       , runtime = 97
       , genres = [ "action", "comedy", "fantasy" ]
       , watched = Unwatched
+      , nsfw = False
       }
     , { title = "The Natural"
       , url = "http://www.imdb.com/title/tt0087781/"
@@ -166,6 +185,7 @@ movies =
       , runtime = 138
       , genres = [ "drama", "sport" ]
       , watched = Unwatched
+      , nsfw = False
       }
     , { title = "The Adventures of Buckaroo Banzai Across the 8th Dimension"
       , url = "http://www.imdb.com/title/tt0086856/"
@@ -174,6 +194,7 @@ movies =
       , runtime = 103
       , genres = [ "adventure", "comedy", "romance" ]
       , watched = Watched (date 2015 5 20)
+      , nsfw = False
       }
     , { title = "Better Off Dead…"
       , url = "http://www.imdb.com/title/tt0088794/"
@@ -182,6 +203,7 @@ movies =
       , runtime = 97
       , genres = [ "comedy", "romance" ]
       , watched = Unwatched
+      , nsfw = False
       }
     , { title = "Brazil"
       , url = "http://www.imdb.com/title/tt0088846/"
@@ -190,6 +212,7 @@ movies =
       , runtime = 132
       , genres = [ "sci-fi" ]
       , watched = Unwatched
+      , nsfw = False
       }
     , { title = "The Last Dragon"
       , url = "http://www.imdb.com/title/tt0089461/"
@@ -198,6 +221,7 @@ movies =
       , runtime = 109
       , genres = [ "action", "comedy", "drama" ]
       , watched = Unwatched
+      , nsfw = False
       }
     , { title = "Spies Like Us"
       , url = "http://www.imdb.com/title/tt0090056/"
@@ -206,6 +230,7 @@ movies =
       , runtime = 102
       , genres = [ "adventure", "comedy" ]
       , watched = Unwatched
+      , nsfw = False
       }
     , { title = "Big Trouble in Little China"
       , url = "http://www.imdb.com/title/tt0090728/"
@@ -214,6 +239,7 @@ movies =
       , runtime = 99
       , genres = [ "action", "adventure", "comedy" ]
       , watched = Unwatched
+      , nsfw = False
       }
     , { title = "The Golden Child"
       , url = "http://www.imdb.com/title/tt0091129/"
@@ -222,6 +248,7 @@ movies =
       , runtime = 94
       , genres = [ "action", "adventure", "comedy" ]
       , watched = Unwatched
+      , nsfw = False
       }
     , { title = "Evil Dead II"
       , url = "http://www.imdb.com/title/tt0092991/"
@@ -230,6 +257,7 @@ movies =
       , runtime = 84
       , genres = [ "comedy", "horror" ]
       , watched = Unwatched
+      , nsfw = False
       }
     , { title = "Raising Arizona"
       , url = "http://www.imdb.com/title/tt0093822/"
@@ -238,6 +266,7 @@ movies =
       , runtime = 94
       , genres = [ "comedy", "crime", "drama" ]
       , watched = Unwatched
+      , nsfw = False
       }
     , { title = "Akira"
       , url = "http://www.imdb.com/title/tt0094625/"
@@ -246,6 +275,7 @@ movies =
       , runtime = 124
       , genres = [ "animation", "action", "sci-fi" ]
       , watched = Unwatched
+      , nsfw = False
       }
     , { title = "The Serpent and the Rainbow"
       , url = "http://www.imdb.com/title/tt0096071/"
@@ -254,6 +284,7 @@ movies =
       , runtime = 98
       , genres = [ "horror" ]
       , watched = Unwatched
+      , nsfw = False
       }
     , { title = "They Live"
       , url = "http://www.imdb.com/title/tt0096256/"
@@ -262,6 +293,7 @@ movies =
       , runtime = 93
       , genres = [ "action", "horror", "sci-fi" ]
       , watched = Unwatched
+      , nsfw = False
       }
     , { title = "Willow"
       , url = "http://www.imdb.com/title/tt0096446/"
@@ -270,6 +302,7 @@ movies =
       , runtime = 126
       , genres = [ "action", "adventure", "drama" ]
       , watched = Unwatched
+      , nsfw = False
       }
     , { title = "UHF"
       , url = "http://www.imdb.com/title/tt0098546/"
@@ -278,6 +311,7 @@ movies =
       , runtime = 97
       , genres = [ "comedy" ]
       , watched = Watched (date 2016 1 14)
+      , nsfw = False
       }
     , { title = "Nothing But Trouble"
       , url = "http://www.imdb.com/title/tt0102558/"
@@ -286,6 +320,7 @@ movies =
       , runtime = 94
       , genres = [ "comedy" ]
       , watched = Unwatched
+      , nsfw = False
       }
     , { title = "Army of Darkness"
       , url = "http://www.imdb.com/title/tt0106308/"
@@ -294,6 +329,7 @@ movies =
       , runtime = 81
       , genres = [ "comedy", "fantasy", "horror" ]
       , watched = Unwatched
+      , nsfw = False
       }
     , { title = "Captain Ron"
       , url = "http://www.imdb.com/title/tt0103924/"
@@ -302,6 +338,7 @@ movies =
       , runtime = 90
       , genres = [ "adventure", "comedy" ]
       , watched = Unwatched
+      , nsfw = False
       }
     , { title = "The Meteor Man"
       , url = "http://www.imdb.com/title/tt0107563/"
@@ -310,6 +347,7 @@ movies =
       , runtime = 100
       , genres = [ "action", "comedy", "fantasy" ]
       , watched = Unwatched
+      , nsfw = False
       }
     , { title = "Stargate"
       , url = "http://www.imdb.com/title/tt0111282/"
@@ -318,6 +356,7 @@ movies =
       , runtime = 121
       , genres = [ "action", "adventure", "sci-fi" ]
       , watched = Unwatched
+      , nsfw = False
       }
     , { title = "Congo"
       , url = "http://www.imdb.com/title/tt0112715/"
@@ -326,6 +365,7 @@ movies =
       , runtime = 109
       , genres = [ "action", "adventure", "mystery" ]
       , watched = Watched (date 2016 7 28)
+      , nsfw = False
       }
     , { title = "Twelve Monkeys"
       , url = "http://www.imdb.com/title/tt0114746/"
@@ -334,6 +374,7 @@ movies =
       , runtime = 129
       , genres = [ "mystery", "sci-fi", "thriller" ]
       , watched = Unwatched
+      , nsfw = False
       }
     , { title = "The Usual Suspects"
       , url = "http://www.imdb.com/title/tt0114814/"
@@ -342,6 +383,7 @@ movies =
       , runtime = 106
       , genres = [ "crime", "drama", "thriller" ]
       , watched = Unwatched
+      , nsfw = False
       }
     , { title = "Breakdown"
       , url = "http://www.imdb.com/title/tt0118771/"
@@ -350,6 +392,7 @@ movies =
       , runtime = 93
       , genres = [ "crime", "drama", "mystery" ]
       , watched = Unwatched
+      , nsfw = False
       }
     , { title = "Contact"
       , url = "http://www.imdb.com/title/tt0118884/"
@@ -358,6 +401,7 @@ movies =
       , runtime = 150
       , genres = [ "drama", "mystery", "sci-fi" ]
       , watched = Unwatched
+      , nsfw = False
       }
     , { title = "L.A. Confidential"
       , url = "http://www.imdb.com/title/tt0119488/"
@@ -366,6 +410,7 @@ movies =
       , runtime = 138
       , genres = [ "crime", "drama", "mystery" ]
       , watched = Unwatched
+      , nsfw = False
       }
     , { title = "Suicide Kings"
       , url = "http://www.imdb.com/title/tt0120241/"
@@ -374,6 +419,7 @@ movies =
       , runtime = 106
       , genres = [ "comedy", "drama", "mystery" ]
       , watched = Unwatched
+      , nsfw = False
       }
     , { title = "Dark City"
       , url = "http://www.imdb.com/title/tt0118929/"
@@ -382,6 +428,7 @@ movies =
       , runtime = 100
       , genres = [ "drama", "fantasy", "sci-fi" ]
       , watched = Unwatched
+      , nsfw = False
       }
     , { title = "Fallen"
       , url = "http://www.imdb.com/title/tt0119099/"
@@ -390,6 +437,7 @@ movies =
       , runtime = 124
       , genres = [ "action", "crime", "drama", "horror" ]
       , watched = Unwatched
+      , nsfw = False
       }
     , { title = "The Negotiator"
       , url = "http://www.imdb.com/title/tt0120768/"
@@ -398,6 +446,7 @@ movies =
       , runtime = 140
       , genres = [ "action", "crime", "drama" ]
       , watched = Unwatched
+      , nsfw = False
       }
     , { title = "Ronin"
       , url = "http://www.imdb.com/title/tt0122690/"
@@ -406,6 +455,7 @@ movies =
       , runtime = 122
       , genres = [ "action", "adventure", "crime" ]
       , watched = Unwatched
+      , nsfw = False
       }
     , { title = "Rushmore"
       , url = "http://www.imdb.com/title/tt0128445/"
@@ -414,6 +464,7 @@ movies =
       , runtime = 93
       , genres = [ "comedy", "drama" ]
       , watched = Unwatched
+      , nsfw = False
       }
     , { title = "What Dreams May Come"
       , url = "http://www.imdb.com/title/tt0120889/"
@@ -422,6 +473,7 @@ movies =
       , runtime = 113
       , genres = [ "drama", "fantasy", "romance" ]
       , watched = Unwatched
+      , nsfw = False
       }
     , { title = "Who Am I?"
       , url = "http://www.imdb.com/title/tt0127357/"
@@ -430,6 +482,7 @@ movies =
       , runtime = 108
       , genres = [ "action", "adventure", "comedy" ]
       , watched = Unwatched
+      , nsfw = False
       }
     , { title = "Being John Malkovich"
       , url = "http://www.imdb.com/title/tt0120601/"
@@ -438,6 +491,7 @@ movies =
       , runtime = 112
       , genres = [ "comedy", "drama", "fantasy" ]
       , watched = Unwatched
+      , nsfw = False
       }
     , { title = "The Boondock Saints"
       , url = "http://www.imdb.com/title/tt0144117/"
@@ -446,6 +500,7 @@ movies =
       , runtime = 108
       , genres = [ "action", "crime", "thriller" ]
       , watched = Unwatched
+      , nsfw = True
       }
     , { title = "Finding Forrester"
       , url = "http://www.imdb.com/title/tt0181536/"
@@ -454,6 +509,7 @@ movies =
       , runtime = 136
       , genres = [ "drama" ]
       , watched = Unwatched
+      , nsfw = False
       }
     , { title = "Men of Honor"
       , url = "http://www.imdb.com/title/tt0203019/"
@@ -462,6 +518,7 @@ movies =
       , runtime = 129
       , genres = [ "biography", "drama" ]
       , watched = Unwatched
+      , nsfw = False
       }
     , { title = "Sexy Beast"
       , url = "http://www.imdb.com/title/tt0203119/"
@@ -470,6 +527,7 @@ movies =
       , runtime = 89
       , genres = [ "crime", "thriller" ]
       , watched = Watched (date 2015 9 3)
+      , nsfw = False
       }
     , { title = "Snatch."
       , url = "http://www.imdb.com/title/tt0208092/"
@@ -478,6 +536,7 @@ movies =
       , runtime = 102
       , genres = [ "comedy", "crime" ]
       , watched = Unwatched
+      , nsfw = False
       }
     , { title = "Frailty"
       , url = "http://www.imdb.com/title/tt0264616/"
@@ -486,6 +545,7 @@ movies =
       , runtime = 100
       , genres = [ "crime", "drama", "thriller" ]
       , watched = Unwatched
+      , nsfw = False
       }
     , { title = "K-Pax"
       , url = "http://www.imdb.com/title/tt0272152/"
@@ -494,6 +554,7 @@ movies =
       , runtime = 120
       , genres = [ "drama", "sci-fi" ]
       , watched = Watched (date 2016 9 30)
+      , nsfw = False
       }
     , { title = "Mulholland Drive"
       , url = "http://www.imdb.com/title/tt0166924/"
@@ -502,6 +563,7 @@ movies =
       , runtime = 147
       , genres = [ "drama", "mystery", "thriller", "horror" ]
       , watched = Unwatched
+      , nsfw = False
       }
     , { title = "Death to Smoochy"
       , url = "http://www.imdb.com/title/tt0266452/"
@@ -510,6 +572,7 @@ movies =
       , runtime = 109
       , genres = [ "comedy", "crime", "drama" ]
       , watched = Watched (date 2014 10 10)
+      , nsfw = False
       }
     , { title = "Equilibrium"
       , url = "http://www.imdb.com/title/tt0238380/"
@@ -518,6 +581,7 @@ movies =
       , runtime = 107
       , genres = [ "action", "drama", "sci-fi" ]
       , watched = Watched (date 2016 4 27)
+      , nsfw = False
       }
     , { title = "Gangs of New York"
       , url = "http://www.imdb.com/title/tt0217505/"
@@ -526,6 +590,7 @@ movies =
       , runtime = 167
       , genres = [ "crime", "drama", "history" ]
       , watched = Unwatched
+      , nsfw = False
       }
     , { title = "The Pianist"
       , url = "http://www.imdb.com/title/tt0253474/"
@@ -534,6 +599,7 @@ movies =
       , runtime = 150
       , genres = [ "biography", "drama", "war" ]
       , watched = Unwatched
+      , nsfw = False
       }
     , { title = "Open Water"
       , url = "http://www.imdb.com/title/tt0374102/"
@@ -542,6 +608,7 @@ movies =
       , runtime = 79
       , genres = [ "biography", "drama", "horror" ]
       , watched = Unwatched
+      , nsfw = False
       }
     , { title = "Ong-bak"
       , url = "http://www.imdb.com/title/tt0368909/"
@@ -550,6 +617,7 @@ movies =
       , runtime = 105
       , genres = [ "action", "thriller" ]
       , watched = Watched (date 2014 12 5)
+      , nsfw = False
       }
     , { title = "Primer"
       , url = "http://www.imdb.com/title/tt0390384/"
@@ -558,6 +626,7 @@ movies =
       , runtime = 77
       , genres = [ "drama", "sci-fi", "thriller" ]
       , watched = Unwatched
+      , nsfw = False
       }
     , { title = "Æon Flux"
       , url = "http://www.imdb.com/title/tt0402022/"
@@ -566,6 +635,7 @@ movies =
       , runtime = 93
       , genres = [ "action", "sci-fi" ]
       , watched = Watched (date 2018 2 22)
+      , nsfw = False
       }
     , { title = "The Descent"
       , url = "http://www.imdb.com/title/tt0435625/"
@@ -574,6 +644,7 @@ movies =
       , runtime = 99
       , genres = [ "adventure", "horror" ]
       , watched = Unwatched
+      , nsfw = False
       }
     , { title = "Derailed"
       , url = "http://www.imdb.com/title/tt0398017/"
@@ -582,6 +653,7 @@ movies =
       , runtime = 108
       , genres = [ "drama", "thriller" ]
       , watched = Unwatched
+      , nsfw = False
       }
     , { title = "Brick"
       , url = "http://www.imdb.com/title/tt0393109/"
@@ -590,6 +662,7 @@ movies =
       , runtime = 110
       , genres = [ "crime", "drama", "mystery" ]
       , watched = Unwatched
+      , nsfw = False
       }
     , { title = "Lucky Number Slevin"
       , url = "http://www.imdb.com/title/tt0425210/"
@@ -598,6 +671,7 @@ movies =
       , runtime = 110
       , genres = [ "crime", "drama", "mystery" ]
       , watched = Unwatched
+      , nsfw = False
       }
     , { title = "The Prestige"
       , url = "http://www.imdb.com/title/tt0482571/"
@@ -606,6 +680,7 @@ movies =
       , runtime = 130
       , genres = [ "drama", "mystery", "thriller" ]
       , watched = Unwatched
+      , nsfw = False
       }
     , { title = "Stranger Than Fiction"
       , url = "http://www.imdb.com/title/tt0420223/"
@@ -614,6 +689,7 @@ movies =
       , runtime = 113
       , genres = [ "comedy", "drama", "fantasy" ]
       , watched = Watched (date 2017 10 26)
+      , nsfw = False
       }
     , { title = "Hot Fuzz"
       , url = "http://www.imdb.com/title/tt0425112/"
@@ -622,6 +698,7 @@ movies =
       , runtime = 121
       , genres = [ "action", "comedy" ]
       , watched = Unwatched
+      , nsfw = False
       }
     , { title = "I Am Legend (Director’s Cut)"
       , url = "http://www.imdb.com/title/tt0480249/"
@@ -630,6 +707,7 @@ movies =
       , runtime = 101
       , genres = [ "drama", "sci-fi", "thriller" ]
       , watched = Unwatched
+      , nsfw = False
       }
     , { title = "Mongol: The Rise of Genghis Khan"
       , url = "http://www.imdb.com/title/tt0416044/"
@@ -638,6 +716,7 @@ movies =
       , runtime = 126
       , genres = [ "adventure", "biography", "drama" ]
       , watched = Unwatched
+      , nsfw = False
       }
     , { title = "Timecrimes"
       , url = "http://www.imdb.com/title/tt0480669/"
@@ -646,6 +725,7 @@ movies =
       , runtime = 92
       , genres = [ "sci-fi", "thriller" ]
       , watched = Unwatched
+      , nsfw = False
       }
     , { title = "Shoot 'Em Up"
       , url = "http://www.imdb.com/title/tt0465602/"
@@ -654,6 +734,7 @@ movies =
       , runtime = 86
       , genres = [ "action", "comedy", "crime" ]
       , watched = Watched (date 2014 11 21)
+      , nsfw = False
       }
     , { title = "The Brothers Bloom"
       , url = "http://www.imdb.com/title/tt0844286/"
@@ -662,6 +743,7 @@ movies =
       , runtime = 114
       , genres = [ "adventure", "comedy", "drama" ]
       , watched = Unwatched
+      , nsfw = False
       }
     , { title = "In Bruges"
       , url = "http://www.imdb.com/title/tt0780536/"
@@ -670,6 +752,7 @@ movies =
       , runtime = 107
       , genres = [ "comedy", "crime", "drama" ]
       , watched = Unwatched
+      , nsfw = False
       }
     , { title = "It Might Get Loud"
       , url = "http://www.imdb.com/title/tt1229360/"
@@ -678,6 +761,7 @@ movies =
       , runtime = 98
       , genres = [ "documentary", "music" ]
       , watched = Unwatched
+      , nsfw = False
       }
     , { title = "Let the Right One In"
       , url = "http://www.imdb.com/title/tt1139797/"
@@ -686,6 +770,7 @@ movies =
       , runtime = 115
       , genres = [ "drama", "horror", "romance" ]
       , watched = Watched (date 2016 10 27)
+      , nsfw = False
       }
     , { title = "Synecdoche New York"
       , url = "http://www.imdb.com/title/tt0383028/"
@@ -694,6 +779,7 @@ movies =
       , runtime = 124
       , genres = [ "comedy", "drama" ]
       , watched = Unwatched
+      , nsfw = False
       }
     , { title = "Case 39"
       , url = "http://www.imdb.com/title/tt0795351/"
@@ -702,6 +788,7 @@ movies =
       , runtime = 109
       , genres = [ "horror", "mystery", "thriller" ]
       , watched = Watched (date 2014 12 18)
+      , nsfw = False
       }
     , { title = "Dead Snow"
       , url = "http://www.imdb.com/title/tt1278340/"
@@ -710,6 +797,7 @@ movies =
       , runtime = 91
       , genres = [ "comedy", "horror" ]
       , watched = Unwatched
+      , nsfw = False
       }
     , { title = "The Wild Hunt"
       , url = "http://www.imdb.com/title/tt1493886"
@@ -718,6 +806,7 @@ movies =
       , runtime = 96
       , genres = [ "drama", "thriller", "horror" ]
       , watched = Unwatched
+      , nsfw = False
       }
     , { title = "Zombieland"
       , url = "http://www.imdb.com/title/tt1156398/"
@@ -726,6 +815,7 @@ movies =
       , runtime = 88
       , genres = [ "adventure", "comedy", "horror" ]
       , watched = Watched (date 2014 10 24)
+      , nsfw = False
       }
     , { title = "Babies"
       , url = "http://www.imdb.com/title/tt1020938/"
@@ -734,6 +824,7 @@ movies =
       , runtime = 79
       , genres = [ "documentary" ]
       , watched = Unwatched
+      , nsfw = False
       }
     , { title = "Tucker and Dale vs. Evil"
       , url = "http://www.imdb.com/title/tt1465522/"
@@ -742,6 +833,7 @@ movies =
       , runtime = 89
       , genres = [ "comedy", "horror" ]
       , watched = Watched (date 2017 8 31)
+      , nsfw = False
       }
     , { title = "Sanctum"
       , url = "http://www.imdb.com/title/tt0881320/"
@@ -750,6 +842,7 @@ movies =
       , runtime = 108
       , genres = [ "adventure", "drama", "thriller" ]
       , watched = Watched (date 2014 11 7)
+      , nsfw = False
       }
     , { title = "The Adjustment Bureau"
       , url = "http://www.imdb.com/title/tt1385826/"
@@ -758,6 +851,7 @@ movies =
       , runtime = 106
       , genres = [ "romance", "sci-fi", "thriller" ]
       , watched = Unwatched
+      , nsfw = False
       }
     , { title = "Argo"
       , url = "http://www.imdb.com/title/tt1024648/"
@@ -766,6 +860,7 @@ movies =
       , runtime = 120
       , genres = [ "drama", "history", "thriller" ]
       , watched = Unwatched
+      , nsfw = False
       }
     , { title = "The Cabin in the Woods"
       , url = "http://www.imdb.com/title/tt1259521/"
@@ -774,6 +869,7 @@ movies =
       , runtime = 95
       , genres = [ "horror", "mystery", "thriller" ]
       , watched = Unwatched
+      , nsfw = False
       }
     , { title = "Iron Sky"
       , url = "http://www.imdb.com/title/tt1034314/"
@@ -782,6 +878,7 @@ movies =
       , runtime = 93
       , genres = [ "action", "comedy", "sci-fi" ]
       , watched = Unwatched
+      , nsfw = False
       }
     , { title = "Life of Pi"
       , url = "http://www.imdb.com/title/tt0454876/"
@@ -790,6 +887,7 @@ movies =
       , runtime = 127
       , genres = [ "adventure", "drama", "fantasy" ]
       , watched = Unwatched
+      , nsfw = False
       }
     , { title = "Safety Not Guaranteed"
       , url = "http://www.imdb.com/title/tt1862079/"
@@ -798,6 +896,7 @@ movies =
       , runtime = 86
       , genres = [ "comedy", "drama", "romance" ]
       , watched = Watched (date 2015 6 18)
+      , nsfw = False
       }
     , { title = "Upstream Color"
       , url = "http://www.imdb.com/title/tt2084989/"
@@ -806,6 +905,7 @@ movies =
       , runtime = 96
       , genres = [ "drama", "sci-fi" ]
       , watched = Unwatched
+      , nsfw = False
       }
     , { title = "The Way Way Back"
       , url = "http://www.imdb.com/title/tt1727388/"
@@ -814,6 +914,7 @@ movies =
       , runtime = 103
       , genres = [ "comedy", "drama" ]
       , watched = Unwatched
+      , nsfw = False
       }
     , { title = "Whiplash"
       , url = "http://www.imdb.com/title/tt2582802/"
@@ -822,6 +923,7 @@ movies =
       , runtime = 107
       , genres = [ "drama", "music" ]
       , watched = Watched (date 2015 9 24)
+      , nsfw = False
       }
     , { title = "The Conjuring"
       , url = "http://www.imdb.com/title/tt1457767/"
@@ -830,6 +932,7 @@ movies =
       , runtime = 112
       , genres = [ "horror" ]
       , watched = Watched (date 2015 10 22)
+      , nsfw = False
       }
     , { title = "Parallels"
       , url = "http://www.imdb.com/title/tt3479316/"
@@ -838,6 +941,7 @@ movies =
       , runtime = 83
       , genres = [ "action", "sci-fi" ]
       , watched = Unwatched
+      , nsfw = False
       }
     , { title = "Repo Man"
       , url = "http://www.imdb.com/title/tt0087995/"
@@ -846,6 +950,7 @@ movies =
       , runtime = 93
       , genres = [ "comedy", "crime", "sci-fi" ]
       , watched = Unwatched
+      , nsfw = False
       }
     , { title = "It's a Mad, Mad, Mad, Mad World"
       , url = "http://www.imdb.com/title/tt0057193/"
@@ -854,6 +959,7 @@ movies =
       , runtime = 205
       , genres = [ "action", "adventure", "comedy" ]
       , watched = Unwatched
+      , nsfw = False
       }
     , { title = "John Wick"
       , url = "http://www.imdb.com/title/tt2911666/"
@@ -862,6 +968,7 @@ movies =
       , runtime = 101
       , genres = [ "action", "crime", "thriller" ]
       , watched = Unwatched
+      , nsfw = False
       }
     , { title = "10 Cloverfield Lane"
       , url = "http://www.imdb.com/title/tt1179933/"
@@ -870,6 +977,7 @@ movies =
       , runtime = 104
       , genres = [ "drama", "horror", "mystery" ]
       , watched = Unwatched
+      , nsfw = False
       }
     , { title = "Hell or High Water"
       , url = "http://www.imdb.com/title/tt2582782/"
@@ -878,6 +986,7 @@ movies =
       , runtime = 102
       , genres = [ "drama", "crime", "thriller" ]
       , watched = Unwatched
+      , nsfw = False
       }
     , { title = "Eternal Sunshine of the Spotless Mind"
       , url = "http://www.imdb.com/title/tt0338013/"
@@ -886,6 +995,7 @@ movies =
       , runtime = 108
       , genres = [ "drama", "romance", "sci-fi" ]
       , watched = Unwatched
+      , nsfw = False
       }
     , { title = "Gladiator"
       , url = "http://www.imdb.com/title/tt0172495/"
@@ -894,6 +1004,7 @@ movies =
       , runtime = 155
       , genres = [ "drama", "action", "adventure" ]
       , watched = Unwatched
+      , nsfw = False
       }
     , { title = "Psycho"
       , url = "http://www.imdb.com/title/tt0054215/"
@@ -902,6 +1013,7 @@ movies =
       , runtime = 109
       , genres = [ "horror", "mystery", "thriller" ]
       , watched = Unwatched
+      , nsfw = False
       }
     , { title = "Earth Girls Are Easy"
       , url = "http://www.imdb.com/title/tt0097257/"
@@ -910,6 +1022,7 @@ movies =
       , runtime = 100
       , genres = [ "comedy", "musical", "romance" ]
       , watched = Unwatched
+      , nsfw = False
       }
     , { title = "Tapeheads"
       , url = "http://www.imdb.com/title/tt0096223/"
@@ -918,6 +1031,7 @@ movies =
       , runtime = 93
       , genres = [ "music", "comedy" ]
       , watched = Watched (date 2018 1 25)
+      , nsfw = False
       }
     , { title = "Boyhood"
       , url = "http://www.imdb.com/title/tt1065073/"
@@ -926,6 +1040,7 @@ movies =
       , runtime = 165
       , genres = [ "drama" ]
       , watched = Unwatched
+      , nsfw = False
       }
     , { title = "The Road Within"
       , url = "http://www.imdb.com/title/tt2962876/"
@@ -934,6 +1049,7 @@ movies =
       , runtime = 100
       , genres = [ "drama", "comedy" ]
       , watched = Unwatched
+      , nsfw = False
       }
     , { title = "Son of Rambow"
       , url = "http://www.imdb.com/title/tt0845046/"
@@ -942,6 +1058,7 @@ movies =
       , runtime = 95
       , genres = [ "comedy", "adventure" ]
       , watched = Unwatched
+      , nsfw = False
       }
     , { title = "My Blue Heaven"
       , url = "http://www.imdb.com/title/tt0100212/"
@@ -950,6 +1067,7 @@ movies =
       , runtime = 97
       , genres = [ "comedy", "action" ]
       , watched = Unwatched
+      , nsfw = False
       }
     , { title = "Dudes & Dragons"
       , url = "http://www.imdb.com/title/tt2170369/"
@@ -958,6 +1076,7 @@ movies =
       , runtime = 122
       , genres = [ "comedy", "adventure" ]
       , watched = Unwatched
+      , nsfw = False
       }
     , { title = "Donnie Darko"
       , url = "http://www.imdb.com/title/tt0246578/"
@@ -974,6 +1093,7 @@ movies =
       , runtime = 106
       , genres = [ "comedy", "romance" ]
       , watched = Unwatched
+      , nsfw = False
       }
     , { title = "The Raid"
       , url = "https://www.imdb.com/title/tt1899353/"
@@ -982,6 +1102,7 @@ movies =
       , runtime = 101
       , genres = [ "action", "thriller" ]
       , watched = Unwatched
+      , nsfw = False
       }
     , { title = "Ip Man"
       , url = "https://www.imdb.com/title/tt1220719/"
@@ -990,6 +1111,7 @@ movies =
       , runtime = 106
       , genres = [ "action", "biography", "drama" ]
       , watched = Unwatched
+      , nsfw = False
       }
     , { title = "Bubba Ho Tep"
       , url = "https://www.imdb.com/title/tt0281686/"
@@ -998,6 +1120,7 @@ movies =
       , runtime = 92
       , genres = [ "comedy", "fantasy", "horror" ]
       , watched = Unwatched
+      , nsfw = False
       }
     , { title = "Time Bandits"
       , url = "https://www.imdb.com/title/tt0081633/"
@@ -1006,6 +1129,7 @@ movies =
       , runtime = 110
       , genres = [ "comedy", "fantasy", "adventure" ]
       , watched = Unwatched
+      , nsfw = False
       }
     ]
         |> List.map (\m -> { m | genres = Genre.fromFlatList m.genres })

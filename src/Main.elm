@@ -46,6 +46,7 @@ main =
 type alias Model =
     { unwatched : List Movie
     , watched : List Movie
+    , nsfw : List Movie
     , focusedMovie : MovieSelection
     , genres : Set Genre
     , selectedGenres : Set Genre
@@ -76,7 +77,11 @@ init location =
         { unwatched =
             MovieList.movies
                 |> List.filter (not << Movie.isWatched)
+                |> List.filter (not << .nsfw)
                 |> List.sortBy .year
+        , nsfw =
+            MovieList.movies
+                |> List.filter .nsfw
         , watched =
             MovieList.movies
                 |> List.filter Movie.isWatched
@@ -320,6 +325,11 @@ view model =
                     (model.watched
                         |> List.map (Movie.movieCard FocusMovie model.selectedGenres)
                     )
+                , h2 [] [ text "Not Safe For Work" ]
+                , div [ class [ Movies ] ]
+                    (model.nsfw
+                        |> List.map (Movie.movieCard FocusMovie model.selectedGenres)
+                    )
                 ]
             , rulesView
             ]
@@ -353,7 +363,8 @@ rulesView =
 2. Movies can be added to the list via a PR against the [git repo](https://github.com/MoviesFromAHat/MoviesFromAHat.github.io/)
 3. We're looking for movies that flew under the radar, not blockbusters. (Think "Krull", not "Lord of the Rings")
 4. Use common sense. You'll be watching this with your co-workers. Be mindful of them and the power differentials that exist in the workspace.
-5. No Troma Films. (The Cheely Rule)
+5. Movies with nudity, sexual content, sexual assault, excessive violence or other factors might be quality films, but not appropriate for a workplace viewing. These can be listed to allow sharing of recommended movies, but should tagged as NSFW and will not be chosen to be viewed at work.
+6. No Troma Films. (The Cheely Rule)
 """
         ]
 
