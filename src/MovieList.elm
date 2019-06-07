@@ -1085,6 +1085,7 @@ movies =
       , runtime = 113
       , genres = [ "drama", "sci-fi", "thriller" ]
       , watched = Unwatched
+      , nsfw = False
       }
     , { title = "Hors De Prix"
       , url = "https://www.imdb.com/title/tt0482088/"
