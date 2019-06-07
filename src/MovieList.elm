@@ -965,6 +965,8 @@ movies =
       , year = 2001
       , runtime = 113
       , genres = [ "drama", "sci-fi", "thriller" ]
+      , watched = Unwatched
+      }
     , { title = "Hors De Prix"
       , url = "https://www.imdb.com/title/tt0482088/"
       , img = "horsdeprix.jpg"
