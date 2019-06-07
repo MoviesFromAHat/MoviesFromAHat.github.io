@@ -1078,6 +1078,15 @@ movies =
       , watched = Unwatched
       , nsfw = False
       }
+    , { title = "Donnie Darko"
+      , url = "http://www.imdb.com/title/tt0246578/"
+      , img = "donnie-darko.jpg"
+      , year = 2001
+      , runtime = 113
+      , genres = [ "drama", "sci-fi", "thriller" ]
+      , watched = Unwatched
+      , nsfw = False
+      }
     , { title = "Hors De Prix"
       , url = "https://www.imdb.com/title/tt0482088/"
       , img = "horsdeprix.jpg"
