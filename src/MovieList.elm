@@ -265,7 +265,7 @@ movies =
       , year = 1987
       , runtime = 94
       , genres = [ "comedy", "crime", "drama" ]
-      , watched = Unwatched
+      , watched = Watched (date 2019 7 8)
       , nsfw = False
       }
     , { title = "Akira"

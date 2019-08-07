@@ -31556,7 +31556,8 @@ var _user$project$MovieList$movies = A2(
 																																	}
 																																}
 																															},
-																															watched: _user$project$Movie$Unwatched,
+																															watched: _user$project$Movie$Watched(
+																																A3(_elm_community$elm_time$Time_Date$date, 2019, 7, 8)),
 																															nsfw: false
 																														},
 																														_1: {
