@@ -238,7 +238,7 @@ movies =
       , year = 1986
       , runtime = 99
       , genres = [ "action", "adventure", "comedy" ]
-      , watched = Unwatched
+      , watched = Watched (date 2019 8 30)
       , nsfw = False
       }
     , { title = "The Golden Child"
