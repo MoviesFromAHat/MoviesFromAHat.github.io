@@ -16,7 +16,7 @@
   "devDependencies": {
     "elm": "^0.18.0",
     "elm-css": "^0.6.0",
-    "elm-live": "^2.7.4"
+    "elm-live": "^4.0.2"
   },
   "license": {
     "type": "MIT",
